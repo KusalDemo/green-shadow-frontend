@@ -49,29 +49,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.cookie = `token=${data.token}; path=/; secure;`;
                     window.location.href = 'home.html';
                 } else {
-                    showError('email', 'Invalid credentials. Please try again.');
+                    showError('email', 'Error logging in. Please try again.');
                 }
             } catch (error) {
                 console.error('Error:', error);
-                showError('email', 'An error occurred. Please try again later.');
+                showError('email', 'Invalid credentials. Please try again.');
             }
         });
     }
 
     if (signupForm) {
-        signupForm.addEventListener('submit', (e) => {
+        signupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const fullName = document.getElementById('fullName').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
+            let roleClarificationCode = document.getElementById("code").value;
+            let role = document.getElementById("role").value;
 
             // Basic validation
-            if (fullName.length < 2) {
-                showError('fullName', 'Please enter your full name');
-                return;
-            }
-
             if (!validateEmail(email)) {
                 showError('email', 'Please enter a valid email address');
                 return;
@@ -86,11 +82,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 showError('confirmPassword', 'Passwords do not match');
                 return;
             }
-
-            // Simulate signup
-            simulateAuth('Creating your account...', () => {
-                window.location.href = 'home.html';
-            });
+            try {
+                let response = await fetch("http://localhost:8082/api/v1/users/register", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({email, password, role, roleClarificationCode}),
+                });
+                if (response.status !== 201) {
+                    showError('email', 'Check your credentials and try again');
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }else{
+                    window.location.href = '../index.html';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showError('email', 'An error occurred. Please try again later.');
+            }
         });
     }
 
