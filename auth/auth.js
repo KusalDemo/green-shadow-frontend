@@ -1,8 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const token = getCookie('token');
+    if (token) {
+        window.location.href = 'home.html';
+    }
+
     // Toggle password visibility
     const togglePasswordButtons = document.querySelectorAll('.toggle-password');
     togglePasswordButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const input = this.previousElementSibling;
             const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
             input.setAttribute('type', type);
@@ -17,27 +22,39 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('loginForm');
     const signupForm = document.getElementById('signupForm');
 
+    // Updated login submission handler
     if (loginForm) {
-        loginForm.addEventListener('submit', (e) => {
+        loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
-            // Basic validation
-            if (!validateEmail(email)) {
-                showError('email', 'Please enter a valid email address');
-                return;
-            }
+            try {
+                const response = await fetch('http://localhost:8082/api/v1/users/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({email, password})
+                });
 
-            if (password.length < 6) {
-                showError('password', 'Password must be at least 6 characters');
-                return;
-            }
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
 
-            // Simulate login
-            simulateAuth('Logging in...', () => {
-                window.location.href = 'home.html';
-            });
+                // Parse JSON response
+                const data = await response.json();
+
+                if (data.token) {
+                    document.cookie = `token=${data.token}; path=/; secure; HttpOnly`;
+                    window.location.href = 'home.html';
+                } else {
+                    showError('email', 'Invalid credentials. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showError('email', 'An error occurred. Please try again later.');
+            }
         });
     }
 
@@ -80,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Social auth buttons
     const socialButtons = document.querySelectorAll('.social-button');
     socialButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const provider = this.classList.contains('google') ? 'Google' : 'Microsoft';
             simulateAuth(`Connecting to ${provider}...`, () => {
                 window.location.href = 'home.html';
@@ -129,4 +146,12 @@ function simulateAuth(message, callback) {
         button.textContent = originalText;
         callback();
     }, 1500);
+}
+
+// Get token from cookie if exists
+function getCookie(name) {
+    console.log("Checking for cookie: " + name);
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
 }
