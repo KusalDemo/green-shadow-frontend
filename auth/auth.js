@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await response.json();
 
                 if (data.token) {
-                    document.cookie = `token=${data.token}; path=/; secure; HttpOnly`;
+                    document.cookie = `token=${data.token}; path=/; secure;`;
                     window.location.href = 'home.html';
                 } else {
                     showError('email', 'Invalid credentials. Please try again.');
