@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - GreenShadow</title>
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="logo">
+                <span style="color: #0D9F4F">GreenShadow</span>
+            </div>
+            <h1>Create Account</h1>
+            <p>Join us to start managing your farm efficiently</p>
+        </div>
+        <form class="auth-form" id="signupForm">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <div class="input-group">
+                    <img src="https://api.iconify.design/mdi:email.svg" alt="Email">
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-group">
+                    <img src="https://api.iconify.design/mdi:lock.svg" alt="Password">
+                    <input type="password" id="password" placeholder="Create a password" required>
+                    <img src="https://api.iconify.design/mdi:eye.svg" class="toggle-password" alt="Show Password">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <div class="input-group">
+                    <img src="https://api.iconify.design/mdi:lock.svg" alt="Confirm Password">
+                    <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+                    <img src="https://api.iconify.design/mdi:eye.svg" class="toggle-password" alt="Show Password">
+                </div>
+            </div>
+            <div class="form-group" style="display: flex; flex-direction: row; gap: 1rem">
+                <div>
+                    <label for="role">Role</label>
+                    <div class="input-group">
+                        <select id="role" required>
+                            <option value="">Select Role</option>
+                            <option value="farmer">MANAGER</option>
+                            <option value="admin">ADMINISTRATIVE</option>
+                            <option value="admin">SCIENTIST</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="code">Role Code</label>
+                    <div class="input-group">
+                        <input type="text" id="code" placeholder="Enter Role Code" required style="padding: 0.8rem 1rem 0.8rem 1rem;">
+                    </div>
+                </div>
+            </div>
+            <div class="form-options">
+                <label class="remember-me">
+                    <input type="checkbox" id="terms" required>
+                    <span>I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a></span>
+                </label>
+            </div>
+            <button type="submit" class="auth-button">Create Account</button>
+            <div class="auth-divider">
+                <span>Or sign up with</span>
+            </div>
+            <div class="social-buttons">
+                <button type="button" class="social-button google">
+                    <img src="https://api.iconify.design/mdi:google.svg" alt="Google">
+                    Google
+                </button>
+                <button type="button" class="social-button microsoft">
+                    <img src="https://api.iconify.design/mdi:microsoft.svg" alt="Microsoft">
+                    Microsoft
+                </button>
+            </div>
+            <p class="auth-footer">
+                Already have an account? <a href="../index.html">Login</a>
+            </p>
+        </form>
+    </div>
+</div>
+<script src="auth.js"></script>
+</body>
+</html>

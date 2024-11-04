@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenShadow</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <div class="hamburger">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <nav class="sidebar">
+        <div class="logo">
+            <span style="color: #0D9F4F">GreenShadow</span>
+        </div>
+        <ul class="nav-items">
+            <li class="active">
+                🏠 Dashboard
+            </li>
+            <li>
+                🧑🏻‍💼 User Management
+            </li>
+            <li>
+                🚜 Vehicle
+            </li>
+            <li>
+                🧰 Equipment
+            </li>
+            <li>
+                📋 Logs
+            </li>
+            <li>
+                👨🏻‍🌾 Staff
+            </li>
+            <li>
+                🌾 Crop Management
+            </li>
+            <li>
+                🏔️ Fields
+            </li>
+        </ul>
+        <ul class="bottom-nav">
+            <li>
+                ⚙️ Settings
+            </li>
+            <li class="logout" id="logout">
+                <img src="https://api.iconify.design/mdi:logout.svg" alt="Logout">Logout
+            </li>
+        </ul>
+    </nav>
+    <main class="main-content">
+        <header>
+            <div class="search-bar">
+                <input type="text" placeholder="Search something here...">
+                <img src="https://api.iconify.design/mdi:bell.svg" alt="Notifications" class="notification-icon">
+            </div>
+            <div class="user-profile">
+                <img src="https://api.iconify.design/mdi:account-circle.svg" alt="Profile" class="profile-icon">
+                <span>Kusal Gunasekara</span>
+            </div>
+        </header>
+        <div class="dashboard-container">
+            <div class="greeting">
+                <div>
+                    <h1>Good Morning!</h1>
+                    <p>Here's what's happening in Green Shadow</p>
+                </div>
+                <button class="export-btn">Reload data</button>
+            </div>
+        </div>
+    </main>
+</div>
+<script src="script.js"></script>
+<script src="home.js"></script>
+</body>
+</html>
