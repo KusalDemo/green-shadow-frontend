@@ -1,3 +1,5 @@
+const loggedUserName= undefined
+
 document.addEventListener('DOMContentLoaded', () => {
     const token = getCookie('token');
     if (token) {
