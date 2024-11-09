@@ -19,53 +19,145 @@
             <span style="color: #0D9F4F">GreenShadow</span>
         </div>
         <ul class="nav-items">
-            <li class="nav-item" data-page="view/dashboard/dashboard.html">🏠 Dashboard</li>
+            <!--<li class="nav-item" data-page="view/dashboard/dashboard.html">🏠 Dashboard</li>
             <li class="nav-item" data-page="view/user/user.html">🧑🏻‍💼 User Management</li>
             <li class="nav-item" data-page="vehicle.html">🚜 Vehicle</li>
             <li class="nav-item" data-page="equipment.html">🧰 Equipment</li>
             <li class="nav-item" data-page="view/logs/logs.html">📋 Logs</li>
             <li class="nav-item" data-page="staff.html">👨🏻‍🌾 Staff</li>
             <li class="nav-item" data-page="crop-management.html">🌾 Crop Management</li>
-            <li class="nav-item" data-page="fields.html">🏔️ Fields</li>
+            <li class="nav-item" data-page="fields.html">🏔️ Fields</li>-->
+            <li class="nav-item" id="nav-home">🏠 Dashboard</li>
+            <li class="nav-item" id="nav-user">🧑🏻‍💼 User Management</li>
+            <li class="nav-item" id="nav-vehicle">🚜 Vehicle</li>
+            <li class="nav-item" id="nav-equipment">🧰 Equipment</li>
+            <li class="nav-item" id="nav-logs">📋 Logs</li>
+            <li class="nav-item" id="nav-staff">👨🏻‍🌾 Staff</li>
+            <li class="nav-item" id="nav-crop">🌾 Crop Management</li>
+            <li class="nav-item" id="nav-field">🏔️ Fields</li>
         </ul>
         <ul class="bottom-nav">
-            <li>
-                ⚙️ Settings
-            </li>
+            <li class="nav-item" id="nav-settings">⚙️ Settings</li>
             <li class="logout" id="logout">
                 <img src="https://api.iconify.design/mdi:logout.svg" alt="Logout">Logout
             </li>
         </ul>
+        <button type="button" id="checker">CHECK</button>
     </nav>
     <main class="main-content" id="main-content">
-        <!--<header>
-            <div class="search-bar">
-                <input type="text" placeholder="Search something here...">
-                <img src="https://api.iconify.design/mdi:bell.svg" alt="Notifications" class="notification-icon">
-            </div>
-            <div class="user-profile">
-                <img src="https://api.iconify.design/mdi:account-circle.svg" alt="Profile" class="profile-icon">
-                <span id="loggedInUser"></span>
-            </div>
-        </header>
-        <div class="dashboard-container">
-            <div class="greeting">
-                <div>
-                    <h1>Good Morning!</h1>
-                    <p>Here's what's happening in Green Shadow</p>
+        <!--Dashboard-->
+        <div id="dashboard-section" style="display: none;">
+            <header>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search something here...">
+                    <img src="https://api.iconify.design/mdi:bell.svg" alt="Notifications" class="notification-icon">
                 </div>
-                <button class="export-btn">Reload data</button>
+                <div class="user-profile">
+                    <img src="https://api.iconify.design/mdi:account-circle.svg" alt="Profile" class="profile-icon">
+                    <span id="loggedInUser"></span>
+                </div>
+            </header>
+            <div class="dashboard-container">
+                <div class="greeting">
+                    <div>
+                        <h1>Good Morning!</h1>
+                        <p>Here's what's happening in Green Shadow</p>
+                    </div>
+                    <button class="export-btn">Reload data</button>
+                </div>
             </div>
-        </div>-->
+        </div>
+        <!--User Management-->
+        <div id="user-management-section" style="display: none;">
+            <h1>User Management</h1>
+            <button class="export-btn">Reload data</button>
+        </div>
+        <div id="vehicle-management-section" style="display: none;">Vehicle Management Content</div>
+        <div id="equipment-management-section" style="display: none;">Equipment Management Content</div>
+        <div id="staff-management-section" style="display: none;">Staff Management Content</div>
+        <div id="crop-management-section" style="display: none;">Crop Management Content</div>
+        <div id="field-management-section" style="display: none;">Fields Management Content</div>
+
+        <!--Logs-->
+        <div id="logs-management-section" style="display: none;">
+            <header>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search something here...">
+                    <img src="https://api.iconify.design/mdi:bell.svg" alt="Notifications" class="notification-icon">
+                </div>
+                <div class="user-profile">
+                    <img src="https://api.iconify.design/mdi:account-circle.svg" alt="Profile" class="profile-icon">
+                </div>
+            </header>
+            <div class="row">
+                <div class="col-12">
+                    <form>
+                        <div class="row g-2">
+                            <div class="mb-3 row col-lg-6">
+                                <label for="log-date-input" class="col-form-label">Log Date</label>
+                                <div class="col-12">
+                                    <input type="date" class="form-control" id="log-date-input" aria-describedby="dateHelp">
+                                </div>
+                            </div>
+                            <div class="mb-3 row col-lg-6">
+                                <label for="observed-image-input" class="form-label">Observed Image</label>
+                                <input class="form-control" type="file" id="observed-image-input">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="log-description-input">description</span>
+                                <input type="text" class="form-control" aria-label="Sizing example input"
+                                       aria-describedby="inputGroup-sizing-default">
+                            </div>
+                        </div>
+                    </form>
+                    <button type="button" id="log-save-btn" class="btn btn-primary">Submit</button>
+                    <button type="button" id="log-save-check" onclick="saveLog()" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <table class="table table-striped table-bordered" id="log-table">
+                        <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Log Description</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Observed Image</th>
+                        </tr>
+                        </thead>
+                        <tbody id="log-table-body">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="settings-section" style="display: none;">Settings Content</div>
+
+        <!--Modals-->
+        <div class="modal fade" id="observedImageModal" tabindex="-1" aria-labelledby="observedImageModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="observedImageModalLabel">Observed Image</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img id="modalImage" src="" alt="Log Image" class="img-fluid" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
 </div>
 <script src="assets/lib/jquery-3.7.1.min.js"></script>
 <script src="script.js"></script>
-<script src="spa.js"></script>
+<!--<script src="spa.js"></script>-->
 <script src="home.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script type="module" src="controller/logsController.js"></script>
+<script type="module" src="controller/logsController.js" defer></script>
 <script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
 <script src="https://cdn.datatables.net/2.1.4/js/dataTables.bootstrap5.js"></script>
 </body>

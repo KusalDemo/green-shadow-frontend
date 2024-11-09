@@ -1,31 +1,32 @@
 export class LogModel{
-    constructor(date, description, image){
-        this.date = date;
-        this.description = description;
-        this.image = image;
+    constructor(logDate, logDetails, observedImage){
+        this.logDate = logDate;
+        this.logDetails = logDetails;
+        this.observedImage = observedImage;
     }
 
-    getDate(){
-        return this.date;
+    getLogDate() {
+        return this.logDate;
     }
 
-    getDescription(){
-        return this.description;
+    getLogDetails() {
+        return this.logDetails;
     }
 
-    getImage(){
-        return this.image;
+    getObservedImage() {
+        return this.observedImage;
     }
 
-    setDate(date){
-        this.date = date;
+    setLogDate(logDate) {
+        this.logDate = logDate;
     }
 
-    setDescription(description){
-        this.description = description;
+    setLogDetails(logDetails) {
+        this.logDetails = logDetails;
     }
 
-    setImage(image){
-        this.image = image;
+    setObservedImage(observedImage) {
+        this.observedImage = observedImage;
     }
+
 }
