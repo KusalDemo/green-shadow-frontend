@@ -67,7 +67,199 @@
         </div>
         <div id="vehicle-management-section" style="display: none;">Vehicle Management Content</div>
         <div id="equipment-management-section" style="display: none;">Equipment Management Content</div>
-        <div id="staff-management-section" style="display: none;">Staff Management Content</div>
+        <!--================================================================================================================-->
+        <!--Staff Management-->
+        <div id="staff-management-section" style="display: none;">
+            <header>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search something here..." id="staff-search-input">
+                    <img src="https://api.iconify.design/mdi:bell.svg" alt="Notifications" class="notification-icon">
+                </div>
+                <div class="user-profile">
+                    <img src="https://api.iconify.design/mdi:account-circle.svg" alt="Profile" class="profile-icon">
+                </div>
+            </header>
+            <div class="row">
+                <div class="col-12">
+                    <span class="badge text-bg-success mb-4">Add Staff</span>
+                    <small class="text-muted mb-4" id="staff-id"></small>
+                    <form class="row g-2 needs-validation" novalidate>
+                        <div class="mb-3 col-lg-6">
+                            <label for="first-name-input" class="col-form-label">First name</label>
+                            <div class="col-12">
+                                <input type="text" class="form-control" id="first-name-input" required>
+                                <div class="invalid-feedback">Please provide a first name.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-lg-6">
+                            <label for="last-name-input" class="col-form-label">Last name</label>
+                            <div class="col-12">
+                                <input type="text" class="form-control" id="last-name-input" required>
+                                <div class="invalid-feedback">Please provide a last name.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-lg-6">
+                            <label for="designation-select" class="form-label">Designation</label>
+                            <div class="col-12">
+                                <select class="form-select" id="designation-select" required>
+                                    <option value="Manager">Manager</option>
+                                    <option value="Senior Assistant Manager">Senior Assistant Manager</option>
+                                    <option value="Assistant Manager">Assistant Manager</option>
+                                    <option value="Admin and HR Staff">Admin and HR Staff</option>
+                                    <option value="Office Assistant">Office Assistant</option>
+                                    <option value="Senior Agronomist">Senior Agronomist</option>
+                                    <option value="Agronomist">Agronomist</option>
+                                    <option value="Soil scientist">Soil scientist</option>
+                                    <option value="Senior Technician">Senior Technician</option>
+                                    <option value="Technician">Technician</option>
+                                    <option value="Supervisors">Supervisors</option>
+                                    <option value="Labors">Labors</option>
+                                    <option value="Other" selected>Other</option>
+                                </select>
+                                <div class="invalid-feedback">Please select a designation.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-lg-6">
+                            <label for="gender-select" class="form-label">Gender</label>
+                            <div class="col-12">
+                                <select class="form-select" id="gender-select" required>
+                                    <option value="" selected disabled>Select gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                                <div class="invalid-feedback">Please select a gender.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-lg-6">
+                            <label for="joined-date-input" class="col-form-label">Joined Date</label>
+                            <div class="col-12">
+                                <input type="date" class="form-control" id="joined-date-input" required>
+                                <div class="invalid-feedback">Please provide a joined date.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-lg-6">
+                            <label for="dob-input" class="col-form-label">Date of Birth</label>
+                            <div class="col-12">
+                                <input type="date" class="form-control" id="dob-input" required>
+                                <div class="invalid-feedback">Please provide a date of birth.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-lg-6">
+                            <label for="address-line-1-input" class="col-form-label">Address Line 1</label>
+                            <div class="col-12">
+                                <input type="text" class="form-control" id="address-line-1-input" required>
+                                <div class="invalid-feedback">Please provide an address line.</div>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-lg-6">
+                            <label for="address-line-2-input" class="col-form-label">Address Line 2</label>
+                            <div class="col-12">
+                                <input type="text" class="form-control" id="address-line-2-input" required>
+                                <div class="invalid-feedback">Please provide an address line.</div>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-lg-6">
+                            <label for="address-line-3-input" class="col-form-label">Address Line 3</label>
+                            <div class="col-12">
+                                <input type="text" class="form-control" id="address-line-3-input" required>
+                                <div class="invalid-feedback">Please provide an address line.</div>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-lg-6">
+                            <label for="address-line-4-input" class="col-form-label">Address Line 4</label>
+                            <div class="col-12">
+                                <input type="text" class="form-control" id="address-line-4-input">
+                                <div class="invalid-feedback">Please provide an address line.</div>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-lg-6">
+                            <label for="address-line-5-input" class="col-form-label">Address Line 5</label>
+                            <div class="col-12">
+                                <input type="text" class="form-control" id="address-line-5-input">
+                                <div class="invalid-feedback">Please provide an address line.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-lg-6">
+                            <label for="contact-input" class="col-form-label">Contact</label>
+                            <div class="col-12">
+                                <input type="tel" class="form-control" id="contact-input" pattern="[0-9]{10}" required>
+                                <div class="invalid-feedback">Please provide a valid contact number.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-lg-6">
+                            <label for="email-input" class="col-form-label">Email</label>
+                            <div class="col-12">
+                                <input type="email" class="form-control" id="email-input" required>
+                                <div class="invalid-feedback">Please provide a valid email address.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-lg-6">
+                            <label for="staff-role-select" class="form-label">Role</label>
+                            <div class="col-12">
+                                <select class="form-select" id="staff-role-select" required>
+                                    <option value="" selected disabled>Select role</option>
+                                    <option value="MANAGER">Manager</option>
+                                    <option value="ADMINISTRATIVE">Administrative</option>
+                                    <option value="SCIENTIST">Scientist</option>
+                                    <option value="OTHER">Other</option>
+                                </select>
+                                <div class="invalid-feedback">Please select a role.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 col-lg-6">
+                            <label for="staff-log-select" class="form-label">Select Related Log</label>
+                            <div class="col-12">
+                                <select class="form-select" id="staff-log-select" required>
+
+                                </select>
+                                <div class="invalid-feedback">Please select a related log.</div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" id="staff-save-btn" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                    <br>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered" id="staff-table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">fname</th>
+                                    <th scope="col">lname</th>
+                                    <th scope="col">designation</th>
+                                    <th scope="col">joined</th>
+                                    <th scope="col">DOB</th>
+                                    <th scope="col">addressLine1</th>
+                                    <th scope="col">contact</th>
+                                    <th scope="col">email</th>
+                                    <th scope="col">role</th>
+                                    <th scope="col">log</th>
+                                </tr>
+                                </thead>
+                                <tbody id="staff-table-body">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--================================================================================================================-->
         <div id="crop-management-section" style="display: none;">Crop Management Content</div>
         <div id="field-management-section" style="display: none;">
             <header>
@@ -104,6 +296,7 @@
             </div>
         </div>
 
+        <!--================================================================================================================-->
         <!--Logs-->
         <div id="logs-management-section" style="display: none;">
             <header>
@@ -206,18 +399,21 @@
                                             <div class="mb-3 row col-lg-6">
                                                 <label for="logs-select-1" class="form-label">Select Log</label>
                                                 <div class="col-12">
-                                                    <select class="form-select" aria-label="Default select example" id="logs-select-1">
+                                                    <select class="form-select" aria-label="Default select example"
+                                                            id="logs-select-1">
 
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row col-lg-6">
-                                                <label for="observed-image-input-2" class="form-label">Observed Image</label>
+                                                <label for="observed-image-input-2" class="form-label">Observed
+                                                    Image</label>
                                                 <input class="form-control" type="file" id="observed-image-input-2">
                                             </div>
                                         </div>
                                     </form>
-                                    <button type="button" id="btn-upload-observed-image-custom" class="btn btn-primary">Upload
+                                    <button type="button" id="btn-upload-observed-image-custom" class="btn btn-primary">
+                                        Upload
                                     </button>
                                 </div>
                             </div>
@@ -238,7 +434,8 @@
                                             <div class="mb-3 row col-lg-6">
                                                 <label for="logs-select-2" class="form-label">Select Log</label>
                                                 <div class="col-12">
-                                                    <select class="form-select" aria-label="Default select example" id="logs-select-2">
+                                                    <select class="form-select" aria-label="Default select example"
+                                                            id="logs-select-2">
 
                                                     </select>
                                                 </div>
@@ -246,14 +443,19 @@
                                             <div class="mb-3 row col-lg-6">
                                                 <label for="crops-select-2" class="form-label">Select Crop</label>
                                                 <div class="col-12">
-                                                    <select class="form-select" aria-label="Default select example" id="crops-select-2">
+                                                    <select class="form-select" aria-label="Default select example"
+                                                            id="crops-select-2">
 
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
-                                        <button type="button" id="btn-merge-log-for-crop" class="btn btn-primary">Merge</button>
-                                        <button type="button" id="btn-delete-log-for-crop" class="btn btn-danger">Delete</button>
+                                        <button type="button" id="btn-merge-log-for-crop" class="btn btn-primary">
+                                            Merge
+                                        </button>
+                                        <button type="button" id="btn-delete-log-for-crop" class="btn btn-danger">
+                                            Delete
+                                        </button>
                                     </form>
                                 </div>
                             </div>
@@ -284,7 +486,8 @@
 
             <!--Modals-->
             <!-- Modal -->
-            <div class="modal fade" id="observedImageModal" tabindex="-1" aria-labelledby="observedImageModalLabel" aria-hidden="true">
+            <div class="modal fade" id="observedImageModal" tabindex="-1" aria-labelledby="observedImageModalLabel"
+                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -292,14 +495,13 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <img id="modalImage" class="img-fluid" alt="Observed Image" />
+                            <img id="modalImage" class="img-fluid" alt="Observed Image"/>
                         </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
+        <!--================================================================================================================-->
     </main>
 </div>
 <script src="assets/lib/jquery-3.7.1.min.js"></script>
@@ -310,6 +512,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script type="module" src="controller/logsController.js" defer></script>
+<script type="module" src="controller/StaffController.js" defer></script>
 <script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
 <script src="https://cdn.datatables.net/2.1.4/js/dataTables.bootstrap5.js"></script>
 </body>
