@@ -230,13 +230,28 @@
                                 </button>
                             </h2>
                             <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
-                                <div class="accordion-body">
-                                    <strong>This is the second item's accordion body.</strong> It is hidden by default,
-                                    until the collapse plugin adds the appropriate classes that we use to style each
-                                    element. These classes control the overall appearance, as well as the showing and
-                                    hiding via CSS transitions. You can modify any of this with custom CSS or overriding
-                                    our default variables. It's also worth noting that just about any HTML can go within
-                                    the <code>.accordion-body</code>, though the transition does limit overflow.
+                                <div class="accordion-body p-4">
+                                    <form>
+                                        <div class="row g-2">
+                                            <div class="mb-3 row col-lg-6">
+                                                <label for="observed-image-input" class="form-label">Select Log</label>
+                                                <div class="col-12">
+                                                    <select class="form-select" aria-label="Default select example" id="logs-select-2">
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row col-lg-6">
+                                                <label for="observed-image-input" class="form-label">Select Crop</label>
+                                                <div class="col-12">
+                                                    <select class="form-select" aria-label="Default select example" id="crops-select-2">
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="button" id="btn-merge-log-for-crop" class="btn btn-primary">Merge</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

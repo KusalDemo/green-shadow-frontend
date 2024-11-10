@@ -27,6 +27,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btnUploadObservedImageCustom) {
         btnUploadObservedImageCustom.addEventListener('click', () => uploadObservedImageCustom(jwtToken));
     }
+
+    let btnMergeLogsAndCrops = document.getElementById("btn-merge-log-for-crop");
+    if (btnMergeLogsAndCrops) {
+        btnMergeLogsAndCrops.addEventListener('click', () => mergeLogsAndCrops(jwtToken));
+    }
+
+
 });
 
 
@@ -78,7 +85,8 @@ const loadTable = (jwtToken) => {
 
 const loadCropsList = (jwtToken) => {
     let cropsSelector = document.getElementById("crops-select");
-    if (!cropsSelector) return;
+    let cropsSelectorInMergeCrops = document.getElementById("crops-select-2");
+    if (!cropsSelector || !cropsSelectorInMergeCrops) return;
 
     $.ajax({
         url: "http://localhost:8082/api/v1/crop",
@@ -92,6 +100,7 @@ const loadCropsList = (jwtToken) => {
                 option.value = cropCode;
                 option.text = cropCommonName;
                 cropsSelector.appendChild(option);
+                cropsSelectorInMergeCrops.appendChild(option);
             });
         },
         error: (error) => {
@@ -107,7 +116,8 @@ const loadCropsList = (jwtToken) => {
 
 const loadAllLogs = (jwtToken) => {
     let logSelectorInObservedImage = document.getElementById("logs-select-1");
-    if (!logSelectorInObservedImage) return;
+    let logSelectorInMergeCrops = document.getElementById("logs-select-2");
+    if (!logSelectorInObservedImage || !logSelectorInMergeCrops) return;
 
     $.ajax({
         url: "http://localhost:8082/api/v1/log",
@@ -121,6 +131,7 @@ const loadAllLogs = (jwtToken) => {
                 option.value = logCode;
                 option.text = logDetails;
                 logSelectorInObservedImage.appendChild(option);
+                logSelectorInMergeCrops.appendChild(option);
             });
         },
         error: (error) => {
@@ -133,7 +144,6 @@ const loadAllLogs = (jwtToken) => {
         }
     });
 }
-
 
 const saveLog = (jwtToken) => {
     const date = document.getElementById("log-date-input")?.value;
@@ -260,8 +270,8 @@ const uploadObservedImageCustom = (jwtToken) => {
         success: (data) => {
             Swal.fire({
                 icon: 'success',
-                title: 'Success',
-                text: 'Log saved successfully! New log code: ' + data,
+                title: 'Uploaded successfully',
+                text: 'Observed image uploaded successfully!'
             })
         },
         error: (error) => {
@@ -388,6 +398,50 @@ const searchLogsByDate = (jwtToken) => {
                     loadTable(jwtToken);
                 }
             })
+        }
+    }
+}
+
+const mergeLogsAndCrops = (jwtToken) => {
+    let logSelect2 = document.getElementById("logs-select-2");
+    let selectedLogForCropMerge = logSelect2.value;
+
+    let cropSelect2 = document.getElementById("crops-select-2");
+    let selectedCropForCropMerge = cropSelect2.value;
+
+    if(selectedLogForCropMerge && selectedCropForCropMerge){
+        let formData = new FormData();
+        formData.append("logCode", selectedLogForCropMerge);
+        formData.append("cropCode", selectedCropForCropMerge);
+
+        try {
+            $.ajax({
+                url: "http://localhost:8082/api/v1/log/crop",
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${jwtToken}`
+                },
+                contentType: false,
+                processData: false,
+                data: formData,
+                success: (data) => {
+                    Swal.fire({
+                        title: 'Successfully assigned',
+                        text: 'Crop added to the log you selected',
+                        icon: 'success',
+                    })
+                },
+                error: (error) => {
+                    let errorMessage = JSON.stringify(error);
+                    Swal.fire({
+                        title: 'Something went wrong',
+                        text: errorMessage,
+                        icon: 'error',
+                    });
+                }
+            });
+        }catch (error) {
+            console.log(error);
         }
     }
 }
