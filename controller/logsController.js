@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const jwtToken = getCookie("token");
     console.log("JWTToken: ", `Bearer ${jwtToken}`);
     loadTable(jwtToken);
+    loadCropsList(jwtToken);
 
     const logSaveButton = document.getElementById("log-save-btn");
     if (logSaveButton) {
@@ -41,8 +42,8 @@ const loadTable = (jwtToken) => {
                     <td>${logDetails}</td>
                     <td>${logDate}</td>
                     <td>
-                        <button class="btn btn-primary view-btn" data-image="${observedImage}" data-bs-toggle="modal" data-bs-target="#observedImageModal">View</button>
-                    </td>
+                       <button class="btn btn-primary view-btn" data-image="${observedImage}" data-bs-toggle="modal" data-bs-target="#observedImageModal">View</button>
+</td>
                 `;
                 logTableBody.appendChild(row);
 
@@ -68,6 +69,35 @@ const loadTable = (jwtToken) => {
         }
     });
 };
+
+const loadCropsList = (jwtToken) => {
+    let cropsSelector = document.getElementById("crops-select");
+    if (!cropsSelector) return;
+
+    $.ajax({
+        url: "http://localhost:8082/api/v1/crop",
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${jwtToken}`
+        },
+        success: (data) => {
+            data.forEach(({cropCode, cropCommonName}) => {
+                let option = document.createElement("option");
+                option.value = cropCode;
+                option.text = cropCommonName;
+                cropsSelector.appendChild(option);
+            });
+        },
+        error: (error) => {
+            console.error(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            });
+        }
+    });
+}
 
 
 const saveLog = (jwtToken) => {
@@ -99,11 +129,11 @@ const saveLog = (jwtToken) => {
                 "Authorization": `Bearer ${jwtToken}`
             },
             data: JSON.stringify(logModel),
-            success: (response) => {
+            success: (data) => {
                 Swal.fire({
                     icon: 'success',
                     title: 'Success',
-                    text: 'Log saved successfully!',
+                    text: 'Log saved successfully! New log code: ' + data,
                 });
                 loadTable(jwtToken);
             },
@@ -127,8 +157,33 @@ const saveLog = (jwtToken) => {
 
 };
 
-const uploadObservedImage = (jwtToken) => {
+const uploadObservedImage = (jwtToken, data) => {
     const observedImageInput = document.getElementById("observed-image-input");
+
+
+    try {
+        $.ajax({
+            url: "http://localhost:8082/api/v1/log",
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${jwtToken}`
+            },
+            success: (data) => {
+                console.log(data);
+            },
+            error: (error) => {
+                console.error(error);
+            }
+        });
+    } catch (error) {
+        console.error(error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+        });
+    }
+
 }
 
 const searchLog = (event) => {
@@ -168,7 +223,7 @@ const searchLogsByDate = (jwtToken) => {
 
     let logSearchStartingDate = document.getElementById("log-start-date")?.value;
     let logSearchEndingDate = document.getElementById("log-end-date")?.value;
-    if(!logSearchStartingDate || !logSearchEndingDate) {
+    if (!logSearchStartingDate || !logSearchEndingDate) {
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
