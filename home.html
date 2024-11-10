@@ -117,7 +117,8 @@
             </header>
             <div class="row">
                 <div class="col-12">
-                    <small class="text-muted" id="log-code"></small>
+                    <span class="badge text-bg-success mb-4">Add Log</span>
+                    <small class="text-muted mb-4" id="log-code"></small>
                     <form>
                         <div class="row g-2">
                             <div class="mb-3 row col-lg-6">
@@ -127,39 +128,40 @@
                                            aria-describedby="dateHelp">
                                 </div>
                             </div>
-                            <div class="mb-3 row col-lg-6">
+                            <!--<div class="mb-3 row col-lg-6">
                                 <label for="observed-image-input" class="form-label">Observed Image</label>
                                 <input class="form-control" type="file" id="observed-image-input">
-                            </div>
+                            </div>-->
                             <div class="mb-3 row col-lg-6">
-                                <label for="observed-image-input" class="form-label">Log description</label>
+                                <label for="log-description-input" class="form-label">Log description</label>
                                 <div class="col-12">
                                     <textarea class="form-control" aria-label="With textarea"
                                               id="log-description-input"></textarea>
                                 </div>
                             </div>
-                            <div class="mb-3 row col-lg-6">
-                                <label for="observed-image-input" class="form-label">Mention related crops</label>
+                            <!--<div class="mb-3 row col-lg-6">
+                                <label for="crops-select" class="form-label">Mention related crops</label>
                                 <div class="col-12">
                                     <select class="form-select" aria-label="Default select example" id="crops-select">
 
                                     </select>
                                 </div>
 
-                            </div>
+                            </div>-->
                         </div>
                     </form>
                     <button type="button" id="log-save-btn" class="btn btn-primary">Save</button>
                     <br>
                     <!--Actions for logs-->
-                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                    <div class="accordion accordion-flush mt-3" id="accordionFlushExample">
+                        <span class="badge text-bg-success mb-1">More Actions</span>
                         <!--Accordian for search logs between two dates-->
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#flush-collapseOne" aria-expanded="false"
                                         aria-controls="flush-collapseOne">
-                                    <small class="text-muted">Search Logs by Date</small>
+                                    <small class="text-muted">Search Logs between two dates</small>
                                 </button>
                             </h2>
                             <div id="flush-collapseOne" class="accordion-collapse collapse"
@@ -194,7 +196,7 @@
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
                                         aria-controls="panelsStayOpen-collapseTwo">
-                                    <small class="text-muted">Upload Images for logs</small>
+                                    <small class="text-muted">Upload images for logs</small>
                                 </button>
                             </h2>
                             <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
@@ -202,7 +204,7 @@
                                     <form>
                                         <div class="row g-2">
                                             <div class="mb-3 row col-lg-6">
-                                                <label for="observed-image-input" class="form-label">Select Log</label>
+                                                <label for="logs-select-1" class="form-label">Select Log</label>
                                                 <div class="col-12">
                                                     <select class="form-select" aria-label="Default select example" id="logs-select-1">
 
@@ -210,7 +212,7 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3 row col-lg-6">
-                                                <label for="observed-image-input" class="form-label">Observed Image</label>
+                                                <label for="observed-image-input-2" class="form-label">Observed Image</label>
                                                 <input class="form-control" type="file" id="observed-image-input-2">
                                             </div>
                                         </div>
@@ -226,7 +228,7 @@
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
                                         aria-controls="panelsStayOpen-collapseThree">
-                                    <small class="text-muted">Add Logs for Crop</small>
+                                    <small class="text-muted">Add / Delete Logs for Crops</small>
                                 </button>
                             </h2>
                             <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
@@ -234,7 +236,7 @@
                                     <form>
                                         <div class="row g-2">
                                             <div class="mb-3 row col-lg-6">
-                                                <label for="observed-image-input" class="form-label">Select Log</label>
+                                                <label for="logs-select-2" class="form-label">Select Log</label>
                                                 <div class="col-12">
                                                     <select class="form-select" aria-label="Default select example" id="logs-select-2">
 
@@ -242,7 +244,7 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3 row col-lg-6">
-                                                <label for="observed-image-input" class="form-label">Select Crop</label>
+                                                <label for="crops-select-2" class="form-label">Select Crop</label>
                                                 <div class="col-12">
                                                     <select class="form-select" aria-label="Default select example" id="crops-select-2">
 
@@ -251,6 +253,7 @@
                                             </div>
                                         </div>
                                         <button type="button" id="btn-merge-log-for-crop" class="btn btn-primary">Merge</button>
+                                        <button type="button" id="btn-delete-log-for-crop" class="btn btn-danger">Delete</button>
                                     </form>
                                 </div>
                             </div>

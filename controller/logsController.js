@@ -33,7 +33,10 @@ document.addEventListener("DOMContentLoaded", () => {
         btnMergeLogsAndCrops.addEventListener('click', () => mergeLogsAndCrops(jwtToken));
     }
 
-
+    let btnDeleteMergedLogsAndCrop = document.getElementById("btn-delete-log-for-crop");
+    if (btnDeleteMergedLogsAndCrop) {
+        btnDeleteMergedLogsAndCrop.addEventListener('click', () => deleteMergedLogs(jwtToken));
+    }
 });
 
 
@@ -429,6 +432,63 @@ const mergeLogsAndCrops = (jwtToken) => {
                         title: 'Successfully assigned',
                         text: 'Crop added to the log you selected',
                         icon: 'success',
+                    })
+                },
+                error: (error) => {
+                    let errorMessage = JSON.stringify(error);
+                    Swal.fire({
+                        title: 'Something went wrong',
+                        text: errorMessage,
+                        icon: 'error',
+                    });
+                }
+            });
+        }catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+const deleteMergedLogs = (jwtToken) => {
+    let logSelect2 = document.getElementById("logs-select-2");
+    let selectedLogForCropMerge = logSelect2.value;
+
+    let cropSelect2 = document.getElementById("crops-select-2");
+    let selectedCropForCropMerge = cropSelect2.value;
+
+    if(selectedLogForCropMerge && selectedCropForCropMerge){
+        let formData = new FormData();
+        formData.append("logCode", selectedLogForCropMerge);
+        formData.append("cropCode", selectedCropForCropMerge);
+
+        try {
+            $.ajax({
+                url: "http://localhost:8082/api/v1/log/crop",
+                method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${jwtToken}`
+                },
+                contentType: false,
+                processData: false,
+                data: formData,
+                success: (data) => {
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "Deleting merged logs, you won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#0D9F4F',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Merge between log and crop has been deleted.',
+                                'success'
+                            )
+                            loadTable(jwtToken);
+                        }
                     })
                 },
                 error: (error) => {
