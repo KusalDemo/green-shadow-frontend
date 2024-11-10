@@ -19,14 +19,6 @@
             <span style="color: #0D9F4F">GreenShadow</span>
         </div>
         <ul class="nav-items">
-            <!--<li class="nav-item" data-page="view/dashboard/dashboard.html">🏠 Dashboard</li>
-            <li class="nav-item" data-page="view/user/user.html">🧑🏻‍💼 User Management</li>
-            <li class="nav-item" data-page="vehicle.html">🚜 Vehicle</li>
-            <li class="nav-item" data-page="equipment.html">🧰 Equipment</li>
-            <li class="nav-item" data-page="view/logs/logs.html">📋 Logs</li>
-            <li class="nav-item" data-page="staff.html">👨🏻‍🌾 Staff</li>
-            <li class="nav-item" data-page="crop-management.html">🌾 Crop Management</li>
-            <li class="nav-item" data-page="fields.html">🏔️ Fields</li>-->
             <li class="nav-item" id="nav-home">🏠 Dashboard</li>
             <li class="nav-item" id="nav-user">🧑🏻‍💼 User Management</li>
             <li class="nav-item" id="nav-vehicle">🚜 Vehicle</li>
@@ -76,10 +68,7 @@
         <div id="equipment-management-section" style="display: none;">Equipment Management Content</div>
         <div id="staff-management-section" style="display: none;">Staff Management Content</div>
         <div id="crop-management-section" style="display: none;">Crop Management Content</div>
-        <div id="field-management-section" style="display: none;">Fields Management Content</div>
-
-        <!--Logs-->
-        <div id="logs-management-section" style="display: none;">
+        <div id="field-management-section" style="display: none;">
             <header>
                 <div class="search-bar">
                     <input type="text" placeholder="Search something here...">
@@ -94,6 +83,41 @@
                     <form>
                         <div class="row g-2">
                             <div class="mb-3 row col-lg-6">
+                                <label for="field-date-input" class="col-form-label">Field Date</label>
+                                <div class="col-12">
+                                    <input type="text" class="form-control" id="field-date-input" aria-describedby="dateHelp">
+                                </div>
+                            </div>
+                            <div class="mb-3 row col-lg-6">
+                                <label for="field-location-input" class="col-form-label">Field Location</label>
+                                <div class="col-12">
+                                    <input type="text" class="form-control" id="field-location-input" aria-describedby="locationHelp">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!--Logs-->
+        <div id="logs-management-section" style="display: none;">
+            <header>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search something here..." id="log-search-input">
+                    <img src="https://api.iconify.design/mdi:bell.svg" alt="Notifications" class="notification-icon">
+                </div>
+                <div class="user-profile">
+                    <img src="https://api.iconify.design/mdi:account-circle.svg" alt="Profile" class="profile-icon">
+                </div>
+            </header>
+            <div class="row">
+                <div class="col-12">
+                    <small class="text-muted" id="log-code"></small>
+                    <form>
+                        <div class="row g-2">
+                            <div class="mb-3 row col-lg-6">
                                 <label for="log-date-input" class="col-form-label">Log Date</label>
                                 <div class="col-12">
                                     <input type="date" class="form-control" id="log-date-input" aria-describedby="dateHelp">
@@ -104,14 +128,31 @@
                                 <input class="form-control" type="file" id="observed-image-input">
                             </div>
                             <div class="input-group mb-3">
-                                <span class="input-group-text" id="log-description-input">description</span>
+                                <span class="input-group-text">description</span>
                                 <input type="text" class="form-control" aria-label="Sizing example input"
-                                       aria-describedby="inputGroup-sizing-default">
+                                       aria-describedby="inputGroup-sizing-default" id="log-description-input">
                             </div>
                         </div>
                     </form>
-                    <button type="button" id="log-save-btn" class="btn btn-primary">Submit</button>
-                    <button type="button" id="log-save-check" onclick="saveLog()" class="btn btn-primary">Submit</button>
+                    <button type="button" id="log-save-btn" class="btn btn-primary">Save</button><br>
+                    <small class="text-muted">Search Logs by Date</small>
+                    <form>
+                        <div class="row g-2">
+                            <div class="mb-3 row col-lg-6">
+                                <label for="log-date-input" class="col-form-label">Starting date</label>
+                                <div class="col-12">
+                                    <input type="date" class="form-control" id="log-start-date" aria-describedby="dateHelp">
+                                </div>
+                            </div>
+                            <div class="mb-3 row col-lg-6">
+                                <label for="log-date-input" class="col-form-label">Ending date</label>
+                                <div class="col-12">
+                                    <input type="date" class="form-control" id="log-end-date" aria-describedby="dateHelp">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <button type="button" id="btn-search-logs-by-date" class="btn btn-primary">Search</button>
                 </div>
             </div>
             <div class="row mt-4">
