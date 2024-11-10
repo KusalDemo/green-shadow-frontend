@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("JWTToken: ", `Bearer ${jwtToken}`);
     loadTable(jwtToken);
     loadCropsList(jwtToken);
+    loadAllLogs(jwtToken);
 
     const logSaveButton = document.getElementById("log-save-btn");
     if (logSaveButton) {
@@ -20,6 +21,11 @@ document.addEventListener("DOMContentLoaded", () => {
     let btnSearchLogsByDate = document.getElementById("btn-search-logs-by-date");
     if (btnSearchLogsByDate) {
         btnSearchLogsByDate.addEventListener('click', () => searchLogsByDate(jwtToken));
+    }
+
+    let btnUploadObservedImageCustom = document.getElementById("btn-upload-observed-image-custom");
+    if (btnUploadObservedImageCustom) {
+        btnUploadObservedImageCustom.addEventListener('click', () => uploadObservedImageCustom(jwtToken));
     }
 });
 
@@ -43,7 +49,7 @@ const loadTable = (jwtToken) => {
                     <td>${logDate}</td>
                     <td>
                        <button class="btn btn-primary view-btn" data-image="${observedImage}" data-bs-toggle="modal" data-bs-target="#observedImageModal">View</button>
-</td>
+                    </td>
                 `;
                 logTableBody.appendChild(row);
 
@@ -86,6 +92,35 @@ const loadCropsList = (jwtToken) => {
                 option.value = cropCode;
                 option.text = cropCommonName;
                 cropsSelector.appendChild(option);
+            });
+        },
+        error: (error) => {
+            console.error(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            });
+        }
+    });
+}
+
+const loadAllLogs = (jwtToken) => {
+    let logSelectorInObservedImage = document.getElementById("logs-select-1");
+    if (!logSelectorInObservedImage) return;
+
+    $.ajax({
+        url: "http://localhost:8082/api/v1/log",
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${jwtToken}`
+        },
+        success: (data) => {
+            data.forEach(({logCode, logDetails}) => {
+                let option = document.createElement("option");
+                option.value = logCode;
+                option.text = logDetails;
+                logSelectorInObservedImage.appendChild(option);
             });
         },
         error: (error) => {
@@ -184,6 +219,59 @@ const uploadObservedImage = (jwtToken, data) => {
         });
     }
 
+}
+
+const uploadObservedImageCustom = (jwtToken) => {
+    console.log("uploadObservedImageCustom calling..");
+
+    const logSelect = document.getElementById("logs-select-1");
+    const selectedValue = logSelect.value;
+    const observedImageInput = document.getElementById("observed-image-input-2");
+
+    if (!observedImageInput) return;
+
+    if (!selectedValue) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Please select a log!',
+        });
+        return;
+    }
+
+    let formData = new FormData();
+    formData.append("logCode", selectedValue);
+    if (observedImageInput.files.length > 0) {
+        formData.append("observedImage", observedImageInput.files[0]);
+    } else {
+        console.error("No file selected");
+    }
+
+
+    $.ajax({
+        url: "http://localhost:8082/api/v1/log",
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${jwtToken}`
+        },
+        contentType: false,
+        processData: false,
+        data: formData,
+        success: (data) => {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Log saved successfully! New log code: ' + data,
+            })
+        },
+        error: (error) => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!' + error,
+            })
+        }
+    });
 }
 
 const searchLog = (event) => {
