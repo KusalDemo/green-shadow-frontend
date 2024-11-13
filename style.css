@@ -71,6 +71,7 @@ body {
 .nav-items {
     border-top: 3px solid #dadada;
     padding-top: 1rem;
+    padding-left: 0;
     list-style: none;
     flex-grow: 1;
 }
@@ -128,6 +129,7 @@ body {
 }
 
 .main-content {
+    width: 80%;
     flex: 1;
     padding: 2rem;
     margin-left: var(--sidebar-width);

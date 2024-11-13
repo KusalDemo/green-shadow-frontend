@@ -80,7 +80,7 @@ const loadTable = (jwtToken) => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Something went wrong!',
+                text: `Something went wrong! ${error}`,
             });
         }
     });
