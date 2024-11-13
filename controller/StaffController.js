@@ -16,6 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (staffUpdateButton) {
         staffUpdateButton.addEventListener('click', () => updateStaff(jwtToken));
     }
+
+    const staffClearButton = document.getElementById("staff-clear-btn");
+    if (staffClearButton) {
+        staffClearButton.addEventListener('click', () => clearTable());
+    }
 })
 
 const loadTable = (jwtToken) => {
@@ -143,6 +148,7 @@ const saveStaff = async (jwtToken) => {
                         text: 'Staff added successfully',
                     })
                     loadTable(jwtToken);
+                    clearTable();
                 },
                 error: (error) => {
                     let err = JSON.stringify(error);
@@ -192,6 +198,7 @@ const updateStaff = async (jwtToken) => {
                         text: 'Staff updated successfully',
                     })
                     loadTable(jwtToken);
+                    clearTable();
                 },
                 error: (error) => {
                     Swal.fire({
@@ -290,4 +297,23 @@ const getValuesInStaffForm =  () => {
     staffInForm.logCode = log;
 
     return staffInForm;
+}
+
+const clearTable = () => {
+    document.getElementById("staff-id").innerText = "";
+    document.getElementById("first-name-input").value = "";
+    document.getElementById("last-name-input").value = "";
+    document.getElementById("designation-select").value = "";
+    document.getElementById("gender-select").value = "";
+    document.getElementById("joined-date-input").value = "";
+    document.getElementById("dob-input").value = "";
+    document.getElementById("address-line-1-input").value = "";
+    document.getElementById("address-line-2-input").value = "";
+    document.getElementById("address-line-3-input").value = "";
+    document.getElementById("address-line-4-input").value = "";
+    document.getElementById("address-line-5-input").value = "";
+    document.getElementById("contact-input").value = "";
+    document.getElementById("email-input").value = "";
+    document.getElementById("staff-role-select").value = "";
+    document.getElementById("staff-log-select").value = "";
 }
