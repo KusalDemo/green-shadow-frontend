@@ -65,7 +65,115 @@
             <h1>User Management</h1>
             <button class="export-btn">Reload data</button>
         </div>
-        <div id="vehicle-management-section" style="display: none;">Vehicle Management Content</div>
+        <!--================================================================================================================-->
+        <!--Vehicle Management-->
+        <div id="vehicle-management-section" style="display: none;">
+            <header>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search something here..." id="vehicle-search-input">
+                    <img src="https://api.iconify.design/mdi:bell.svg" alt="Notifications" class="notification-icon">
+                </div>
+                <div class="user-profile">
+                    <img src="https://api.iconify.design/mdi:account-circle.svg" alt="Profile" class="profile-icon">
+                </div>
+            </header>
+            <div class="row">
+                <div class="col-12">
+                    <!--<span class="badge text-bg-success mb-4">Add Staff</span>-->
+                    <small class="text-muted mb-4" id="vehicle-code"></small><br>
+                    <form class="row g-2 needs-validation" novalidate>
+                        <div class="mb-3 col-lg-6">
+                            <label for="license-plate-number-input" class="col-form-label">License Plate</label>
+                            <div class="col-12">
+                                <input type="text" class="form-control" id="license-plate-number-input" required>
+                                <div class="invalid-feedback">Please provide a license plate number</div>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-lg-6">
+                            <label for="vehicle-category-select" class="form-label">Vehicle Category</label>
+                            <div class="col-12">
+                                <select class="form-select" id="vehicle-category-select" required>
+                                    <option value="Car">Car</option>
+                                    <option value="Van">Van</option>
+                                    <option value="Motorbikes">Motorbikes</option>
+                                    <option value="Tractors – Land masters">Tractors – Land masters</option>
+                                    <option value="Tractors - 4WD">Tractors - 4WD</option>
+                                    <option value="Tankers truck">Tankers truck</option>
+                                    <option value="Land vehicles">Land vehicles</option>
+                                    <option value="Lorry">Lorry</option>
+                                    <option value="Other" selected>Other</option>
+                                </select>
+                                <div class="invalid-feedback">Please select a vehicle category.</div>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-lg-6">
+                            <label for="fuel-type-select" class="form-label">Fuel Type</label>
+                            <div class="col-12">
+                                <select class="form-select" id="fuel-type-select" required>
+                                    <option value="Patrol">Patrol</option>
+                                    <option value="Diesel">Diesel</option>
+                                </select>
+                                <div class="invalid-feedback">Please select a fuel type.</div>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-lg-6">
+                            <label for="vehicle-status-select" class="form-label">Status</label>
+                            <div class="col-12">
+                                <select class="form-select" id="vehicle-status-select" required>
+                                    <option value="AVAILABLE">Available</option>
+                                    <option value="UNAVAILABLE">Unavailable</option>
+                                </select>
+                                <div class="invalid-feedback">Please set current status.</div>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-lg-6">
+                            <label for="remarks-input" class="form-label">Remarks</label>
+                            <div class="col-12">
+                                    <textarea class="form-control" aria-label="With textarea"
+                                              id="remarks-input"></textarea>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-lg-6">
+                            <label for="vehicle-staff-select" class="form-label">Select Responsible Staff</label>
+                            <div class="col-12">
+                                <select class="form-select" id="vehicle-staff-select" required>
+
+                                </select>
+                                <div class="invalid-feedback">There must be a responsible staff</div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="button" id="vehicle-save-btn" class="btn btn-primary">Save</button>
+                            <button type="button" id="vehicle-update-btn" class="btn btn-secondary">Update</button>
+                            <button type="button" id="vehicle-clear-btn" class="btn btn-warning">Clear</button>
+                        </div>
+                    </form>
+                    <br>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered" id="vehicle-table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">License Plate</th>
+                                    <th scope="col">Vehicle Category</th>
+                                    <th scope="col">Fuel Type</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Remarks</th>
+                                    <th scope="col">Responsible Staff</th>
+                                </tr>
+                                </thead>
+                                <tbody id="vehicle-table-body">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="equipment-management-section" style="display: none;">Equipment Management Content</div>
         <!--================================================================================================================-->
         <!--Staff Management-->
@@ -520,6 +628,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script type="module" src="controller/logsController.js" defer></script>
 <script type="module" src="controller/StaffController.js" defer></script>
+<script type="module" src="controller/VehicleController.js" defer></script>
 <script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
 <script src="https://cdn.datatables.net/2.1.4/js/dataTables.bootstrap5.js"></script>
 </body>

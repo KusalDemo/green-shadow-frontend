@@ -98,7 +98,6 @@ const loadTable = (jwtToken) => {
 }
 
 const loadAllLogs = (jwtToken) => {
-    console.log("All Logs Loaded")
     let logSelectorInStaff = document.getElementById("staff-log-select");
     if (!logSelectorInStaff) return;
 
@@ -128,7 +127,7 @@ const loadAllLogs = (jwtToken) => {
 }
 
 const saveStaff = async (jwtToken) => {
-    if(document.getElementById("staff-id")==null){
+    if(document.getElementById("staff-id").innerText===""){
         let staffToSave = await getValuesInStaffForm();
         console.log(staffToSave)
 
