@@ -10,5 +10,6 @@
     <orderEntry type="library" name="dataTables" level="application" />
     <orderEntry type="library" name="jquery-3.5.1" level="application" />
     <orderEntry type="library" name="dataTables.bootstrap5" level="application" />
+    <orderEntry type="library" name="leaflet" level="application" />
   </component>
 </module>
