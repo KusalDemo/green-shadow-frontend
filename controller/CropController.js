@@ -67,7 +67,6 @@ const loadTable = (jwtToken) => {
                     `;
 
                     cropTable.appendChild(row);
-
                     row.addEventListener("click", () => populateCropFields(crop));
                 })
                 new DataTable('#crop-table', {paging: true, pageLength: 10, destroy: true});

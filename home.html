@@ -175,7 +175,99 @@
                 </div>
             </div>
         </div>
-        <div id="equipment-management-section" style="display: none;">Equipment Management Content</div>
+        <div id="equipment-management-section" style="display: none;">
+            <header>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search something here..." id="equipment-search-input">
+                    <img src="https://api.iconify.design/mdi:bell.svg" alt="Notifications" class="notification-icon">
+                </div>
+                <div class="user-profile">
+                    <img src="https://api.iconify.design/mdi:account-circle.svg" alt="Profile" class="profile-icon">
+                </div>
+            </header>
+            <div class="row">
+                <div class="col-12">
+                    <!--<span class="badge text-bg-success mb-4">Add Staff</span>-->
+                    <small class="text-muted mb-4" id="equipment-id"></small><br>
+                    <form class="row g-2 needs-validation" novalidate>
+                        <div class="mb-3 col-lg-6">
+                            <label for="equipment-name-input" class="col-form-label">Equipment Name</label>
+                            <div class="col-12">
+                                <input type="text" class="form-control" id="equipment-name-input" required>
+                                <div class="invalid-feedback">Please provide a equipment name.</div>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-lg-6">
+                            <label for="equipment-type-select" class="form-label">Equipment type</label>
+                            <div class="col-12">
+                                <select class="form-select" id="equipment-type-select" required>
+                                    <option value="ELECTRICAL">Electrical</option>
+                                    <option value="MECHANICAL">Mechanical</option>
+                                </select>
+                                <div class="invalid-feedback">Please select a type.</div>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-lg-6">
+                            <label for="equipment-status-select" class="form-label">Equipment status</label>
+                            <div class="col-12">
+                                <select class="form-select" id="equipment-status-select" required>
+                                    <option value="AVAILABLE">Available</option>
+                                    <option value="UNAVAILABLE">Unavailable</option>
+                                </select>
+                                <div class="invalid-feedback">Please set availability.</div>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-lg-6">
+                            <label for="equipment-staff-select" class="form-label">Select staff associated</label>
+                            <div class="col-12">
+                                <select class="form-select" id="equipment-staff-select" required>
+
+                                </select>
+                                <div class="invalid-feedback">There must be a staff associated</div>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-lg-6">
+                            <label for="equipment-field-select" class="form-label">Select field associated</label>
+                            <div class="col-12">
+                                <select class="form-select" id="equipment-field-select" required>
+
+                                </select>
+                                <div class="invalid-feedback">There must be a field associated</div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="button" id="equipment-save-btn" class="btn btn-primary">Save</button>
+                            <button type="button" id="equipment-update-btn" class="btn btn-secondary">Update</button>
+                            <button type="button" id="equipment-delete-btn" class="btn btn-danger">Delete</button>
+                            <button type="button" id="equipment-clear-btn" class="btn btn-warning">Clear</button>
+                        </div>
+                    </form>
+                    <br>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered" id="equipment-table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Equipment Id</th>
+                                    <th scope="col">name</th>
+                                    <th scope="col">type</th>
+                                    <th scope="col">category</th>
+                                    <th scope="col">status</th>
+                                    <th scope="col">staffId</th>
+                                    <th scope="col">fieldCode</th>
+                                </tr>
+                                </thead>
+                                <tbody id="equipment-table-body">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!--================================================================================================================-->
         <!--Staff Management-->
         <div id="staff-management-section" style="display: none;">
@@ -477,6 +569,8 @@
                 </div>
             </div>
         </div>
+        <!--================================================================================================================-->
+        <!--Field management-->
         <div id="field-management-section" style="display: none;">
             <header>
                 <div class="search-bar">
@@ -511,7 +605,6 @@
                 </div>
             </div>
         </div>
-
         <!--================================================================================================================-->
         <!--Logs-->
         <div id="logs-management-section" style="display: none;">
