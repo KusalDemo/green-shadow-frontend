@@ -134,7 +134,11 @@ const loadAllLogs = (jwtToken) => {
                 option.value = logCode;
                 option.text = logDetails;
                 logSelectorInObservedImage.appendChild(option);
-                logSelectorInMergeCrops.appendChild(option);
+
+                let option2 = document.createElement("option");
+                option2.value = logCode;
+                option2.text = logDetails;
+                logSelectorInMergeCrops.appendChild(option2);
             });
         },
         error: (error) => {
@@ -181,12 +185,11 @@ const saveLog = (jwtToken) => {
                 Swal.fire({
                     icon: 'success',
                     title: 'Success',
-                    text: 'Log saved successfully! New log code: ' + data,
+                    text: 'Log saved successfully',
                 });
                 loadTable(jwtToken);
             },
             error: (error) => {
-                console.error(error);
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
@@ -195,7 +198,6 @@ const saveLog = (jwtToken) => {
             }
         });
     } catch (error) {
-        console.error(error);
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
