@@ -150,12 +150,12 @@ const saveStaff = async (jwtToken) => {
                     clearTable();
                 },
                 error: (error) => {
-                    let err = JSON.stringify(error);
+                    const errorMessage = error.responseText || "An unexpected error occurred.";
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
-                        text: 'Something went wrong!' + err,
-                    });
+                        text: `${errorMessage}`,
+                    })
                 }
             });
         }catch (error) {
@@ -200,11 +200,12 @@ const updateStaff = async (jwtToken) => {
                     clearTable();
                 },
                 error: (error) => {
+                    const errorMessage = error.responseText || "An unexpected error occurred.";
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
-                        text: 'Something went wrong!',
-                    });
+                        text: `${errorMessage}`,
+                    })
                 }
             });
         }catch (error) {

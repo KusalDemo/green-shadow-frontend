@@ -12,6 +12,17 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btnSaveVehicle) {
         btnSaveVehicle.addEventListener('click', () => saveVehicle(jwtToken));
     }
+
+    let btnUpdateVehicle = document.getElementById("vehicle-update-btn");
+    if (btnUpdateVehicle) {
+        btnUpdateVehicle.addEventListener('click', () => updateVehicle(jwtToken));
+    }
+
+    let btnClearVehicleForm = document.getElementById("vehicle-clear-btn");
+    if (btnClearVehicleForm) {
+        btnClearVehicleForm.addEventListener('click', () => clearVehicleForm());
+    }
+
 })
 
 const loadStaffList = (jwtToken) => {
@@ -76,10 +87,11 @@ const loadTable = (jwtToken) => {
             new DataTable("#vehicle-table", {paging: true, pageLength: 10, destroy: true});
         },
         error: (error) => {
+            const errorMessage = error.responseText || "An unexpected error occurred.";
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: `Something went wrong! ${error}`,
+                text: `${errorMessage}`,
             })
         }
     })
@@ -104,12 +116,59 @@ const saveVehicle = async (jwtToken) => {
                     text: 'Vehicle saved successfully'
                 })
                 loadTable(jwtToken);
+                clearVehicleForm();
             },
             error: (error) => {
+                const errorMessage = error.responseText || "An unexpected error occurred.";
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: `Something went wrong! ${error}`,
+                    text: `${errorMessage}`,
+                })
+            }
+        })
+    } catch (error) {
+        console.error(error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `Something went wrong! try again!`,
+        })
+    }
+}
+
+
+const updateVehicle = async (jwtToken) => {
+    let vehicleToUpdate = await getValuesInVehicleForm();
+    if (!vehicleToUpdate) return;
+
+    let vehicleCodeToUpdate = document.getElementById("vehicle-code").innerText;
+    if (!vehicleCodeToUpdate) return console.error("Vehicle code not found");
+
+    try {
+        $.ajax({
+            url: "http://localhost:8082/api/v1/vehicle/"+vehicleCodeToUpdate,
+            method: "PUT",
+            headers: {
+                "Authorization": `Bearer ${jwtToken}`
+            },
+            data: JSON.stringify(vehicleToUpdate),
+            contentType: "application/json",
+            success: (data) => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Vehicle updated successfully'
+                })
+                loadTable(jwtToken);
+                clearVehicleForm();
+            },
+            error: (error) => {
+                const errorMessage = error.responseText || "An unexpected error occurred.";
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: `${errorMessage}`,
                 })
             }
         })
@@ -136,6 +195,7 @@ const updateFormFields = (vehicle) => {
     document.getElementById("vehicle-category-select").value = vehicle.vehicleCategory || "";
     document.getElementById("fuel-type-select").value = vehicle.fuelType || "";
     document.getElementById("vehicle-status-select").value = vehicle.status || "";
+    document.getElementById("remarks-input").value = vehicle.remarks || "";
     document.getElementById("vehicle-staff-select").value = vehicle.staff.id || "";
 }
 
@@ -157,4 +217,14 @@ const getValuesInVehicleForm = () => {
     vehicleModel.setStaff(vehicleResponsibleStaff);
 
     return vehicleModel;
+}
+
+const clearVehicleForm = () => {
+    document.getElementById("license-plate-number-input").value = "";
+    document.getElementById("vehicle-category-select").value = "";
+    document.getElementById("fuel-type-select").value = "";
+    document.getElementById("vehicle-status-select").value = "";
+    document.getElementById("remarks-input").value = "";
+    document.getElementById("vehicle-staff-select").value = "";
+    document.getElementById("vehicle-code").innerText = "";
 }
