@@ -190,53 +190,59 @@ const updateVehicle = async (jwtToken) => {
 
 const deleteVehicle = (jwtToken) => {
     let vehicleCodeToDelete = document.getElementById("vehicle-code").innerText;
-    if (!vehicleCodeToDelete) return console.error("Vehicle code not found");
-
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#0D9F4F',
-        confirmButtonText: 'Yes, Delete!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            try {
-                $.ajax({
-                    url: "http://localhost:8082/api/v1/vehicle/" + vehicleCodeToDelete,
-                    method: "DELETE",
-                    headers: {
-                        "Authorization": `Bearer ${jwtToken}`
-                    },
-                    success: (data) => {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: 'Vehicle deleted successfully'
-                        })
-                        loadTable(jwtToken);
-                        clearVehicleForm();
-                    },
-                    error: (error) => {
-                        const errorMessage = error.responseText || "An unexpected error occurred.";
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: `${errorMessage}`,
-                        })
-                    }
-                })
-            } catch (error) {
-                console.error(error);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: `Something went wrong! try again!`,
-                })
+    if (vehicleCodeToDelete) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#0D9F4F',
+            confirmButtonText: 'Yes, Delete!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                try {
+                    $.ajax({
+                        url: "http://localhost:8082/api/v1/vehicle/" + vehicleCodeToDelete,
+                        method: "DELETE",
+                        headers: {
+                            "Authorization": `Bearer ${jwtToken}`
+                        },
+                        success: (data) => {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'Vehicle deleted successfully'
+                            })
+                            loadTable(jwtToken);
+                            clearVehicleForm();
+                        },
+                        error: (error) => {
+                            const errorMessage = error.responseText || "An unexpected error occurred.";
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: `${errorMessage}`,
+                            })
+                        }
+                    })
+                } catch (error) {
+                    console.error(error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: `Something went wrong! try again!`,
+                    })
+                }
             }
-        }
-    })
+        })
+    }else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `Select a vehicle to delete!`,
+        })
+    }
 }
 
 

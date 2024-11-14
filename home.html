@@ -376,7 +376,107 @@
             </div>
         </div>
         <!--================================================================================================================-->
-        <div id="crop-management-section" style="display: none;">Crop Management Content</div>
+        <!--Crop Management-->
+        <div id="crop-management-section" style="display: none;">
+            <header>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search something here..." id="crop-search-input">
+                    <img src="https://api.iconify.design/mdi:bell.svg" alt="Notifications" class="notification-icon">
+                </div>
+                <div class="user-profile">
+                    <img src="https://api.iconify.design/mdi:account-circle.svg" alt="Profile" class="profile-icon">
+                </div>
+            </header>
+            <div class="row">
+                <div class="col-12">
+                    <!--<span class="badge text-bg-success mb-4">Add Staff</span>-->
+                    <small class="text-muted mb-4" id="crop-code"></small><br>
+                    <form class="row g-2 needs-validation" novalidate>
+                        <div class="mb-3 col-lg-6">
+                            <label for="crop-common-name-input" class="col-form-label">Common Name</label>
+                            <div class="col-12">
+                                <input type="text" class="form-control" id="crop-common-name-input" required>
+                                <div class="invalid-feedback">Please provide a common name.</div>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-lg-6">
+                            <label for="crop-scientific-name-input" class="col-form-label">Scientific Name</label>
+                            <div class="col-12">
+                                <input type="text" class="form-control" id="crop-scientific-name-input" required>
+                                <div class="invalid-feedback">Please provide a scientific name.</div>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-lg-6">
+                            <label for="crop-category-select" class="form-label">Crop Category</label>
+                            <div class="col-12">
+                                <select class="form-select" id="crop-category-select" required>
+                                    <option value="Rice">Rice</option>
+                                    <option value="Cowpea">Cowpea</option>
+                                    <option value="Green gram">Green gram</option>
+                                    <option value="Chickpea">Chickpea</option>
+                                    <option value="Sweet potato">Sweet potato</option>
+                                    <option value="Reddish">Reddish</option>
+                                    <option value="Cassava">Cassava</option>
+                                    <option value="Other" selected>Other</option>
+                                </select>
+                                <div class="invalid-feedback">Please select a vehicle category.</div>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-lg-6">
+                            <label for="crop-season-select" class="form-label">Crop Season</label>
+                            <div class="col-12">
+                                <select class="form-select" id="crop-season-select" required>
+                                    <option value="Maha Season">Maha Season (October - March)</option>
+                                    <option value="Yala Season">Yala Season (April - September)</option>
+                                    <option value="Yala Maha Seasons">Yala / Maha Seasons</option>
+                                    <option value="Inter-Seasonal Crops">Inter-Seasonal (March-April / September-October)</option>
+                                    <option value="Perennial">Perennial (Year-round)</option>
+                                </select>
+                                <div class="invalid-feedback">Please select a crop season.</div>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-lg-6">
+                            <label for="crop-field-select" class="form-label">Select field associated</label>
+                            <div class="col-12">
+                                <select class="form-select" id="crop-field-select" required>
+
+                                </select>
+                                <div class="invalid-feedback">There must be a field associated</div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="button" id="crop-save-btn" class="btn btn-primary">Save</button>
+                            <button type="button" id="crop-update-btn" class="btn btn-secondary">Update</button>
+                            <button type="button" id="crop-delete-btn" class="btn btn-danger">Delete</button>
+                            <button type="button" id="crop-clear-btn" class="btn btn-warning">Clear</button>
+                        </div>
+                    </form>
+                    <br>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered" id="crop-table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Crop code</th>
+                                    <th scope="col">Crop common name</th>
+                                    <th scope="col">Crop science name</th>
+                                    <th scope="col">category</th>
+                                    <th scope="col">crop season</th>
+                                    <th scope="col">field code</th>
+                                    <th scope="col">images</th>
+                                </tr>
+                                </thead>
+                                <tbody id="crop-table-body">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="field-management-section" style="display: none;">
             <header>
                 <div class="search-bar">
@@ -630,6 +730,7 @@
 <script type="module" src="controller/logsController.js" defer></script>
 <script type="module" src="controller/StaffController.js" defer></script>
 <script type="module" src="controller/VehicleController.js" defer></script>
+<script type="module" src="controller/CropController.js" defer></script>
 <script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
 <script src="https://cdn.datatables.net/2.1.4/js/dataTables.bootstrap5.js"></script>
 </body>
