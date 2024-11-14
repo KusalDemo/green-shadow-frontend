@@ -155,6 +155,102 @@ const saveCrop = (jwtToken) => {
     }
 }
 
+const updateCrop = (jwtToken) => {
+    if (document.getElementById("crop-code").innerText === "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Please select a crop to update',
+        })
+    } else {
+        let cropToUpdate = getValuesInCropForm();
+        if (cropToUpdate) {
+            try {
+                $.ajax({
+                    url: "http://localhost:8082/api/v1/crop/" + document.getElementById("crop-code").innerText,
+                    method: "PUT",
+                    headers: {
+                        "Authorization": `Bearer ${jwtToken}`
+                    },
+                    data: JSON.stringify(cropToUpdate),
+                    contentType: "application/json",
+                    success: () => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Crop updated successfully',
+                            text: 'Crop updated successfully',
+                        })
+                        loadTable(jwtToken);
+                        clearCropForm();
+                    },
+                    error: (error) => {
+                        const errorMessage = error.responseText || "An unexpected error occurred.";
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: `${errorMessage}`,
+                        })
+                    }
+                })
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
+}
+
+const deleteCrop = (jwtToken) => {
+    let cropToDelete = document.getElementById("crop-code");
+    if (cropToDelete.innerText === "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Please select a crop to delete',
+        })
+    }else{
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#0D9F4F',
+            confirmButtonText: 'Yes, Delete!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                try {
+                    $.ajax({
+                        url: "http://localhost:8082/api/v1/crop/" + document.getElementById("crop-code").innerText,
+                        method: "DELETE",
+                        headers: {
+                            "Authorization": `Bearer ${jwtToken}`
+                        },
+                        success: () => {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Crop deleted successfully',
+                                text: 'Crop deleted successfully',
+                            })
+                            loadTable(jwtToken);
+                            clearCropForm();
+                        },
+                        error: (error) => {
+                            const errorMessage = error.responseText || "An unexpected error occurred.";
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: `${errorMessage}`,
+                            })
+                        }
+                    })
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        })
+    }
+}
+
 
 const getCookie = (name) => {
     const value = `; ${document.cookie}`;
@@ -167,6 +263,7 @@ const getValuesInCropForm = () => {
     let cropScientificName = document.getElementById("crop-scientific-name-input").value;
     let cropSeason = document.getElementById("crop-season-select").value;
     let cropField = document.getElementById("crop-field-select").value;
+    let category = document.getElementById("crop-category-select").value;
 
     let cropModel = new CropModel();
 
@@ -174,6 +271,7 @@ const getValuesInCropForm = () => {
     cropModel.setCropScientificName(cropScientificName);
     cropModel.setCropSeason(cropSeason);
     cropModel.setFieldCode(cropField);
+    cropModel.setCategory(category);
 
     return cropModel;
 }
@@ -184,6 +282,7 @@ const populateCropFields = (crop) => {
     document.getElementById("crop-scientific-name-input").value = crop.cropScientificName;
     document.getElementById("crop-season-select").value = crop.cropSeason;
     document.getElementById("crop-field-select").value = crop.fieldCode;
+    document.getElementById("crop-category-select").value = crop.category;
 }
 
 const clearCropForm = () => {
@@ -192,4 +291,5 @@ const clearCropForm = () => {
     document.getElementById("crop-scientific-name-input").value = "";
     document.getElementById("crop-season-select").value = "";
     document.getElementById("crop-field-select").value = "";
+    document.getElementById("crop-category-select").value = "";
 }
