@@ -5,6 +5,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const jwtToken = getCookie("token");
 
     loadTable(jwtToken);
+    loadFieldCodes(jwtToken);
+
+    let btnSaveCrop = document.getElementById("crop-save-btn");
+    if (btnSaveCrop) {
+        btnSaveCrop.addEventListener('click', () => saveCrop(jwtToken));
+    }
+
+    let btnUpdateCrop = document.getElementById("crop-update-btn");
+    if (btnUpdateCrop) {
+        btnUpdateCrop.addEventListener('click', () => updateCrop(jwtToken));
+    }
+
+    let btnClearCropForm = document.getElementById("crop-clear-btn");
+    if (btnClearCropForm) {
+        btnClearCropForm.addEventListener('click', () => clearCropForm());
+    }
+
+    let btnDeleteCrop = document.getElementById("crop-delete-btn");
+    if (btnDeleteCrop) {
+        btnDeleteCrop.addEventListener('click', () => deleteCrop(jwtToken));
+    }
 })
 
 const loadTable = (jwtToken) => {
@@ -12,7 +33,7 @@ const loadTable = (jwtToken) => {
     let cropTable = document.getElementById("crop-table-body");
     if (!cropTable) return;
 
-    try{
+    try {
         $.ajax({
             url: "http://localhost:8082/api/v1/crop",
             method: "GET",
@@ -49,15 +70,90 @@ const loadTable = (jwtToken) => {
 
                     row.addEventListener("click", () => populateCropFields(crop));
                 })
-                new DataTable('#crop-table',{paging: true, pageLength: 10, destroy: true});
+                new DataTable('#crop-table', {paging: true, pageLength: 10, destroy: true});
             }
         })
-    }catch (error){
+    } catch (error) {
         console.log(error);
     }
 }
 
+const loadFieldCodes = (jwtToken) => {
+    let cropFieldSelector = document.getElementById("crop-field-select");
+    if (!cropFieldSelector) return;
 
+    try {
+        $.ajax({
+            url: "http://localhost:8082/api/v1/field",
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${jwtToken}`
+            },
+            success: (data) => {
+                data.forEach((field) => {
+                    let option = document.createElement("option");
+                    option.innerHTML = field.fieldName;
+                    option.value = field.fieldCode;
+                    cropFieldSelector.appendChild(option);
+                })
+            }
+            , error: (error) => {
+                const errorMessage = error.responseText || "An unexpected error occurred.";
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: `${errorMessage}`,
+                })
+            }
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const saveCrop = (jwtToken) => {
+    if (document.getElementById("crop-code").innerText !== "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'crop is already added. Please update the crop details',
+        })
+    } else {
+        let cropModel = getValuesInCropForm();
+        if (cropModel) {
+            try {
+                $.ajax({
+                    url: "http://localhost:8082/api/v1/crop",
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${jwtToken}`
+                    },
+                    data: JSON.stringify(cropModel),
+                    contentType: "application/json",
+                    success: () => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Crop added successfully',
+                            text: 'Crop added successfully',
+                        })
+                        loadTable(jwtToken);
+                        clearCropForm();
+                    },
+                    error: (error) => {
+                        const errorMessage = error.responseText || "An unexpected error occurred.";
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: `${errorMessage}`,
+                        })
+                    }
+                })
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
+}
 
 
 const getCookie = (name) => {
@@ -88,4 +184,12 @@ const populateCropFields = (crop) => {
     document.getElementById("crop-scientific-name-input").value = crop.cropScientificName;
     document.getElementById("crop-season-select").value = crop.cropSeason;
     document.getElementById("crop-field-select").value = crop.fieldCode;
+}
+
+const clearCropForm = () => {
+    document.getElementById("crop-code").innerText = "";
+    document.getElementById("crop-common-name-input").value = "";
+    document.getElementById("crop-scientific-name-input").value = "";
+    document.getElementById("crop-season-select").value = "";
+    document.getElementById("crop-field-select").value = "";
 }
