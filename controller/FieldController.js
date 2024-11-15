@@ -13,11 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
         attribution: '&copy; OpenStreetMap contributors'
     }).addTo(window.globalMap);
 
-    let btnSaveField = document.getElementById("field-save-btn");
-    if (btnSaveField) {
-        btnSaveField.addEventListener('click', () => saveField(jwtToken));
-    }
-
     let selectedMarker;
 
     window.globalMap.on('click', (event) => {
@@ -35,6 +30,26 @@ document.addEventListener("DOMContentLoaded", () => {
             .bindPopup("Selected Location")
             .openPopup();
     });
+
+    let btnSaveField = document.getElementById("field-save-btn");
+    if (btnSaveField) {
+        btnSaveField.addEventListener('click', () => saveField(jwtToken));
+    }
+
+    let btnUpdateField = document.getElementById("field-update-btn");
+    if (btnUpdateField) {
+        btnUpdateField.addEventListener('click', () => updateField(jwtToken));
+    }
+
+    let btnClearFieldForm = document.getElementById("field-clear-btn");
+    if (btnClearFieldForm) {
+        btnClearFieldForm.addEventListener('click', () => clearFieldForm());
+    }
+
+    let btnDeleteField = document.getElementById("field-delete-btn");
+    if (btnDeleteField) {
+        btnDeleteField.addEventListener('click', () => deleteField(jwtToken));
+    }
 })
 
 const loadTable = (jwtToken) => {
@@ -108,7 +123,7 @@ const saveField = (jwtToken) => {
             title: 'Oops...',
             text: 'Please select a field to edit!'
         });
-    }else{
+    } else {
         let fieldToSave = getFieldFormDetails();
 
         if (fieldToSave) {
@@ -145,7 +160,110 @@ const saveField = (jwtToken) => {
     }
 }
 
+const updateField = (jwtToken) => {
+    const fieldCode = document.getElementById("field-code").innerText;
+    if (fieldCode === "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Please select a field to edit!'
+        });
+    } else {
+        let fieldToUpdate = getFieldFormDetails();
+        if (fieldToUpdate) {
+            try {
+                $.ajax({
+                    url: "http://localhost:8082/api/v1/field/" + fieldCode,
+                    method: "PUT",
+                    headers: {
+                        "Authorization": `Bearer ${jwtToken}`
+                    },
+                    data: JSON.stringify(fieldToUpdate),
+                    contentType: "application/json",
+                    success: (data) => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Field updated successfully!'
+                        })
+                        loadTable(jwtToken);
+                    },
+                    error: (error) => {
+                        const errorMessage = error.responseText || "An unexpected error occurred.";
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: `${errorMessage}`,
+                        })
+                    }
+                })
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
+}
 
+const clearFieldForm = () => {
+    document.getElementById("field-code").innerText = "";
+    document.getElementById("field-name-input").value = "";
+    document.getElementById("extent-size-of-field-input").value = "";
+    document.getElementById("latitude-input").value = "";
+    document.getElementById("longitude-input").value = "";
+    document.getElementById("field-log-select").value = "";
+}
+
+const deleteField = (jwtToken) => {
+    const fieldCode = document.getElementById("field-code").innerText;
+    if (fieldCode === "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Please select a field to delete!'
+        });
+    } else {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#0D9F4F',
+            confirmButtonText: 'Yes, Delete!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                try {
+                    $.ajax({
+                        url: "http://localhost:8082/api/v1/field/" + fieldCode,
+                        method: "DELETE",
+                        headers: {
+                            "Authorization": `Bearer ${jwtToken}`
+                        },
+                        success: () => {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'Field deleted successfully!'
+                            })
+                            loadTable(jwtToken);
+                            clearFieldForm();
+                        },
+                        error: (error) => {
+                            const errorMessage = error.responseText || "An unexpected error occurred.";
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: `${errorMessage}`,
+                            })
+                        }
+                    })
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        })
+    }
+}
 
 
 const getCookie = (name) => {
