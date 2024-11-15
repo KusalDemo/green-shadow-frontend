@@ -1,3 +1,5 @@
+import {FieldModel} from "../model/FieldModel.js";
+
 document.addEventListener("DOMContentLoaded", () => {
     console.log("Field loaded");
     const jwtToken = getCookie("token");
@@ -5,22 +7,34 @@ document.addEventListener("DOMContentLoaded", () => {
     loadTable(jwtToken)
     logCodeSelector(jwtToken)
 
-    const map = L.map('map').setView([7.8731, 80.7718], 7);
-
+    window.globalMap = L.map('map').setView([7.8731, 80.7718], 7);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
+    }).addTo(window.globalMap);
 
-    map.on('click', function(e) {
-        const lat = e.latlng.lat;
-        const lng = e.latlng.lng;
+    let btnSaveField = document.getElementById("field-save-btn");
+    if (btnSaveField) {
+        btnSaveField.addEventListener('click', () => saveField(jwtToken));
+    }
+
+    let selectedMarker;
+
+    window.globalMap.on('click', (event) => {
+        const lat = event.latlng.lat;
+        const lng = event.latlng.lng;
 
         document.getElementById('latitude-input').value = lat;
         document.getElementById('longitude-input').value = lng;
+
+        if (selectedMarker) {
+            window.globalMap.removeLayer(selectedMarker);
+        }
+        selectedMarker = L.marker([lat, lng])
+            .addTo(window.globalMap)
+            .bindPopup("Selected Location")
+            .openPopup();
     });
-
-
 })
 
 const loadTable = (jwtToken) => {
@@ -86,6 +100,51 @@ const logCodeSelector = (jwtToken) => {
         }
     })
 }
+const saveField = (jwtToken) => {
+    const fieldCode = document.getElementById("field-code").innerText;
+    if (fieldCode !== "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Please select a field to edit!'
+        });
+    }else{
+        let fieldToSave = getFieldFormDetails();
+
+        if (fieldToSave) {
+            try {
+                $.ajax({
+                    url: "http://localhost:8082/api/v1/field",
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${jwtToken}`
+                    },
+                    data: JSON.stringify(fieldToSave),
+                    contentType: "application/json",
+                    success: (data) => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Field saved successfully!'
+                        })
+                        loadTable(jwtToken);
+                    },
+                    error: (error) => {
+                        const errorMessage = error.responseText || "An unexpected error occurred.";
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: `${errorMessage}`,
+                        })
+                    }
+                })
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
+}
+
 
 
 
@@ -98,9 +157,56 @@ const getCookie = (name) => {
 const populateFieldFields = (field) => {
     document.getElementById("field-code").innerText = field.fieldCode;
     document.getElementById("field-name-input").value = field.fieldName;
-    //document.getElementById("field-location-input").value = field.fieldLocation;
     document.getElementById("extent-size-of-field-input").value = field.extentSizeOfField;
     document.getElementById("field-log-select").value = field.logCode;
+
+    const lat = field.fieldLocation.x;
+    const lng = field.fieldLocation.y;
+
+    document.getElementById("latitude-input").value = lat;
+    document.getElementById("longitude-input").value = lng;
+
+    const map = window.globalMap;
+    if (!map) {
+        console.error("Map instance not initialized. Please ensure the map is loaded before populating fields.");
+        return;
+    }
+
+    map.setView([lat, lng], 15);
+
+    if (window.selectedMarker) {
+        map.removeLayer(window.selectedMarker);
+    }
+    window.selectedMarker = L.marker([lat, lng])
+        .addTo(map)
+        .bindPopup("Selected Location")
+        .openPopup();
+};
+
+
+const getFieldFormDetails = () => {
+    let fieldCode = document.getElementById("field-code").innerText;
+    let fieldName = document.getElementById("field-name-input").value;
+    let extentSizeOfField = document.getElementById("extent-size-of-field-input").value;
+    let logCode = document.getElementById("field-log-select").value;
+
+    let latitude = document.getElementById("latitude-input").value;
+    let longitude = document.getElementById("longitude-input").value;
+
+    let fieldLocation = {
+        x: parseFloat(latitude),
+        y: parseFloat(longitude)
+    };
+
+    let fieldModel = new FieldModel();
+
+    fieldModel.fieldCode = fieldCode;
+    fieldModel.fieldName = fieldName;
+    fieldModel.fieldLocation = fieldLocation;
+    fieldModel.extentSizeOfField = extentSizeOfField;
+    fieldModel.logCode = logCode;
+
+    return fieldModel
 }
 
 
