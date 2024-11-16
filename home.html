@@ -6,7 +6,7 @@
     <title>GreenShadow</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -60,11 +60,41 @@
                     <button class="export-btn">Reload data</button>
                 </div>
             </div>
+            <!--<div class="container">
+                <div class="col-md-6 col-sm-12">
+                    <div id="openweathermap-widget-22"></div>
+                </div>
+            </div>-->
         </div>
-        <!--User Management-->
+        <!--Monitor Management-->
         <div id="user-management-section" style="display: none;">
-            <h1>User Management</h1>
-            <button class="export-btn">Reload data</button>
+            <header>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search something here..." id="monitor-search-input">
+                    <img src="https://api.iconify.design/mdi:bell.svg" alt="Notifications" class="notification-icon">
+                </div>
+                <div class="user-profile">
+                    <img src="https://api.iconify.design/mdi:account-circle.svg" alt="Profile" class="profile-icon">
+                </div>
+            </header>
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3 col-lg-6">
+                        <label for="monitor-crop-select" class="form-label">Select Crop</label>
+                        <div class="col-12">
+                            <select class="form-select" id="monitor-crop-select" required>
+
+                            </select>
+                            <div class="invalid-feedback">There must be a crop selected</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div id="related-crop-logs-div">
+
+                    </div>
+                </div>
+            </div>
         </div>
         <!--================================================================================================================-->
         <!--Vehicle Management-->
@@ -436,6 +466,47 @@
                     </form>
                     <br>
                 </div>
+                <!--Accordian for assign a field to a staff-->
+                <div class="accordion accordion-flush mt-3" id="accordionFlush">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-assign-field-to-staff" aria-expanded="false"
+                                    aria-controls="flush-assign-field-to-staff">
+                                <small class="text-muted">Assign Staff to Fields</small>
+                            </button>
+                        </h2>
+                        <div id="flush-assign-field-to-staff" class="accordion-collapse collapse"
+                             data-bs-parent="#accordionFlush">
+                            <div class="accordion-body p-4">
+                                <form>
+                                    <div class="row g-2">
+                                        <div class="mb-3 row col-lg-6">
+                                            <label for="log-date-input" class="col-form-label">Select Staff</label>
+                                            <div class="col-12">
+                                                <select class="form-select" aria-label="Default select example"
+                                                        id="staff-select-1">
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row col-lg-6">
+                                            <label for="log-date-input" class="col-form-label">Select Field</label>
+                                            <div class="col-12">
+                                                <select class="form-select" aria-label="Default select example"
+                                                        id="field-select-1">
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <button type="button" id="btn-assign-staff-to-field" class="btn btn-primary">Assign
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row mt-4">
                     <div class="col-12">
                         <div class="table-responsive">
@@ -523,7 +594,9 @@
                                     <option value="Maha Season">Maha Season (October - March)</option>
                                     <option value="Yala Season">Yala Season (April - September)</option>
                                     <option value="Yala Maha Seasons">Yala / Maha Seasons</option>
-                                    <option value="Inter-Seasonal Crops">Inter-Seasonal (March-April / September-October)</option>
+                                    <option value="Inter-Seasonal Crops">Inter-Seasonal (March-April /
+                                        September-October)
+                                    </option>
                                     <option value="Perennial">Perennial (Year-round)</option>
                                 </select>
                                 <div class="invalid-feedback">Please select a crop season.</div>
@@ -879,8 +952,27 @@
 <script type="module" src="controller/CropController.js" defer></script>
 <script type="module" src="controller/EquipmentController.js" defer></script>
 <script type="module" src="controller/FieldController.js" defer></script>
+<script type="module" src="controller/MonitorController.js" defer></script>
 <script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
 <script src="https://cdn.datatables.net/2.1.4/js/dataTables.bootstrap5.js"></script>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+
+<script>window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];
+window.myWidgetParam.push({
+    id: 22,
+    cityid: '1241622',
+    appid: 'f3e0b77f6adc488bfcd56bfc2b0cbdb0',
+    units: 'metric',
+    containerid: 'openweathermap-widget-22',
+});
+(function () {
+    var script = document.createElement('script');
+    script.async = true;
+    script.charset = "utf-8";
+    script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(script, s);
+})();</script>
 </body>
 </html>
