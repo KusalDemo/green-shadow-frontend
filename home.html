@@ -22,13 +22,13 @@
         </div>
         <ul class="nav-items">
             <li class="nav-item" id="nav-home">🏠 Dashboard</li>
-            <li class="nav-item" id="nav-user">🧑🏻‍💼 User Management</li>
             <li class="nav-item" id="nav-vehicle">🚜 Vehicle</li>
             <li class="nav-item" id="nav-equipment">🧰 Equipment</li>
             <li class="nav-item" id="nav-logs">📋 Logs</li>
             <li class="nav-item" id="nav-staff">👨🏻‍🌾 Staff</li>
             <li class="nav-item" id="nav-crop">🌾 Crop Management</li>
             <li class="nav-item" id="nav-field">🏔️ Fields</li>
+            <li class="nav-item" id="nav-user">📈 Monitor</li>
         </ul>
         <ul class="bottom-nav">
             <li class="nav-item" id="nav-settings">⚙️ Settings</li>
@@ -79,18 +79,29 @@
             </header>
             <div class="row">
                 <div class="col-12">
-                    <div class="mb-3 col-lg-6">
-                        <label for="monitor-crop-select" class="form-label">Select Crop</label>
-                        <div class="col-12">
-                            <select class="form-select" id="monitor-crop-select" required>
+                    <form class="row g-2 needs-validation bg-white rounded-3 p-3 mb-3" novalidate>
+                        <div class="mb-3 col-lg-6">
+                            <label for="monitor-crop-select" class="form-label">Select Crop</label>
+                            <div class="col-12">
+                                <select class="form-select" id="monitor-crop-select" required>
 
-                            </select>
-                            <div class="invalid-feedback">There must be a crop selected</div>
+                                </select>
+                                <div class="invalid-feedback">There must be a crop selected</div>
+                            </div>
                         </div>
-                    </div>
+                        <div class="mb-3 col-lg-6">
+                            <label for="monitor-field-select" class="form-label">Select Field</label>
+                            <div class="col-12">
+                                <select class="form-select" id="monitor-field-select" required>
+
+                                </select>
+                                <div class="invalid-feedback">There must be a field selected</div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 <div class="col-12">
-                    <div id="related-crop-logs-div">
+                    <div id="related-monitoring-div">
 
                     </div>
                 </div>
@@ -112,7 +123,7 @@
                 <div class="col-12">
                     <!--<span class="badge text-bg-success mb-4">Add Staff</span>-->
                     <small class="text-muted mb-4" id="vehicle-code"></small><br>
-                    <form class="row g-2 needs-validation" novalidate>
+                    <form class="row g-2 needs-validation bg-white rounded-3 p-3" novalidate>
                         <div class="mb-3 col-lg-6">
                             <label for="license-plate-number-input" class="col-form-label">License Plate</label>
                             <div class="col-12">
@@ -222,7 +233,7 @@
                 <div class="col-12">
                     <!--<span class="badge text-bg-success mb-4">Add Staff</span>-->
                     <small class="text-muted mb-4" id="equipment-id"></small><br>
-                    <form class="row g-2 needs-validation" novalidate>
+                    <form class="row g-2 needs-validation bg-white rounded-3 p-3" novalidate>
                         <div class="mb-3 col-lg-6">
                             <label for="equipment-name-input" class="col-form-label">Equipment Name</label>
                             <div class="col-12">
@@ -316,7 +327,7 @@
                 <div class="col-12">
                     <!--<span class="badge text-bg-success mb-4">Add Staff</span>-->
                     <small class="text-muted mb-4" id="staff-id"></small><br>
-                    <form class="row g-2 needs-validation" novalidate>
+                    <form class="row g-2 needs-validation bg-white rounded-3 p-3" novalidate>
                         <div class="mb-3 col-lg-6">
                             <label for="first-name-input" class="col-form-label">First name</label>
                             <div class="col-12">
@@ -556,7 +567,7 @@
                 <div class="col-12">
                     <!--<span class="badge text-bg-success mb-4">Add Staff</span>-->
                     <small class="text-muted mb-4" id="crop-code"></small><br>
-                    <form class="row g-2 needs-validation" novalidate>
+                    <form class="row g-2 needs-validation bg-white rounded-3 p-3" novalidate>
                         <div class="mb-3 col-lg-6">
                             <label for="crop-common-name-input" class="col-form-label">Common Name</label>
                             <div class="col-12">
@@ -660,7 +671,7 @@
                 <div class="col-12">
                     <!--<span class="badge text-bg-success mb-4">Add Staff</span>-->
                     <small class="text-muted mb-4" id="field-code"></small><br>
-                    <form class="row g-2 needs-validation" novalidate>
+                    <form class="row g-2 needs-validation bg-white rounded-3 p-3" novalidate>
                         <div class="mb-3 col-lg-6">
                             <label for="field-name-input" class="col-form-label">Equipment Name</label>
                             <div class="col-12">
@@ -747,7 +758,7 @@
                 <div class="col-12">
                     <!--<span class="badge text-bg-success mb-4">Add Log</span>-->
                     <small class="text-muted mb-4" id="log-code"></small>
-                    <form>
+                    <form class="bg-white rounded-3 p-3">
                         <div class="row g-2">
                             <div class="mb-3 row col-lg-6">
                                 <label for="log-date-input" class="col-form-label">Log Date</label>
@@ -777,8 +788,8 @@
 
                             </div>-->
                         </div>
+                        <button type="button" id="log-save-btn" class="btn btn-primary">Save</button>
                     </form>
-                    <button type="button" id="log-save-btn" class="btn btn-primary">Save</button>
                     <br>
                     <!--Actions for logs-->
                     <div class="accordion accordion-flush mt-3" id="accordionFlushExample">
@@ -917,26 +928,61 @@
                     </div>
                 </div>
             </div>
-            <div id="settings-section" style="display: none;">Settings Content</div>
-
-            <!--Modals-->
-            <!-- Modal -->
-            <div class="modal fade" id="observedImageModal" tabindex="-1" aria-labelledby="observedImageModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="observedImageModalLabel">Observed Image</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <img id="modalImage" class="img-fluid" alt="Observed Image"/>
-                        </div>
+        </div>
+        <!--Modals-->
+        <!-- Modal -->
+        <div class="modal fade" id="observedImageModal" tabindex="-1" aria-labelledby="observedImageModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="observedImageModalLabel">Image viewer</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <img id="modalImage" class="img-fluid" alt="Observed Image"/><br>
+                        <small class="text-muted">green shadow properties</small>
                     </div>
                 </div>
             </div>
         </div>
         <!--================================================================================================================-->
+        <!--Settings-->
+        <div id="settings-section" style="display: none;">
+            <header>
+                <div class="search-bar">
+                    <small class="text-muted current-time"></small>
+                    <img src="https://api.iconify.design/mdi:bell.svg" alt="Notifications" class="notification-icon">
+                </div>
+                <div class="user-profile">
+                    <img src="https://api.iconify.design/mdi:account-circle.svg" alt="Profile" class="profile-icon">
+                </div>
+            </header>
+            <div class="row">
+                <div class="col-12">
+                    <form class="bg-white rounded-3 p-3">
+                        <h3 class="mb-3">Settings</h3>
+                        <div class="row g-2">
+                            <div class="mb-3 row col-lg-6">
+                                <label for="log-date-input" class="col-form-label">New Password</label>
+                                <div class="col-12">
+                                    <input type="password" class="form-control" id="password-input"
+                                           aria-describedby="dateHelp">
+                                </div>
+                            </div>
+                            <div class="mb-3 row col-lg-6">
+                                <label for="log-date-input" class="col-form-label">Re-Enter Password</label>
+                                <div class="col-12">
+                                    <input type="password" class="form-control" id="re-password-input"
+                                           aria-describedby="dateHelp">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </main>
 </div>
 <script src="assets/lib/jquery-3.7.1.min.js"></script>

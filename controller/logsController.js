@@ -258,6 +258,16 @@ const uploadObservedImageCustom = (jwtToken) => {
         return;
     }
 
+    const selectedFile = observedImageInput.files[0];
+    if (selectedFile.type !== "image/jpeg" || selectedFile.type !== "image/png") {
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid File Type',
+            text: 'Please upload a JPEG or PNG image!',
+        });
+        return;
+    }
+
     let formData = new FormData();
     formData.append("logCode", selectedValue);
     if (observedImageInput.files.length > 0) {
@@ -537,7 +547,7 @@ const populateFormFields = (logDate, logCode, logDetails) => {
 
 const showImageModal = (base64Image) => {
     const modalImage = document.getElementById("modalImage");
-    modalImage.src = `data:image/png;base64,${base64Image}`;
+    modalImage.src = `data:image/jpeg;base64,${base64Image}`;
 };
 
 const refreshLogsTable = (jwtToken) => {

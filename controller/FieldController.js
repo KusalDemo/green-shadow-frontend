@@ -83,14 +83,25 @@ const loadTable = (jwtToken) => {
                     <td>${fieldName}</td>
                     <td>${locationText}</td>
                     <td>${extentSizeOfField}</td>
-                    <td>${image1}</td>
-                    <td>${image2}</td>
+                    <td>
+                       <button class="btn btn-primary view-btn" data-image="${image1}" data-bs-toggle="modal" data-bs-target="#observedImageModal">View</button>
+                    </td>
+                    <td>
+                       <button class="btn btn-primary view-btn" data-image="${image2}" data-bs-toggle="modal" data-bs-target="#observedImageModal">View</button>
+                    </td>
                     <td>${logCode}</td>
                 `;
                 fieldTable.appendChild(row);
                 row.addEventListener('click', () => populateFieldFields(field));
             })
             new DataTable('#field-table', {paging: true, pageLength: 10, destroy: true});
+
+            document.querySelectorAll('.view-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const base64Image = event.target.getAttribute('data-image');
+                    showImageModal(base64Image);
+                });
+            });
         }
     })
 }
@@ -326,5 +337,10 @@ const getFieldFormDetails = () => {
 
     return fieldModel
 }
+
+const showImageModal = (base64Image) => {
+    const modalImage = document.getElementById("modalImage");
+    modalImage.src = `data:image/jpeg;base64,${base64Image}`;
+};
 
 
