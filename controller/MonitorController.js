@@ -4,10 +4,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const jwtToken = getCookie("token");
 
     loadCropsSelector(jwtToken);
+    loadFieldSelector(jwtToken);
 
     let monitorCropSelector = document.getElementById("monitor-crop-select");
     if (monitorCropSelector) {
         monitorCropSelector.addEventListener('change', () => loadRelatedLogDivs(jwtToken));
+    }
+
+    let monitorFieldSelector = document.getElementById("monitor-field-select");
+    if (monitorFieldSelector) {
+        monitorFieldSelector.addEventListener('change', () => loadRelatedStaffDivs(jwtToken));
     }
 })
 
@@ -31,9 +37,29 @@ const loadCropsSelector = (jwtToken) => {
         }
     })
 }
+const loadFieldSelector = (jwtToken) => {
+    let monitorFieldSelector = document.getElementById("monitor-field-select");
+    if (!monitorFieldSelector) return;
+
+    $.ajax({
+        url: "http://localhost:8082/api/v1/field",
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${jwtToken}`
+        },
+        success: (data) => {
+            data.forEach((field) => {
+                let option = document.createElement("option");
+                option.innerHTML = field.fieldName;
+                option.value = field.fieldCode;
+                monitorFieldSelector.appendChild(option);
+            })
+        }
+    })
+}
 
 const loadRelatedLogDivs = (jwtToken) => {
-    let relatedLogDivs = document.getElementById("related-crop-logs-div");
+    let relatedLogDivs = document.getElementById("related-monitoring-div");
     if (!relatedLogDivs) return;
 
     relatedLogDivs.innerHTML = "";
@@ -90,6 +116,50 @@ const loadRelatedLogDivs = (jwtToken) => {
         }
         , error: (error) => {
             console.error(error);
+            const errorMessage = error.responseText || "An unexpected error occurred.";
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `${errorMessage}`,
+            })
+        }
+    })
+}
+
+const loadRelatedStaffDivs = (jwtToken) => {
+    let relatedStaffDivs = document.getElementById("related-monitoring-div");
+    if (!relatedStaffDivs) return;
+
+    relatedStaffDivs.innerHTML = "";
+
+    let monitorFieldSelector = document.getElementById("monitor-field-select");
+    if (!monitorFieldSelector) return;
+
+    let fieldCode = monitorFieldSelector.value;
+    if (!fieldCode) return;
+
+    $.ajax({
+        url: `http://localhost:8082/api/v1/staff/field/${fieldCode}`,
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${jwtToken}`
+        },
+        success: (data) => {
+            data.forEach((staff) => {
+                relatedStaffDivs.innerHTML += `
+                    <div class="card mb-3" style="width: 100%;">
+                        <p class="card-header">Staff Code: ${staff.id}</p>
+                        <div class="card-body">
+                            <small class="card-title">Name: ${staff.firstName} ${staff.lastName}</small><br>
+                            <small class="card-text">Role: ${staff.role}</small><br>
+                            <small class="card-text">Email: ${staff.email}</small><br>
+                            <small class="card-text">Phone: ${staff.contactNumber}</small><br><br>
+                        </div>
+                    </div>
+                `;
+            })
+        }
+        , error: (error) => {
             const errorMessage = error.responseText || "An unexpected error occurred.";
             Swal.fire({
                 icon: 'error',
