@@ -258,7 +258,7 @@ const uploadObservedImageCustom = (jwtToken) => {
         return;
     }
 
-    const selectedFile = observedImageInput.files[0];
+    /*const selectedFile = observedImageInput.files[0];
     if (selectedFile.type !== "image/jpeg" || selectedFile.type !== "image/png") {
         Swal.fire({
             icon: 'error',
@@ -266,7 +266,7 @@ const uploadObservedImageCustom = (jwtToken) => {
             text: 'Please upload a JPEG or PNG image!',
         });
         return;
-    }
+    }*/
 
     let formData = new FormData();
     formData.append("logCode", selectedValue);

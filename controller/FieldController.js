@@ -50,6 +50,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btnDeleteField) {
         btnDeleteField.addEventListener('click', () => deleteField(jwtToken));
     }
+    let btnUploadFieldImages = document.getElementById("btn-upload-field-images");
+    if (btnUploadFieldImages) {
+        btnUploadFieldImages.addEventListener('click', () => uploadFieldImages(jwtToken));
+    }
 })
 
 const loadTable = (jwtToken) => {
@@ -215,6 +219,60 @@ const updateField = (jwtToken) => {
     }
 }
 
+const uploadFieldImages = (jwtToken) => {
+    let selectedFieldToUploadImages = document.getElementById("field-select-2").value;
+    if (selectedFieldToUploadImages === "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Please select a field to upload images!'
+        })
+    } else {
+        let image1 = document.getElementById("field-image-input-1").files[0];
+        let image2 = document.getElementById("field-image-input-2").files[0];
+        if (image1 === undefined || image2 === undefined) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '2 images are required to upload!'
+            })
+        } else {
+            let formData = new FormData();
+            formData.append("fieldCode", selectedFieldToUploadImages);
+            formData.append("image1", image1);
+            formData.append("image2", image2);
+            $.ajax({
+                url: "http://localhost:8082/api/v1/field",
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${jwtToken}`
+                },
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: (data) => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: 'Images uploaded successfully!'
+                    })
+                    loadTable(jwtToken);
+                    clearFieldImageForm();
+                },
+                error: (error) => {
+                    const errorMessage = error.responseText || "An unexpected error occurred.";
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: `${errorMessage}`,
+                    })
+                }
+            })
+        }
+    }
+}
+
+
 const clearFieldForm = () => {
     document.getElementById("field-code").innerText = "";
     document.getElementById("field-name-input").value = "";
@@ -222,6 +280,11 @@ const clearFieldForm = () => {
     document.getElementById("latitude-input").value = "";
     document.getElementById("longitude-input").value = "";
     document.getElementById("field-log-select").value = "";
+}
+const clearFieldImageForm = () => {
+    document.getElementById("field-select-2").value = "";
+    document.getElementById("field-image-input-1").value = "";
+    document.getElementById("field-image-input-2").value = "";
 }
 
 const deleteField = (jwtToken) => {

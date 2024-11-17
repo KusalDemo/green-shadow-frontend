@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     loadCropsSelector(jwtToken);
     loadFieldSelector(jwtToken);
+    loadFieldSelectorMonitor(jwtToken);
 
     let monitorCropSelector = document.getElementById("monitor-crop-select");
     if (monitorCropSelector) {
@@ -104,7 +105,7 @@ const loadRelatedLogDivs = (jwtToken) => {
                         <div class="card-body">
                             <small class="card-title">Date: ${new Date(log.logDate).toLocaleDateString()}</small><br><br>
                             <small class="card-text">${log.logDetails}</small><br><br>
-                            <img src="${log.observedImage}" width="100" height="100" alt="observed_image"/><br><br>
+                            <img src="data:image/jpeg;base64,${log.observedImage}" width="200" height="200" alt="no_image"/><br><br>
                             <small class="card-text">Related Staff</small>
                           <small class="card-text">${staffListHTML}</small><br>
                           <small class="card-text">Related Field</small>
@@ -171,10 +172,43 @@ const loadRelatedStaffDivs = (jwtToken) => {
 }
 
 
+const loadFieldSelectorMonitor = (jwtToken) => {
+    let fieldSelectorMonitor = document.getElementById("field-select-2");
+    if (!fieldSelectorMonitor) return;
+
+    $.ajax({
+        url: "http://localhost:8082/api/v1/field",
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${jwtToken}`
+        },
+        success: (data) => {
+            data.forEach((field) => {
+                let option = document.createElement("option");
+                option.innerHTML = field.fieldName;
+                option.value = field.fieldCode;
+                fieldSelectorMonitor.appendChild(option);
+            })
+        }
+        , error: (error) => {
+            const errorMessage = error.responseText || "An unexpected error occurred.";
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `${errorMessage}`,
+            })
+        }
+    })
+}
 
 
 const getCookie = (name) => {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
     return parts.length === 2 ? parts.pop().split(';').shift() : null;
+};
+
+const showImageModal = (base64Image) => {
+    const modalImage = document.getElementById("modalImage");
+    modalImage.src = `data:image/jpeg;base64,${base64Image}`;
 };
