@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     loadTable(jwtToken);
     loadFieldCodes(jwtToken);
+    loadCropCodes(jwtToken);
 
     let btnSaveCrop = document.getElementById("crop-save-btn");
     if (btnSaveCrop) {
@@ -25,6 +26,11 @@ document.addEventListener("DOMContentLoaded", () => {
     let btnDeleteCrop = document.getElementById("crop-delete-btn");
     if (btnDeleteCrop) {
         btnDeleteCrop.addEventListener('click', () => deleteCrop(jwtToken));
+    }
+
+    let btnUploadCropImage = document.getElementById("btn-upload-crop-images");
+    if (btnUploadCropImage) {
+        btnUploadCropImage.addEventListener('click', () => uploadCropImages(jwtToken));
     }
 })
 
@@ -62,7 +68,7 @@ const loadTable = (jwtToken) => {
                         <td>${cropSeason}</td>
                         <td>${fieldCode}</td>
                         <td>
-                            <img src="${cropImage}" width="100" height="100" alt="crop_image">
+                            <img src="data:image/jpeg;base64,${cropImage}" class="img-thumbnail rounded" style="width: 100px; height: 80px;" alt="crop image">
                         </td>
                     `;
 
@@ -109,6 +115,40 @@ const loadFieldCodes = (jwtToken) => {
         console.log(error);
     }
 }
+
+const loadCropCodes = (jwtToken) => {
+    let cropCodeSelector = document.getElementById("crop-select-2");
+    if (!cropCodeSelector) return;
+
+    try {
+        $.ajax({
+            url: "http://localhost:8082/api/v1/crop",
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${jwtToken}`
+            },
+            success: (data) => {
+                data.forEach((crop) => {
+                    let option = document.createElement("option");
+                    option.innerHTML = crop.cropCommonName;
+                    option.value = crop.cropCode;
+                    cropCodeSelector.appendChild(option);
+                })
+            }
+            , error: (error) => {
+                const errorMessage = error.responseText || "An unexpected error occurred.";
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: `${errorMessage}`,
+                })
+            }
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 const saveCrop = (jwtToken) => {
     if (document.getElementById("crop-code").innerText !== "") {
@@ -206,7 +246,7 @@ const deleteCrop = (jwtToken) => {
             title: 'Oops...',
             text: 'Please select a crop to delete',
         })
-    }else{
+    } else {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -247,6 +287,58 @@ const deleteCrop = (jwtToken) => {
                 }
             }
         })
+    }
+}
+
+const uploadCropImages = (jwtToken) => {
+    let selectedCropToUploadImage = document.getElementById("crop-select-2").value;
+    if (selectedCropToUploadImage === "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Please select a crop to upload image',
+        })
+    } else {
+        let cropImageToSave = document.getElementById("crop-image-input-1").files[0];
+        if (cropImageToSave === undefined) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please select an image to upload',
+            })
+        } else {
+            let formData = new FormData();
+            formData.append("cropCode", selectedCropToUploadImage);
+            formData.append("image", cropImageToSave);
+
+            $.ajax({
+                url: "http://localhost:8082/api/v1/crop",
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${jwtToken}`
+                },
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: (data) => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: 'Image uploaded successfully!'
+                    })
+                    loadTable(jwtToken);
+                    clearCropImageForm();
+                },
+                error: (error) => {
+                    const errorMessage = error.responseText || "An unexpected error occurred.(check again cropCode & image type)";
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: `${errorMessage}`,
+                    })
+                }
+            })
+        }
     }
 }
 
@@ -292,3 +384,9 @@ const clearCropForm = () => {
     document.getElementById("crop-field-select").value = "";
     document.getElementById("crop-category-select").value = "";
 }
+
+const clearCropImageForm = () => {
+    document.getElementById("crop-select-2").value = "";
+    document.getElementById("crop-image-input-1").value = "";
+}
+
