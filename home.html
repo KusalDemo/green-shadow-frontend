@@ -21,23 +21,102 @@
             <span style="color: #0D9F4F">GreenShadow</span>
         </div>
         <ul class="nav-items">
-            <li class="nav-item" id="nav-home">🏠 Dashboard</li>
-            <li class="nav-item" id="nav-vehicle">🚜 Vehicle</li>
-            <li class="nav-item" id="nav-equipment">🧰 Equipment</li>
-            <li class="nav-item" id="nav-logs">📋 Logs</li>
-            <li class="nav-item" id="nav-staff">👨🏻‍🌾 Staff</li>
-            <li class="nav-item" id="nav-crop">🌾 Crop Management</li>
-            <li class="nav-item" id="nav-field">🏔️ Fields</li>
-            <li class="nav-item" id="nav-user">📈 Monitor</li>
+            <li class="nav-item" id="nav-home">
+                <img src="https://api.iconify.design/mdi:home-outline.svg" alt="Dashboard"> Dashboard
+            </li>
+            <li class="nav-item" id="nav-vehicle">
+                <img src="https://api.iconify.design/mdi:truck-outline.svg" alt="Vehicle"> Vehicle
+            </li>
+            <li class="nav-item" id="nav-equipment">
+                <img src="https://api.iconify.design/mdi:toolbox-outline.svg" alt="Equipment"> Equipment
+            </li>
+            <li class="nav-item" id="nav-logs">
+                <img src="https://api.iconify.design/mdi:clipboard-text-outline.svg" alt="Logs"> Logs
+            </li>
+            <li class="nav-item" id="nav-staff">
+                <img src="https://api.iconify.design/mdi:account-multiple-outline.svg" alt="Staff"> Staff
+            </li>
+            <li class="nav-item" id="nav-crop">
+                <img src="https://api.iconify.design/mdi:corn.svg" alt="Crop Management"> Crop Management
+            </li>
+            <li class="nav-item" id="nav-field">
+                <img src="https://api.iconify.design/mdi:terrain.svg" alt="Fields"> Fields
+            </li>
+            <li class="nav-item" id="nav-user">
+                <img src="https://api.iconify.design/mdi:chart-line.svg" alt="Monitor"> Monitor
+            </li>
         </ul>
+
         <ul class="bottom-nav">
-            <li class="nav-item" id="nav-settings">⚙️ Settings</li>
+            <li class="nav-item" id="nav-settings">
+                <img src="https://api.iconify.design/mdi:cog-outline.svg" alt="Settings"> Settings
+            </li>
             <li class="logout" id="logout">
                 <img src="https://api.iconify.design/mdi:logout.svg" alt="Logout">Logout
             </li>
         </ul>
         <button type="button" id="checker">CHECK</button>
     </nav>
+    <!--<nav class="col-md-3 col-lg-2 d-md-block sidebar bg-white border-end vh-100">
+        <div class=" text-center logo">
+            <small style="color: #0D9F4F; font-weight: bold; font-size: 1.5rem;">GreenShadow</small>
+        </div>
+        <ul class="nav flex-column nav-items">
+            <li class="nav-item" id="nav-home">
+                <a href="#" class="nav-link text-dark d-flex align-items-center">
+                    🏠 <span class="ms-2">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item" id="nav-vehicle">
+                <a href="#" class="nav-link text-dark d-flex align-items-center">
+                    🚜 <span class="ms-2">Vehicle</span>
+                </a>
+            </li>
+            <li class="nav-item" id="nav-equipment">
+                <a href="#" class="nav-link text-dark d-flex align-items-center">
+                    🧰 <span class="ms-2">Equipment</span>
+                </a>
+            </li>
+            <li class="nav-item" id="nav-logs">
+                <a href="#" class="nav-link text-dark d-flex align-items-center">
+                    📋 <span class="ms-2">Logs</span>
+                </a>
+            </li>
+            <li class="nav-item" id="nav-staff">
+                <a href="#" class="nav-link text-dark d-flex align-items-center">
+                    👨🏻‍🌾 <span class="ms-2">Staff</span>
+                </a>
+            </li>
+            <li class="nav-item" id="nav-crop">
+                <a href="#" class="nav-link text-dark d-flex align-items-center">
+                    🌾 <span class="ms-2">Crop Management</span>
+                </a>
+            </li>
+            <li class="nav-item" id="nav-field">
+                <a href="#" class="nav-link text-dark d-flex align-items-center">
+                    🏔️ <span class="ms-2">Fields</span>
+                </a>
+            </li>
+            <li class="nav-item" id="nav-user">
+                <a href="#" class="nav-link text-dark d-flex align-items-center">
+                    📈 <span class="ms-2">Monitor</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="nav flex-column bottom-nav mt-auto">
+            <li class="nav-item" id="nav-settings">
+                <a href="#" class="nav-link text-dark d-flex align-items-center">
+                    ⚙️ <span class="ms-2">Settings</span>
+                </a>
+            </li>
+            <li class="nav-item logout" id="logout">
+                <a href="#" class="nav-link text-danger d-flex align-items-center">
+                    <img src="https://api.iconify.design/mdi:logout.svg" alt="Logout" class="me-2" style="width: 20px;"> Logout
+                </a>
+            </li>
+        </ul>
+        <button class="btn btn-success w-100 mt-3" id="checker">CHECK</button>
+    </nav>-->
     <main class="main-content" id="main-content">
         <!--Dashboard-->
         <div id="dashboard-section" style="display: none;">
@@ -47,8 +126,8 @@
                     <img src="https://api.iconify.design/mdi:bell.svg" alt="Notifications" class="notification-icon">
                 </div>
                 <div class="user-profile">
+                    <small class="user-email"></small>
                     <img src="https://api.iconify.design/mdi:account-circle.svg" alt="Profile" class="profile-icon">
-                    <span id="loggedInUser"></span>
                 </div>
             </header>
             <div class="dashboard-container">
@@ -74,6 +153,7 @@
                     <img src="https://api.iconify.design/mdi:bell.svg" alt="Notifications" class="notification-icon">
                 </div>
                 <div class="user-profile">
+                    <small class="user-email"></small>
                     <img src="https://api.iconify.design/mdi:account-circle.svg" alt="Profile" class="profile-icon">
                 </div>
             </header>
@@ -116,6 +196,7 @@
                     <img src="https://api.iconify.design/mdi:bell.svg" alt="Notifications" class="notification-icon">
                 </div>
                 <div class="user-profile">
+                    <small class="user-email"></small>
                     <img src="https://api.iconify.design/mdi:account-circle.svg" alt="Profile" class="profile-icon">
                 </div>
             </header>
@@ -226,6 +307,7 @@
                     <img src="https://api.iconify.design/mdi:bell.svg" alt="Notifications" class="notification-icon">
                 </div>
                 <div class="user-profile">
+                    <small class="user-email"></small>
                     <img src="https://api.iconify.design/mdi:account-circle.svg" alt="Profile" class="profile-icon">
                 </div>
             </header>
@@ -320,6 +402,7 @@
                     <img src="https://api.iconify.design/mdi:bell.svg" alt="Notifications" class="notification-icon">
                 </div>
                 <div class="user-profile">
+                    <small class="user-email"></small>
                     <img src="https://api.iconify.design/mdi:account-circle.svg" alt="Profile" class="profile-icon">
                 </div>
             </header>
@@ -560,6 +643,7 @@
                     <img src="https://api.iconify.design/mdi:bell.svg" alt="Notifications" class="notification-icon">
                 </div>
                 <div class="user-profile">
+                    <small class="user-email"></small>
                     <img src="https://api.iconify.design/mdi:account-circle.svg" alt="Profile" class="profile-icon">
                 </div>
             </header>
@@ -700,6 +784,7 @@
                     <img src="https://api.iconify.design/mdi:bell.svg" alt="Notifications" class="notification-icon">
                 </div>
                 <div class="user-profile">
+                    <small class="user-email"></small>
                     <img src="https://api.iconify.design/mdi:account-circle.svg" alt="Profile" class="profile-icon">
                 </div>
             </header>
@@ -830,6 +915,7 @@
                     <img src="https://api.iconify.design/mdi:bell.svg" alt="Notifications" class="notification-icon">
                 </div>
                 <div class="user-profile">
+                    <small class="user-email"></small>
                     <img src="https://api.iconify.design/mdi:account-circle.svg" alt="Profile" class="profile-icon">
                 </div>
             </header>
@@ -1034,6 +1120,7 @@
                     <img src="https://api.iconify.design/mdi:bell.svg" alt="Notifications" class="notification-icon">
                 </div>
                 <div class="user-profile">
+                    <small class="user-email"></small>
                     <img src="https://api.iconify.design/mdi:account-circle.svg" alt="Profile" class="profile-icon">
                 </div>
             </header>
@@ -1057,6 +1144,7 @@
                                 </div>
                             </div>
                         </div>
+                        <button type="button" id="btn-change-password" class="btn btn-primary">Change Password</button>
                     </form>
                 </div>
             </div>
@@ -1071,6 +1159,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script type="module" src="controller/DashboardController.js" defer></script>
 <script type="module" src="controller/logsController.js" defer></script>
 <script type="module" src="controller/StaffController.js" defer></script>
 <script type="module" src="controller/VehicleController.js" defer></script>

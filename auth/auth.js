@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (data.token) {
                     document.cookie = `token=${data.token}; path=/; secure;`;
+                    document.cookie = `greenShadowUser=${email}; path=/; secure;`;
                     window.location.href = 'home.html';
                 } else {
                     showError('email', 'Error logging in. Please try again.');

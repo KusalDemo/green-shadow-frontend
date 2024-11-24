@@ -248,7 +248,7 @@ header {
 /* Responsive Design */
 @media (max-width: 1024px) {
     .sidebar {
-        transform: translateX(-100%);
+        transform: translateX(-150%);
         z-index: 999;
     }
 

@@ -11,8 +11,9 @@ logout.addEventListener('click', () => {
         confirmButtonText: 'Yes, Logout!'
     }).then((result) => {
         if (result.isConfirmed) {
-            // Clear the token cookie
+            // Clear the token & user cookie
             document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "greenShadowUser=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             window.location.href = 'index.html';
         }
     })
@@ -75,4 +76,18 @@ function initializeApp() {
     function getLastActiveSection() {
         return localStorage.getItem('lastActiveSection');
     }
+
+
+    let userLoggedIn = getCookie("greenShadowUser");
+    const userEmailElements = document.getElementsByClassName("user-email");
+
+    for (let element of userEmailElements) {
+        element.innerHTML = userLoggedIn;
+    }
 }
+
+const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    return parts.length === 2 ? parts.pop().split(';').shift() : null;
+};

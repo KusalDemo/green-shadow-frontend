@@ -88,9 +88,9 @@ const loadTable = (jwtToken) => {
 };
 
 const loadCropsList = (jwtToken) => {
-    let cropsSelector = document.getElementById("crops-select");
+    //let cropsSelector = document.getElementById("crops-select");
     let cropsSelectorInMergeCrops = document.getElementById("crops-select-2");
-    if (!cropsSelector || !cropsSelectorInMergeCrops) return;
+    if (!cropsSelectorInMergeCrops) return;
 
     $.ajax({
         url: "http://localhost:8082/api/v1/crop",
@@ -103,7 +103,7 @@ const loadCropsList = (jwtToken) => {
                 let option = document.createElement("option");
                 option.value = cropCode;
                 option.text = cropCommonName;
-                cropsSelector.appendChild(option);
+                //cropsSelector.appendChild(option);
                 cropsSelectorInMergeCrops.appendChild(option);
             });
         },
