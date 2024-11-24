@@ -83,7 +83,7 @@ const loadTable = (jwtToken) => {
                     <td>${fuelType}</td>
                     <td>${status}</td>
                     <td>${remarks}</td>
-                    <td>${staff.id}</td>
+                    <td>${staff}</td>
                 `;
 
                 row.addEventListener("click", () => updateFormFields(vehicle));
