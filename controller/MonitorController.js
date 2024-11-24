@@ -186,35 +186,45 @@ const releaseStaffFromField = (staffId, fieldCode, jwtToken) => {
     fieldCode = decodeURIComponent(fieldCode);
     jwtToken = decodeURIComponent(jwtToken);
 
-    console.log(staffId, " ", fieldCode, " ", jwtToken);
-
     const formData = new FormData();
     formData.append("staffId", staffId);
     formData.append("fieldCode", fieldCode);
 
-    $.ajax({
-        url: "http://localhost:8082/api/v1/staff",
-        method: "DELETE",
-        headers: {
-            "Authorization": `Bearer ${jwtToken}`
-        },
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: () => {
-            loadRelatedStaffDivs(jwtToken);
-            Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: 'Staff released successfully',
-            })
-        },
-        error: (error) => {
-            const errorMessage = error.responseText || "An unexpected error occurred.";
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: `${errorMessage}`,
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "Release this staff from this field, you won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#0D9F4F',
+        confirmButtonText: 'Yes, release..'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "http://localhost:8082/api/v1/staff",
+                method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${jwtToken}`
+                },
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: () => {
+                    loadRelatedStaffDivs(jwtToken);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: 'Staff released successfully',
+                    })
+                },
+                error: (error) => {
+                    const errorMessage = error.responseText || "An unexpected error occurred.";
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: `${errorMessage}`,
+                    })
+                }
             })
         }
     })
