@@ -147,18 +147,27 @@ const loadRelatedStaffDivs = (jwtToken) => {
         },
         success: (data) => {
             data.forEach((staff) => {
-                relatedStaffDivs.innerHTML += `
-                    <div class="card mb-3" style="width: 100%;">
-                        <p class="card-header">Staff Code: ${staff.id}</p>
-                        <div class="card-body">
-                            <small class="card-title">Name: ${staff.firstName} ${staff.lastName}</small><br>
-                            <small class="card-text">Role: ${staff.role}</small><br>
-                            <small class="card-text">Email: ${staff.email}</small><br>
-                            <small class="card-text">Phone: ${staff.contactNumber}</small><br><br>
-                            <button class="btn btn-primary" onclick="releaseStaffFromField('${staff.id}', '${fieldCode}' , '${jwtToken}')">Release</button>
-                        </div>
-                    </div>
-                `;
+                const card = document.createElement('div');
+                card.className = 'card mb-3';
+                card.style.width = '100%';
+
+                card.innerHTML = `
+            <p class="card-header">Staff Code: ${staff.id}</p>
+            <div class="card-body">
+                <small class="card-title">Name: ${staff.firstName} ${staff.lastName}</small><br>
+                <small class="card-text">Role: ${staff.role}</small><br>
+                <small class="card-text">Email: ${staff.email}</small><br>
+                <small class="card-text">Phone: ${staff.contactNumber}</small><br><br>
+            </div>
+        `;
+
+                const button = document.createElement('button');
+                button.className = 'btn btn-primary';
+                button.textContent = 'Release';
+                button.onclick = () => releaseStaffFromField(staff.id, fieldCode, jwtToken);
+
+                card.querySelector('.card-body').appendChild(button);
+                relatedStaffDivs.appendChild(card);
             })
         }
         , error: (error) => {
@@ -173,37 +182,41 @@ const loadRelatedStaffDivs = (jwtToken) => {
 }
 
 const releaseStaffFromField = (staffId, fieldCode, jwtToken) => {
-    console.log(staffId," ", fieldCode, " ", jwtToken);
+    staffId = decodeURIComponent(staffId);
+    fieldCode = decodeURIComponent(fieldCode);
+    jwtToken = decodeURIComponent(jwtToken);
+
+    console.log(staffId, " ", fieldCode, " ", jwtToken);
 
     const formData = new FormData();
     formData.append("staffId", staffId);
     formData.append("fieldCode", fieldCode);
 
     $.ajax({
-      url: "http://localhost:8082/api/v1/staff",
-      method: "DELETE",
-      headers: {
-        "Authorization": `Bearer ${jwtToken}`
-      },
-      data: formData,
-      processData: false,
-      contentType: false,
-      success: () => {
-        loadRelatedStaffDivs(jwtToken);
-        Swal.fire({
-            icon: 'success',
-            title: 'Success',
-            text: 'Staff released successfully',
-        })
-      },
-      error: (error) => {
-          const errorMessage = error.responseText || "An unexpected error occurred.";
-          Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: `${errorMessage}`,
-          })
-      }
+        url: "http://localhost:8082/api/v1/staff",
+        method: "DELETE",
+        headers: {
+            "Authorization": `Bearer ${jwtToken}`
+        },
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: () => {
+            loadRelatedStaffDivs(jwtToken);
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Staff released successfully',
+            })
+        },
+        error: (error) => {
+            const errorMessage = error.responseText || "An unexpected error occurred.";
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `${errorMessage}`,
+            })
+        }
     })
 }
 
