@@ -155,6 +155,7 @@ const loadRelatedStaffDivs = (jwtToken) => {
                             <small class="card-text">Role: ${staff.role}</small><br>
                             <small class="card-text">Email: ${staff.email}</small><br>
                             <small class="card-text">Phone: ${staff.contactNumber}</small><br><br>
+                            <button class="btn btn-primary" onclick="releaseStaffFromField('${staff.id}', '${fieldCode}' , '${jwtToken}')">Release</button>
                         </div>
                     </div>
                 `;
@@ -168,6 +169,41 @@ const loadRelatedStaffDivs = (jwtToken) => {
                 text: `${errorMessage}`,
             })
         }
+    })
+}
+
+const releaseStaffFromField = (staffId, fieldCode, jwtToken) => {
+    console.log(staffId," ", fieldCode, " ", jwtToken);
+
+    const formData = new FormData();
+    formData.append("staffId", staffId);
+    formData.append("fieldCode", fieldCode);
+
+    $.ajax({
+      url: "http://localhost:8082/api/v1/staff",
+      method: "DELETE",
+      headers: {
+        "Authorization": `Bearer ${jwtToken}`
+      },
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: () => {
+        loadRelatedStaffDivs(jwtToken);
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Staff released successfully',
+        })
+      },
+      error: (error) => {
+          const errorMessage = error.responseText || "An unexpected error occurred.";
+          Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: `${errorMessage}`,
+          })
+      }
     })
 }
 
