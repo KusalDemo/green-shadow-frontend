@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("JWTToken: ", `Bearer ${jwtToken}`);
     loadAllLogs(jwtToken)
     loadTable(jwtToken);
+    loadStaffIds(jwtToken);
+    loadFieldCodes(jwtToken);
 
     const staffSaveButton = document.getElementById("staff-save-btn");
     if (staffSaveButton) {
@@ -20,6 +22,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const staffClearButton = document.getElementById("staff-clear-btn");
     if (staffClearButton) {
         staffClearButton.addEventListener('click', () => clearTable());
+    }
+
+    const btnAssignStaffToField = document.getElementById("btn-assign-staff-to-field");
+    if (btnAssignStaffToField) {
+        btnAssignStaffToField.addEventListener('click', () => assignStaffToField(jwtToken));
     }
 })
 
@@ -225,6 +232,108 @@ const updateStaff = async (jwtToken) => {
     }
 
 }
+
+const loadStaffIds = (jwtToken) => {
+    const staffSelector = document.getElementById("staff-select-1");
+    if (!staffSelector) return;
+
+    $.ajax({
+      url: "http://localhost:8082/api/v1/staff",
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${jwtToken}`
+      },
+      success: (data) => {
+        data.forEach(({ id, firstName, lastName, designation }) => {
+          let option = document.createElement("option");
+          option.value = id;
+          option.text = firstName + " " + lastName + " - " + designation;
+          staffSelector.appendChild(option);
+        });
+      },
+      error: (error) => {
+          const errorMessage = error.responseText || "An unexpected error occurred.";
+          Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: `${errorMessage}`,
+          })
+      }
+    })
+}
+
+const loadFieldCodes = (jwtToken) => {
+    const fieldSelector = document.getElementById("field-select-1");
+    if (!fieldSelector) return;
+
+    $.ajax({
+      url: "http://localhost:8082/api/v1/field",
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${jwtToken}`
+      },
+      success: (data) => {
+        data.forEach(({ fieldCode, fieldName }) => {
+          let option = document.createElement("option");
+          option.value = fieldCode;
+          option.text = fieldName;
+          fieldSelector.appendChild(option);
+        });
+      },
+      error: (error) => {
+          const errorMessage = error.responseText || "An unexpected error occurred.";
+          Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: `${errorMessage}`,
+          })
+      }
+    })
+}
+
+const assignStaffToField = (jwtToken) => {
+    const selectedStaff = document.getElementById("staff-select-1").value;
+    const selectedField = document.getElementById("field-select-1").value;
+    if (!selectedStaff || !selectedField) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: 'Please select both staff and field',
+        })
+    }
+
+    const formData = new FormData();
+    formData.append("staffId", selectedStaff);
+    formData.append("fieldCode", selectedField);
+
+    $.ajax({
+        url: "http://localhost:8082/api/v1/staff",
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${jwtToken}`
+        },
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: () => {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Staff assigned to field successfully!',
+            })
+            loadTable(jwtToken);
+        },
+        error: (error) => {
+            const errorMessage = error.responseText || "An unexpected error occurred.";
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `${errorMessage}`,
+            })
+        }
+    })
+}
+
 
 
 
