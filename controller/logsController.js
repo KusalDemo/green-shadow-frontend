@@ -52,11 +52,13 @@ const loadTable = (jwtToken) => {
         },
         success: (data) => {
             data.forEach(({logCode, logDetails, logDate, observedImage}) => {
+                const formattedDate = getFormattedDate(logDate);
+
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${logCode}</td>
                     <td>${logDetails}</td>
-                    <td>${logDate}</td>
+                    <td>${formattedDate}</td>
                     <td>
                        <button class="btn btn-primary view-btn" data-image="${observedImage}" data-bs-toggle="modal" data-bs-target="#observedImageModal">View</button>
                     </td>
@@ -258,15 +260,15 @@ const uploadObservedImageCustom = (jwtToken) => {
         return;
     }
 
-    /*const selectedFile = observedImageInput.files[0];
-    if (selectedFile.type !== "image/jpeg" || selectedFile.type !== "image/png") {
+    const selectedFile = observedImageInput.files[0];
+    if (selectedFile.type !== "image/jpeg" && selectedFile.type !== "image/png" && selectedFile.type !== "image/jpg") {
         Swal.fire({
             icon: 'error',
             title: 'Invalid File Type',
-            text: 'Please upload a JPEG or PNG image!',
+            text: 'Please upload a JPEG, JPG or PNG image!',
         });
         return;
-    }*/
+    }
 
     let formData = new FormData();
     formData.append("logCode", selectedValue);
@@ -287,6 +289,7 @@ const uploadObservedImageCustom = (jwtToken) => {
         processData: false,
         data: formData,
         success: (data) => {
+            loadTable(jwtToken);
             Swal.fire({
                 icon: 'success',
                 title: 'Uploaded successfully',
@@ -560,4 +563,13 @@ const refreshLogsTable = (jwtToken) => {
     logTableBody.innerHTML = '';
     loadTable(jwtToken);
 };
+
+const getFormattedDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+}
 
