@@ -9,6 +9,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btnChangePassword) {
         btnChangePassword.addEventListener('click', () => changePassword(jwtToken, loggedUser));
     }
+
+    const btnChangeRole = document.getElementById("btn-change-role");
+    if (btnChangeRole) {
+        btnChangeRole.addEventListener('click', () => changeRole(jwtToken, loggedUser));
+    }
 })
 
 const changePassword = (jwtToken, loggedUser) => {
@@ -89,6 +94,77 @@ const changePassword = (jwtToken, loggedUser) => {
             text: 'Something went wrong!',
         })
     }
+}
+
+const changeRole = (jwtToken, loggedUser) => {
+    const password = document.getElementById("old-password-input-2").value;
+    const role = document.getElementById("role-type-select").value;
+    const roleClarificationCode = document.getElementById("clarification-code-input").value;
+
+    const userModel = new UserModel();
+    userModel.setEmail(loggedUser);
+    userModel.setPassword(password);
+    userModel.setRole(role);
+    userModel.setRoleClarificationCode(roleClarificationCode);
+
+    if (!password) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Password is required',
+        })
+        return;
+    }
+    if (!role) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Role is required',
+        })
+        return;
+    }
+    if (!roleClarificationCode) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Clarification code is required',
+        })
+        return;
+    }
+
+    $.ajax({
+        url: "http://localhost:8082/api/v1/users/role",
+        method: "PUT",
+        headers: {
+            "Authorization": `Bearer ${jwtToken}`
+        },
+        data: JSON.stringify(userModel),
+        contentType: "application/json",
+        success: (data) => {
+            Swal.fire({
+                title: 'Re-login required',
+                text: "After changing role, please re-login",
+                icon: 'success',
+                showCancelButton: false,
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    document.cookie = "greenShadowUser=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    window.location.href = 'index.html';
+                }
+            })
+        },
+        error: (error) => {
+            const errorMessage = error.responseText || "An unexpected error occurred.";
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: `${errorMessage}`,
+            })
+        }
+    })
 }
 
 

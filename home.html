@@ -1125,8 +1125,10 @@
             </header>
             <div class="row">
                 <div class="col-12">
+                    <h3 class="mb-3">Settings</h3>
+                    <!--Change password form-->
                     <form class="bg-white rounded-3 p-3">
-                        <h3 class="mb-3">Settings</h3>
+                        <h5 class="mb-5">Change Password</h5>
                         <div class="row g-2">
                             <div class="mb-3 row col-lg-6">
                                 <label for="old-password-input-1" class="col-form-label">Old Password</label>
@@ -1146,7 +1148,7 @@
                                 </div>
                             </div>
                             <div class="mb-3 row col-lg-6">
-                                <label for="log-date-input" class="col-form-label">Re-Enter Password</label>
+                                <label for="re-password-input" class="col-form-label">Re-Enter Password</label>
                                 <div class="col-12">
                                     <input type="password" class="form-control" id="re-password-input"
                                            aria-describedby="dateHelp">
@@ -1154,6 +1156,42 @@
                             </div>
                         </div>
                         <button type="button" id="btn-change-password" class="btn btn-primary">Change Password</button>
+                    </form>
+
+                    <!--Change role form-->
+                    <form class="bg-white rounded-3 p-3 mt-5">
+                        <h5 class="mb-5">Change Role</h5>
+                        <div class="row g-2">
+                            <div class="mb-3 row col-lg-6">
+                                <label for="old-password-input-2" class="col-form-label">Old Password</label>
+                                <div class="col-12">
+                                    <input type="password" class="form-control" id="old-password-input-2"
+                                           aria-describedby="dateHelp">
+                                </div>
+                            </div>
+                            <div class="mb-3 row col-lg-6">
+                                <small class="form-text text-muted">Old Password is required to change your role</small>
+                            </div>
+                            <div class="mb-3 col-lg-6">
+                                <label for="role-type-select" class="form-label">Select new role</label>
+                                <div class="col-12">
+                                    <select class="form-select" id="role-type-select" required>
+                                        <option value="MANAGER">MANAGER</option>
+                                        <option value="ADMINISTRATIVE">ADMINISTRATIVE</option>
+                                        <option value="SCIENTIST">SCIENTIST</option>
+                                    </select>
+                                    <div class="invalid-feedback">Please select a type.</div>
+                                </div>
+                            </div>
+                            <div class="mb-3 row col-lg-6">
+                                <label for="clarification-code-input" class="col-form-label">Clarification Code</label>
+                                <div class="col-12">
+                                    <input type="password" class="form-control" id="clarification-code-input"
+                                           aria-describedby="dateHelp">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" id="btn-change-role" class="btn btn-primary">Change role</button>
                     </form>
                 </div>
             </div>
