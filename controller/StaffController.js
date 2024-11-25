@@ -334,18 +334,6 @@ const assignStaffToField = (jwtToken) => {
     })
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 const getCookie = (name) => {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);

@@ -14,6 +14,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btnChangeRole) {
         btnChangeRole.addEventListener('click', () => changeRole(jwtToken, loggedUser));
     }
+
+    const btnDeleteAccount = document.getElementById("btn-delete-account");
+    if (btnDeleteAccount) {
+        btnDeleteAccount.addEventListener('click', () => deleteAccount(jwtToken, loggedUser));
+    }
 })
 
 const changePassword = (jwtToken, loggedUser) => {
@@ -162,6 +167,57 @@ const changeRole = (jwtToken, loggedUser) => {
                 icon: 'error',
                 title: 'Oops...',
                 text: `${errorMessage}`,
+            })
+        }
+    })
+}
+
+const deleteAccount = (jwtToken, loggedUser) => {
+    const password = document.getElementById("old-password-input-3").value;
+    if (!password) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Password is required',
+        })
+        return;
+    }
+
+    const userModel = new UserModel();
+    userModel.setEmail(loggedUser);
+    userModel.setPassword(password);
+
+    Swal.fire({
+        title: 'High risk action',
+        text: "Are you sure you want to delete your account? This action cannot be undone.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'I accept the risk and delete my account',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "http://localhost:8082/api/v1/users/delete",
+                method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${jwtToken}`
+                },
+                data: JSON.stringify(userModel),
+                contentType: "application/json",
+                success: (data) => {
+                    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    document.cookie = "greenShadowUser=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    window.location.href = 'index.html';
+                },
+                error: (error) => {
+                    const errorMessage = error.responseText || "An unexpected error occurred.";
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: `${errorMessage}`,
+                    })
+                }
             })
         }
     })
