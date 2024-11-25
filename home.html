@@ -1129,6 +1129,16 @@
                         <h3 class="mb-3">Settings</h3>
                         <div class="row g-2">
                             <div class="mb-3 row col-lg-6">
+                                <label for="old-password-input-1" class="col-form-label">Old Password</label>
+                                <div class="col-12">
+                                    <input type="password" class="form-control" id="old-password-input-1"
+                                           aria-describedby="dateHelp">
+                                </div>
+                            </div>
+                            <div class="mb-3 row col-lg-6">
+                                <small class="form-text text-muted">Old Password is required to change your password</small>
+                            </div>
+                            <div class="mb-3 row col-lg-6">
                                 <label for="log-date-input" class="col-form-label">New Password</label>
                                 <div class="col-12">
                                     <input type="password" class="form-control" id="password-input"
@@ -1166,6 +1176,7 @@
 <script type="module" src="controller/EquipmentController.js" defer></script>
 <script type="module" src="controller/FieldController.js" defer></script>
 <script type="module" src="controller/MonitorController.js" defer></script>
+<script type="module" src="controller/SettingsController.js" defer></script>
 <script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
 <script src="https://cdn.datatables.net/2.1.4/js/dataTables.bootstrap5.js"></script>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
