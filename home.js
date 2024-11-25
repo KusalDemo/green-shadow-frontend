@@ -86,6 +86,24 @@ function initializeApp() {
     }
 }
 
+// Function to get the current time as a string
+function getCurrentTime() {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    return `${hours}:${minutes}:${seconds}`;
+}
+
+function updateClockPlaceholder() {
+    const clockPlaceholders = document.querySelectorAll('.clock-placeholder');
+    clockPlaceholders.forEach((clockPlaceholder) => {
+        clockPlaceholder.textContent = `Current Time: ${getCurrentTime()}`;
+    });
+}
+setInterval(updateClockPlaceholder, 1000);
+
+
 const getCookie = (name) => {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);

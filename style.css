@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -22,6 +24,12 @@ body {
 .container {
     display: flex;
     min-height: 100vh;
+}
+
+.logo span {
+    font-family: "Great Vibes", cursive;
+    font-weight: 600;
+    font-size: 1.9rem;
 }
 
 /* Hamburger Menu */
@@ -106,6 +114,7 @@ body {
     border-top: 2px solid #eee;
     padding-top: 1rem;
     margin-top: auto;
+    padding-left: 0;
 }
 
 .bottom-nav li {
