@@ -1,8 +1,8 @@
 import {EquipmentModel} from "../model/EquipmentModel.js";
-import {getCookie,showErrorAlert} from "../utils/utils.js";
+import {getCookie,showErrorAlert,destroyDataTable} from "../utils/utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("Equipment loaded");
+    destroyDataTable('#equipment-table')
 
     const jwtToken = getCookie("token");
     loadTable(jwtToken);

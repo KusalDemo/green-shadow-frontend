@@ -1,10 +1,8 @@
 import {StaffModel} from "../model/StaffModel.js";
-import {getCookie, showErrorAlert} from "../utils/utils.js";
+import {getCookie, showErrorAlert, destroyDataTable} from "../utils/utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("Staff loaded");
     const jwtToken = getCookie("token");
-    console.log("JWTToken: ", `Bearer ${jwtToken}`);
     loadAllLogs(jwtToken)
     loadStaffTable(jwtToken);
     loadStaffIds(jwtToken);
@@ -34,6 +32,8 @@ document.addEventListener("DOMContentLoaded", () => {
 const loadStaffTable = (jwtToken) => {
     let staffTable = document.getElementById("staff-table-body");
     if (!staffTable) return;
+
+    destroyDataTable('#staff-table');
 
     $.ajax({
         url: "http://localhost:8082/api/v1/staff",
@@ -87,12 +87,7 @@ const loadStaffTable = (jwtToken) => {
 
                 staffTable.appendChild(row);
             });
-
-            new DataTable("#staff-table", {
-                paging: true,
-                pageLength: 10,
-                destroy: true
-            });
+            new DataTable("#staff-table", {paging: true, pageLength: 10, destroy: true});
         },
         error: (error) => showErrorAlert(error)
     });

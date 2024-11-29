@@ -1,10 +1,8 @@
 import {LogModel} from "../model/logModel.js";
-import {getCookie, showErrorAlert} from "../utils/utils.js";
+import {getCookie, showErrorAlert ,getFormattedDate,destroyDataTable} from "../utils/utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("Logs loaded");
     const jwtToken = getCookie("token");
-    console.log("JWTToken: ", `Bearer ${jwtToken}`);
     loadTable(jwtToken);
     loadCropsList(jwtToken);
     loadAllLogs(jwtToken);
@@ -44,6 +42,8 @@ document.addEventListener("DOMContentLoaded", () => {
 const loadTable = (jwtToken) => {
     const logTableBody = document.getElementById('log-table-body');
     if (!logTableBody) return;
+
+    destroyDataTable('#log-table');
 
     $.ajax({
         url: "http://127.0.0.1:8082/api/v1/log",
@@ -445,13 +445,3 @@ const refreshLogsTable = (jwtToken) => {
     logTableBody.innerHTML = '';
     loadTable(jwtToken);
 };
-
-const getFormattedDate = (dateString) => {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-
-    return `${year}-${month}-${day}`;
-}
-

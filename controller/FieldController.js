@@ -1,5 +1,5 @@
 import {FieldModel} from "../model/FieldModel.js";
-import {getCookie,showErrorAlert} from "../utils/utils.js";
+import {getCookie,showErrorAlert,destroyDataTable} from "../utils/utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log("Field loaded");
@@ -58,9 +58,10 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 const loadTable = (jwtToken) => {
-
     let fieldTable = document.getElementById("field-table-body");
     if (!fieldTable) return;
+
+    destroyDataTable('#field-table');
 
     $.ajax({
         url: "http://localhost:8082/api/v1/field",
@@ -250,7 +251,6 @@ const uploadFieldImages = (jwtToken) => {
         }
     }
 }
-
 
 const clearFieldForm = () => {
     document.getElementById("field-code").innerText = "";

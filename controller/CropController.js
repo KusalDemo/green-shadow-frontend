@@ -1,5 +1,5 @@
 import {CropModel} from "../model/CropModel.js";
-import {getCookie,showErrorAlert} from "../utils/utils.js";
+import {getCookie,showErrorAlert,destroyDataTable} from "../utils/utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const jwtToken = getCookie("token");
@@ -35,9 +35,10 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 const loadTable = (jwtToken) => {
-
     let cropTable = document.getElementById("crop-table-body");
     if (!cropTable) return;
+
+    destroyDataTable('#crop-table');
 
     try {
         $.ajax({
@@ -197,8 +198,10 @@ const updateCrop = (jwtToken) => {
                             icon: 'success',
                             title: 'Crop updated successfully',
                             text: 'Crop updated successfully',
-                        })
-                        loadTable(jwtToken);
+                        }).then(() => {
+                            loadTable(jwtToken); // Load table after the success alert
+                        });
+                        //loadTable(jwtToken);
                         clearCropForm();
                     },
                     error: (error) => showErrorAlert(error)
@@ -339,4 +342,6 @@ const clearCropImageForm = () => {
     document.getElementById("crop-select-2").value = "";
     document.getElementById("crop-image-input-1").value = "";
 }
+
+
 

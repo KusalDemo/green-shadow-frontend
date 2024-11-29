@@ -1,8 +1,7 @@
 import {VehicleModel} from "../model/VehicleModel.js";
-import {getCookie, showErrorAlert} from "../utils/utils.js";
+import {getCookie, showErrorAlert, destroyDataTable} from "../utils/utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("Vehicle loaded");
     const jwtToken = getCookie("token");
 
     loadTable(jwtToken);
@@ -56,6 +55,8 @@ const loadStaffList = (jwtToken) => {
 const loadTable = (jwtToken) => {
     let vehicleTable = document.getElementById("vehicle-table-body");
     if (!vehicleTable) return;
+
+    destroyDataTable('#vehicle-table');
 
     $.ajax({
         url: "http://localhost:8082/api/v1/vehicle",
