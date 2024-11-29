@@ -354,6 +354,15 @@ const getFieldFormDetails = () => {
         y: parseFloat(longitude)
     };
 
+    if (!fieldName || !extentSizeOfField || !latitude || !longitude || !logCode) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Please fill all the fields',
+        })
+        return;
+    }
+
     let fieldModel = new FieldModel();
 
     fieldModel.fieldCode = fieldCode;

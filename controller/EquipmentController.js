@@ -118,7 +118,6 @@ const loadFieldCodes = (jwtToken) => {
 
 
 const saveEquipment = async (jwtToken) => {
-
     if (document.getElementById("equipment-id").innerText !== "") {
         Swal.fire({
             icon: 'error',

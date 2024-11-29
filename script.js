@@ -17,13 +17,4 @@ document.addEventListener('DOMContentLoaded', () => {
             hamburger.classList.remove('active');
         }
     });
-
-    // Add search functionality
-    const searchInput = document.querySelector('.search-bar input');
-    searchInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            alert(`Searching for: ${searchInput.value}`);
-            searchInput.value = '';
-        }
-    });
 });

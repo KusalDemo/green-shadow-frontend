@@ -1,5 +1,7 @@
 import {VehicleModel} from "../model/VehicleModel.js";
 import {getCookie, showErrorAlert, destroyDataTable} from "../utils/utils.js";
+import {isValidSriLankanNumberPlate} from "../utils/validations.js";
+
 
 document.addEventListener("DOMContentLoaded", () => {
     const jwtToken = getCookie("token");
@@ -137,7 +139,7 @@ const updateVehicle = async (jwtToken) => {
     if (!vehicleToUpdate) return;
 
     let vehicleCodeToUpdate = document.getElementById("vehicle-code").innerText;
-    if (!vehicleCodeToUpdate) return console.error("Vehicle code not found");
+    if (!vehicleCodeToUpdate) return ;
 
     try {
         $.ajax({
@@ -235,6 +237,23 @@ const getValuesInVehicleForm = () => {
     let vehicleStatus = document.getElementById("vehicle-status-select").value;
     let remarks = document.getElementById("remarks-input").value;
     let vehicleResponsibleStaff = document.getElementById("vehicle-staff-select").value;
+
+    if (!licensePlateNumber || !vehicleCategory || !fuelType || !vehicleStatus || !remarks || !vehicleResponsibleStaff) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Please fill in all the fields',
+        })
+        return;
+    }
+    if (!isValidSriLankanNumberPlate(licensePlateNumber)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Please enter a valid license plate number',
+        })
+        return;
+    }
 
     let vehicleModel = new VehicleModel();
 

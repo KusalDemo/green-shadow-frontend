@@ -5,7 +5,7 @@ export class StaffModel{
                 designation,
                 gender,
                 joinedDate,
-                dOB,
+                dob,
                 addressLine1,
                 addressLine2,
                 addressLine3,
@@ -22,7 +22,7 @@ export class StaffModel{
         this.designation = designation;
         this.gender = gender;
         this.joinedDate = joinedDate;
-        this.dOB = dOB;
+        this.dob = dob;
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;
         this.addressLine3 = addressLine3;
@@ -59,7 +59,7 @@ export class StaffModel{
     }
 
     getDOB() {
-        return this.dOB;
+        return this.dob;
     }
 
     getAddressLine1() {
@@ -123,7 +123,7 @@ export class StaffModel{
     }
 
     setDOB(dOB) {
-        this.dOB = dOB;
+        this.dob = dob;
     }
 
     setAddressLine1(addressLine1) {

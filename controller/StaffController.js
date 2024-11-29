@@ -1,5 +1,6 @@
 import {StaffModel} from "../model/StaffModel.js";
 import {getCookie, showErrorAlert, destroyDataTable, getFormattedDate} from "../utils/utils.js";
+import {isAtLeast18YearsOld, isValidEmail, isValidSriLankanPhoneNumber} from "../utils/validations.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const jwtToken = getCookie("token");
@@ -118,8 +119,15 @@ const loadAllLogs = (jwtToken) => {
 const saveStaff = async (jwtToken) => {
     if(document.getElementById("staff-id").innerText===""){
         let staffToSave = await getValuesInStaffForm();
-        console.log(staffToSave)
 
+        if(!isAtLeast18YearsOld(staffToSave.dob)){
+            Swal.fire({
+                icon: 'warning',
+                title: 'Oops...',
+                text: 'Staff should be atleast 18 years old',
+            });
+            return;
+        }
         try{
             $.ajax({
                 url: "http://localhost:8082/api/v1/staff",
@@ -158,6 +166,14 @@ const saveStaff = async (jwtToken) => {
 
 const updateStaff = async (jwtToken) => {
     let staffToUpdate = await getValuesInStaffForm();
+    if(!isAtLeast18YearsOld(staffToUpdate.dob)){
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: 'Staff should be atleast 18 years old to be added',
+        })
+        return
+    }
     let staffIdToUpdate = document.getElementById("staff-id").innerText;
     if(staffIdToUpdate){
         staffToUpdate.id = staffIdToUpdate;
@@ -286,7 +302,7 @@ const updateFormFields = (staff) => {
     document.getElementById("designation-select").value = staff.designation || "";
     document.getElementById("gender-select").value = staff.gender || "";
     document.getElementById("joined-date-input").value = staff.joinedDate || "";
-    document.getElementById("dob-input").value = staff.dOB || "";
+    document.getElementById("dob-input").value = staff.dob || "";
     document.getElementById("address-line-1-input").value = staff.addressLine1 || "";
     document.getElementById("address-line-2-input").value = staff.addressLine2 || "";
     document.getElementById("address-line-3-input").value = staff.addressLine3 || "";
@@ -314,6 +330,31 @@ const getValuesInStaffForm =  () => {
     let email = document.getElementById("email-input")?.value || "";
     let role = document.getElementById("staff-role-select")?.value || "";
     let log = document.getElementById("staff-log-select")?.value || "";
+
+    if (!fName || !lName || !designation || !gender || !joinedDate || !dob || !addressLine1 || !contact || !email || !role || !log) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: 'Please fill all the fields!',
+        })
+        return;
+    }
+    if(!isValidSriLankanPhoneNumber(contact)){
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: 'Please enter a valid sri lankan phone number!, example: 077XXXXXXX, 011XXXXXXX',
+        })
+        return;
+    }
+    if(!isValidEmail(email)){
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: 'Please enter a valid email address!',
+        })
+        return;
+    }
 
     const staffInForm = new StaffModel();
     staffInForm.firstName = fName;

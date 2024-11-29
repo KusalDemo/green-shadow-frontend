@@ -309,6 +309,15 @@ const getValuesInCropForm = () => {
     let cropField = document.getElementById("crop-field-select").value;
     let category = document.getElementById("crop-category-select").value;
 
+    if (!cropCommonName || !cropScientificName || !cropSeason || !cropField || !category) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: 'Please fill in all required fields',
+        })
+        return null;
+    }
+
     let cropModel = new CropModel();
 
     cropModel.setCropCommonName(cropCommonName);
