@@ -1,4 +1,4 @@
-import {getCookie} from "../utils/utils.js";
+import {getCookie, showErrorAlert} from "../utils/utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log("Monitor loaded");
@@ -117,15 +117,7 @@ const loadRelatedLogDivs = (jwtToken) => {
                 `;
             })
         }
-        , error: (error) => {
-            console.error(error);
-            const errorMessage = error.responseText || "An unexpected error occurred.";
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: `${errorMessage}`,
-            })
-        }
+        , error: (error) => showErrorAlert(error)
     })
 }
 
@@ -172,14 +164,7 @@ const loadRelatedStaffDivs = (jwtToken) => {
                 relatedStaffDivs.appendChild(card);
             })
         }
-        , error: (error) => {
-            const errorMessage = error.responseText || "An unexpected error occurred.";
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: `${errorMessage}`,
-            })
-        }
+        , error: (error) => showErrorAlert(error)
     })
 }
 
@@ -219,14 +204,7 @@ const releaseStaffFromField = (staffId, fieldCode, jwtToken) => {
                         text: 'Staff released successfully',
                     })
                 },
-                error: (error) => {
-                    const errorMessage = error.responseText || "An unexpected error occurred.";
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: `${errorMessage}`,
-                    })
-                }
+                error: (error) => showErrorAlert(error)
             })
         }
     })
@@ -251,18 +229,6 @@ const loadFieldSelectorMonitor = (jwtToken) => {
                 fieldSelectorMonitor.appendChild(option);
             })
         }
-        , error: (error) => {
-            const errorMessage = error.responseText || "An unexpected error occurred.";
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: `${errorMessage}`,
-            })
-        }
+        , error: (error) => showErrorAlert(error)
     })
 }
-
-const showImageModal = (base64Image) => {
-    const modalImage = document.getElementById("modalImage");
-    modalImage.src = `data:image/jpeg;base64,${base64Image}`;
-};

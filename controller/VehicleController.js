@@ -1,5 +1,5 @@
 import {VehicleModel} from "../model/VehicleModel.js";
-import {getCookie} from "../utils/utils.js";
+import {getCookie, showErrorAlert} from "../utils/utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log("Vehicle loaded");
@@ -93,14 +93,7 @@ const loadTable = (jwtToken) => {
             });
             new DataTable("#vehicle-table", {paging: true, pageLength: 10, destroy: true});
         },
-        error: (error) => {
-            const errorMessage = error.responseText || "An unexpected error occurred.";
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: `${errorMessage}`,
-            })
-        }
+        error: (error) => showErrorAlert(error)
     })
 }
 const saveVehicle = async (jwtToken) => {
@@ -125,14 +118,7 @@ const saveVehicle = async (jwtToken) => {
                 loadTable(jwtToken);
                 clearVehicleForm();
             },
-            error: (error) => {
-                const errorMessage = error.responseText || "An unexpected error occurred.";
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: `${errorMessage}`,
-                })
-            }
+            error: (error) => showErrorAlert(error)
         })
     } catch (error) {
         console.error(error);
@@ -170,14 +156,7 @@ const updateVehicle = async (jwtToken) => {
                 loadTable(jwtToken);
                 clearVehicleForm();
             },
-            error: (error) => {
-                const errorMessage = error.responseText || "An unexpected error occurred.";
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: `${errorMessage}`,
-                })
-            }
+            error: (error) => showErrorAlert(error)
         })
     } catch (error) {
         console.error(error);
@@ -218,14 +197,7 @@ const deleteVehicle = (jwtToken) => {
                             loadTable(jwtToken);
                             clearVehicleForm();
                         },
-                        error: (error) => {
-                            const errorMessage = error.responseText || "An unexpected error occurred.";
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: `${errorMessage}`,
-                            })
-                        }
+                        error: (error) => showErrorAlert(error)
                     })
                 } catch (error) {
                     console.error(error);

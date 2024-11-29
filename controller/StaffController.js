@@ -1,5 +1,5 @@
 import {StaffModel} from "../model/StaffModel.js";
-import {getCookie} from "../utils/utils.js";
+import {getCookie, showErrorAlert} from "../utils/utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log("Staff loaded");
@@ -94,14 +94,7 @@ const loadStaffTable = (jwtToken) => {
                 destroy: true
             });
         },
-        error: (error) => {
-            let err = JSON.stringify(error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Something went wrong! ' + err
-            });
-        }
+        error: (error) => showErrorAlert(error)
     });
 }
 
@@ -123,14 +116,7 @@ const loadAllLogs = (jwtToken) => {
                 logSelectorInStaff.appendChild(option);
             });
         },
-        error: (error) => {
-            console.error(error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Something went wrong!',
-            });
-        }
+        error: (error) => showErrorAlert(error)
     });
 }
 
@@ -157,17 +143,9 @@ const saveStaff = async (jwtToken) => {
                     loadStaffTable(jwtToken);
                     clearTable();
                 },
-                error: (error) => {
-                    const errorMessage = error.responseText || "An unexpected error occurred.";
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: `${errorMessage}`,
-                    })
-                }
+                error: (error) => showErrorAlert(error)
             });
         }catch (error) {
-            console.error(error)
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -207,14 +185,7 @@ const updateStaff = async (jwtToken) => {
                     })
                     clearTable();
                 },
-                error: (error) => {
-                    const errorMessage = error.responseText || "An unexpected error occurred.";
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: `${errorMessage}`,
-                    })
-                }
+                error: (error) => showErrorAlert(error)
             });
         }catch (error) {
             console.error(error)
@@ -252,14 +223,7 @@ const loadStaffIds = (jwtToken) => {
           staffSelector.appendChild(option);
         });
       },
-      error: (error) => {
-          const errorMessage = error.responseText || "An unexpected error occurred.";
-          Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: `${errorMessage}`,
-          })
-      }
+      error: (error) => showErrorAlert(error)
     })
 }
 
@@ -281,14 +245,7 @@ const loadFieldCodes = (jwtToken) => {
           fieldSelector.appendChild(option);
         });
       },
-      error: (error) => {
-          const errorMessage = error.responseText || "An unexpected error occurred.";
-          Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: `${errorMessage}`,
-          })
-      }
+      error: (error) => showErrorAlert(error)
     })
 }
 
@@ -324,14 +281,7 @@ const assignStaffToField = (jwtToken) => {
             })
             loadStaffTable(jwtToken);
         },
-        error: (error) => {
-            const errorMessage = error.responseText || "An unexpected error occurred.";
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: `${errorMessage}`,
-            })
-        }
+        error: (error) => showErrorAlert(error)
     })
 }
 const updateFormFields = (staff) => {

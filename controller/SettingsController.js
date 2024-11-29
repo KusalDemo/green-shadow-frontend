@@ -1,5 +1,5 @@
 import {UserModel} from "../model/UserModel.js";
-import {getCookie} from "../utils/utils.js";
+import {getCookie, showErrorAlert} from "../utils/utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const jwtToken = getCookie("token");
@@ -83,17 +83,9 @@ const changePassword = (jwtToken, loggedUser) => {
                     }
                 })
             },
-            error: (error) => {
-                const errorMessage = error.responseText || "An unexpected error occurred.";
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: `${errorMessage}`,
-                })
-            }
+            error: (error) => showErrorAlert(error)
         })
     } catch (error) {
-        console.error(error);
         Swal.fire({
             icon: 'error',
             title: 'Oops...',
@@ -162,14 +154,7 @@ const changeRole = (jwtToken, loggedUser) => {
                 }
             })
         },
-        error: (error) => {
-            const errorMessage = error.responseText || "An unexpected error occurred.";
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: `${errorMessage}`,
-            })
-        }
+        error: (error) => showErrorAlert(error)
     })
 }
 
@@ -211,14 +196,7 @@ const deleteAccount = (jwtToken, loggedUser) => {
                     document.cookie = "greenShadowUser=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                     window.location.href = 'index.html';
                 },
-                error: (error) => {
-                    const errorMessage = error.responseText || "An unexpected error occurred.";
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: `${errorMessage}`,
-                    })
-                }
+                error: (error) => showErrorAlert(error)
             })
         }
     })

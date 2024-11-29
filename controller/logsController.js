@@ -1,5 +1,5 @@
 import {LogModel} from "../model/logModel.js";
-import {getCookie} from "../utils/utils.js";
+import {getCookie, showErrorAlert} from "../utils/utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log("Logs loaded");
@@ -79,13 +79,7 @@ const loadTable = (jwtToken) => {
             });
         },
         error: (error) => {
-            console.error(error);
-            const errorMessage = error.responseText || "An unexpected error occurred.";
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: `${errorMessage}`,
-            })
+            showErrorAlert(error);
         }
     });
 };
@@ -110,15 +104,7 @@ const loadCropsList = (jwtToken) => {
                 cropsSelectorInMergeCrops.appendChild(option);
             });
         },
-        error: (error) => {
-            console.error(error);
-            const errorMessage = error.responseText || "An unexpected error occurred.";
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: `${errorMessage}`,
-            })
-        }
+        error: (error) => showErrorAlert(error)
     });
 }
 
@@ -146,15 +132,7 @@ const loadAllLogs = (jwtToken) => {
                 logSelectorInMergeCrops.appendChild(option2);
             });
         },
-        error: (error) => {
-            console.error(error);
-            const errorMessage = error.responseText || "An unexpected error occurred.";
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: `${errorMessage}`,
-            })
-        }
+        error: (error) => showErrorAlert(error)
     });
 }
 
@@ -195,14 +173,7 @@ const saveLog = (jwtToken) => {
                 });
                 loadTable(jwtToken);
             },
-            error: (error) => {
-                const errorMessage = error.responseText || "An unexpected error occurred.";
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: `${errorMessage}`,
-                })
-            }
+            error: (error) => showErrorAlert(error)
         });
     } catch (error) {
         Swal.fire({
@@ -267,48 +238,9 @@ const uploadObservedImageCustom = (jwtToken) => {
                 text: 'Observed image uploaded successfully!'
             })
         },
-        error: (error) => {
-            const errorMessage = error.responseText || "An unexpected error occurred.";
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: `${errorMessage}`,
-            })
-        }
+        error: (error) => showErrorAlert(error)
     });
 }
-
-const searchLog = (event) => {
-    let searchedLog = document.getElementById("log-search-input");
-
-    if (searchedLog) {
-        try {
-            $.ajax({
-                url: "http://localhost:8082/api/v1/log",
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${jwtToken}`
-                },
-                success: (data) => {
-                    console.log(data);
-                },
-                error: (error) => {
-                    console.error(error);
-                }
-            });
-        } catch (error) {
-            console.error(error);
-
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Something went wrong!',
-            });
-        }
-
-    }
-}
-
 const searchLogsByDate = (jwtToken) => {
     const logTableBody = document.getElementById('log-table-body');
     if (!logTableBody) return;
@@ -425,14 +357,7 @@ const mergeLogsAndCrops = (jwtToken) => {
                         icon: 'success',
                     })
                 },
-                error: (error) => {
-                    const errorMessage = error.responseText || "An unexpected error occurred.";
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: `${errorMessage}`,
-                    })
-                }
+                error: (error) => showErrorAlert(error)
             });
         }catch (error) {
             console.log(error);
@@ -482,14 +407,7 @@ const deleteMergedLogs = (jwtToken) => {
                         }
                     })
                 },
-                error: (error) => {
-                    const errorMessage = error.responseText || "An unexpected error occurred.";
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: `${errorMessage}`,
-                    })
-                }
+                error: (error) => showErrorAlert(error)
             });
         }catch (error) {
             console.log(error);

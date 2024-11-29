@@ -1,5 +1,5 @@
 import {FieldModel} from "../model/FieldModel.js";
-import {getCookie} from "../utils/utils.js";
+import {getCookie,showErrorAlert} from "../utils/utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log("Field loaded");
@@ -158,21 +158,8 @@ const saveField = (jwtToken) => {
                             title: 'Success',
                             text: 'Field saved successfully!'
                         })
-
-                        setTimeout(() => {
-                            console.log("saved", jwtToken)
-                            loadTable(jwtToken);
-                        }, 1000);
-
                     },
-                    error: (error) => {
-                        const errorMessage = error.responseText || "An unexpected error occurred.";
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: `${errorMessage}`,
-                        })
-                    }
+                    error: (error) => showErrorAlert(error)
                 })
             } catch (error) {
                 console.log(error);
@@ -209,14 +196,7 @@ const updateField = (jwtToken) => {
                         })
                         loadTable(jwtToken);
                     },
-                    error: (error) => {
-                        const errorMessage = error.responseText || "An unexpected error occurred.";
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: `${errorMessage}`,
-                        })
-                    }
+                    error: (error) => showErrorAlert(error)
                 })
             } catch (error) {
                 console.log(error);
@@ -265,14 +245,7 @@ const uploadFieldImages = (jwtToken) => {
                     loadTable(jwtToken);
                     clearFieldImageForm();
                 },
-                error: (error) => {
-                    const errorMessage = error.responseText || "An unexpected error occurred.";
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: `${errorMessage}`,
-                    })
-                }
+                error: (error) => showErrorAlert(error)
             })
         }
     }
@@ -328,14 +301,7 @@ const deleteField = (jwtToken) => {
                             loadTable(jwtToken);
                             clearFieldForm();
                         },
-                        error: (error) => {
-                            const errorMessage = error.responseText || "An unexpected error occurred.";
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: `${errorMessage}`,
-                            })
-                        }
+                        error: (error) => showErrorAlert(error)
                     })
                 } catch (error) {
                     console.log(error);

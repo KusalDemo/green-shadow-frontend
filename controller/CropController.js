@@ -1,8 +1,7 @@
 import {CropModel} from "../model/CropModel.js";
-import {getCookie} from "../utils/utils.js";
+import {getCookie,showErrorAlert} from "../utils/utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("Crop loaded");
     const jwtToken = getCookie("token");
 
     loadTable(jwtToken);
@@ -65,7 +64,7 @@ const loadTable = (jwtToken) => {
                         <td>${cropCode}</td>
                         <td>${cropCommonName}</td>
                         <td>${cropScientificName}</td>
-                         <td>${category}</td>
+                        <td>${category}</td>
                         <td>${cropSeason}</td>
                         <td>${fieldCode}</td>
                         <td>
@@ -103,14 +102,7 @@ const loadFieldCodes = (jwtToken) => {
                     cropFieldSelector.appendChild(option);
                 })
             }
-            , error: (error) => {
-                const errorMessage = error.responseText || "An unexpected error occurred.";
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: `${errorMessage}`,
-                })
-            }
+            ,error: (error) => showErrorAlert(error)
         })
     } catch (error) {
         console.log(error);
@@ -136,14 +128,7 @@ const loadCropCodes = (jwtToken) => {
                     cropCodeSelector.appendChild(option);
                 })
             }
-            , error: (error) => {
-                const errorMessage = error.responseText || "An unexpected error occurred.";
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: `${errorMessage}`,
-                })
-            }
+            , error: (error) => showErrorAlert(error)
         })
     } catch (error) {
         console.log(error);
@@ -179,14 +164,7 @@ const saveCrop = (jwtToken) => {
                         loadTable(jwtToken);
                         clearCropForm();
                     },
-                    error: (error) => {
-                        const errorMessage = error.responseText || "An unexpected error occurred.";
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: `${errorMessage}`,
-                        })
-                    }
+                    error: (error) => showErrorAlert(error)
                 })
             } catch (error) {
                 console.log(error);
@@ -223,14 +201,7 @@ const updateCrop = (jwtToken) => {
                         loadTable(jwtToken);
                         clearCropForm();
                     },
-                    error: (error) => {
-                        const errorMessage = error.responseText || "An unexpected error occurred.";
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: `${errorMessage}`,
-                        })
-                    }
+                    error: (error) => showErrorAlert(error)
                 })
             } catch (error) {
                 console.log(error);
@@ -274,14 +245,7 @@ const deleteCrop = (jwtToken) => {
                             loadTable(jwtToken);
                             clearCropForm();
                         },
-                        error: (error) => {
-                            const errorMessage = error.responseText || "An unexpected error occurred.";
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: `${errorMessage}`,
-                            })
-                        }
+                        error: (error) => showErrorAlert(error)
                     })
                 } catch (error) {
                     console.log(error);
@@ -330,14 +294,7 @@ const uploadCropImages = (jwtToken) => {
                     loadTable(jwtToken);
                     clearCropImageForm();
                 },
-                error: (error) => {
-                    const errorMessage = error.responseText || "An unexpected error occurred.(check again cropCode & image type)";
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: `${errorMessage}`,
-                    })
-                }
+                error: (error) => showErrorAlert(error)
             })
         }
     }
