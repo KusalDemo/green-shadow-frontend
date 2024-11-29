@@ -90,10 +90,14 @@ const loadTable = (jwtToken) => {
                     <td>${locationText}</td>
                     <td>${extentSizeOfField}</td>
                     <td>
-                       <button class="btn btn-primary view-btn" data-image="${image1}" data-bs-toggle="modal" data-bs-target="#observedImageModal">View</button>
+                       <button class="btn btn-primary view-btn" data-image="${image1}" data-bs-toggle="modal" data-bs-target="#observedImageModal">
+                            <img src="https://api.iconify.design/mdi:eye.svg?color=white" alt="View" class="btn-icon"> View
+                       </button>
                     </td>
                     <td>
-                       <button class="btn btn-primary view-btn" data-image="${image2}" data-bs-toggle="modal" data-bs-target="#observedImageModal">View</button>
+                       <button class="btn btn-primary view-btn" data-image="${image2}" data-bs-toggle="modal" data-bs-target="#observedImageModal">
+                            <img src="https://api.iconify.design/mdi:eye.svg?color=white" alt="View" class="btn-icon"> View
+                       </button>
                     </td>
                     <td>${logCode}</td>
                 `;

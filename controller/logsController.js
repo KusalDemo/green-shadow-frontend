@@ -61,7 +61,9 @@ const loadTable = (jwtToken) => {
                     <td>${logDetails}</td>
                     <td>${formattedDate}</td>
                     <td>
-                       <button class="btn btn-primary view-btn" data-image="${observedImage}" data-bs-toggle="modal" data-bs-target="#observedImageModal">View</button>
+                       <button class="btn btn-primary view-btn" data-image="${observedImage}" data-bs-toggle="modal" data-bs-target="#observedImageModal">
+                            <img src="https://api.iconify.design/mdi:eye.svg?color=white" alt="View" class="btn-icon"> View
+                       </button>
                     </td>
                 `;
                 logTableBody.appendChild(row);
