@@ -1,5 +1,5 @@
 import {StaffModel} from "../model/StaffModel.js";
-import {getCookie, showErrorAlert, destroyDataTable} from "../utils/utils.js";
+import {getCookie, showErrorAlert, destroyDataTable, getFormattedDate} from "../utils/utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const jwtToken = getCookie("token");
@@ -51,7 +51,7 @@ const loadStaffTable = (jwtToken) => {
                     designation,
                     gender,
                     joinedDate,
-                    dOB,
+                    dob,
                     addressLine1,
                     addressLine2,
                     addressLine3,
@@ -70,8 +70,8 @@ const loadStaffTable = (jwtToken) => {
                     <td>${lastName}</td>
                     <td>${designation}</td>
                     <td>${gender}</td>
-                    <td>${joinedDate}</td>
-                    <td>${dOB}</td>
+                    <td>${getFormattedDate(joinedDate)}</td>
+                    <td>${getFormattedDate(dob)}</td>
                     <td>${addressLine1}</td>
                     <td>${addressLine2}</td>
                     <td>${addressLine3}</td>
@@ -321,7 +321,7 @@ const getValuesInStaffForm =  () => {
     staffInForm.designation = designation;
     staffInForm.gender = gender;
     staffInForm.joinedDate = joinedDate;
-    staffInForm.dOB = dob;
+    staffInForm.dob = dob;
     staffInForm.addressLine1 = addressLine1;
     staffInForm.addressLine2 = addressLine2;
     staffInForm.addressLine3 = addressLine3;
