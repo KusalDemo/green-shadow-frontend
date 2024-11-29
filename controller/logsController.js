@@ -1,4 +1,5 @@
 import {LogModel} from "../model/logModel.js";
+import {getCookie} from "../utils/utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log("Logs loaded");
@@ -212,36 +213,6 @@ const saveLog = (jwtToken) => {
     }
 
 };
-
-const uploadObservedImage = (jwtToken, data) => {
-    const observedImageInput = document.getElementById("observed-image-input");
-
-
-    try {
-        $.ajax({
-            url: "http://localhost:8082/api/v1/log",
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${jwtToken}`
-            },
-            success: (data) => {
-                console.log(data);
-            },
-            error: (error) => {
-                console.error(error);
-            }
-        });
-    } catch (error) {
-        console.error(error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!',
-        });
-    }
-
-}
-
 const uploadObservedImageCustom = (jwtToken) => {
     console.log("uploadObservedImageCustom calling..");
 
@@ -525,13 +496,6 @@ const deleteMergedLogs = (jwtToken) => {
         }
     }
 }
-
-const getCookie = (name) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    return parts.length === 2 ? parts.pop().split(';').shift() : null;
-};
-
 const populateFormFields = (logDate, logCode, logDetails) => {
     document.getElementById("log-code").innerText = logCode;
 

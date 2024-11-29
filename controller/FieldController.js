@@ -1,4 +1,5 @@
 import {FieldModel} from "../model/FieldModel.js";
+import {getCookie} from "../utils/utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log("Field loaded");
@@ -157,7 +158,12 @@ const saveField = (jwtToken) => {
                             title: 'Success',
                             text: 'Field saved successfully!'
                         })
-                        loadTable(jwtToken);
+
+                        setTimeout(() => {
+                            console.log("saved", jwtToken)
+                            loadTable(jwtToken);
+                        }, 1000);
+
                     },
                     error: (error) => {
                         const errorMessage = error.responseText || "An unexpected error occurred.";
@@ -338,14 +344,6 @@ const deleteField = (jwtToken) => {
         })
     }
 }
-
-
-const getCookie = (name) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    return parts.length === 2 ? parts.pop().split(';').shift() : null;
-};
-
 const populateFieldFields = (field) => {
     document.getElementById("field-code").innerText = field.fieldCode;
     document.getElementById("field-name-input").value = field.fieldName;

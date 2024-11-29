@@ -1,4 +1,5 @@
 import {EquipmentModel} from "../model/EquipmentModel.js";
+import {getCookie} from "../utils/utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log("Equipment loaded");
@@ -271,14 +272,6 @@ const clearEquipmentForm = () => {
     document.getElementById("equipment-staff-select").value = "";
     document.getElementById("equipment-field-select").value = "";
 }
-
-
-const getCookie = (name) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    return parts.length === 2 ? parts.pop().split(';').shift() : null;
-};
-
 const updateFormFields = (equipment) => {
     document.getElementById("equipment-id").innerHTML = equipment.equipmentId
     document.getElementById("equipment-name-input").value = equipment.name;

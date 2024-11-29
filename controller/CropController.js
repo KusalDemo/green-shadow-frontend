@@ -1,4 +1,5 @@
 import {CropModel} from "../model/CropModel.js";
+import {getCookie} from "../utils/utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log("Crop loaded");
@@ -341,14 +342,6 @@ const uploadCropImages = (jwtToken) => {
         }
     }
 }
-
-
-const getCookie = (name) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    return parts.length === 2 ? parts.pop().split(';').shift() : null;
-};
-
 const getValuesInCropForm = () => {
     let cropCommonName = document.getElementById("crop-common-name-input").value;
     let cropScientificName = document.getElementById("crop-scientific-name-input").value;

@@ -1,11 +1,12 @@
 import {StaffModel} from "../model/StaffModel.js";
+import {getCookie} from "../utils/utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log("Staff loaded");
     const jwtToken = getCookie("token");
     console.log("JWTToken: ", `Bearer ${jwtToken}`);
     loadAllLogs(jwtToken)
-    loadTable(jwtToken);
+    loadStaffTable(jwtToken);
     loadStaffIds(jwtToken);
     loadFieldCodes(jwtToken);
 
@@ -30,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 })
 
-const loadTable = (jwtToken) => {
+const loadStaffTable = (jwtToken) => {
     let staffTable = document.getElementById("staff-table-body");
     if (!staffTable) return;
 
@@ -153,7 +154,7 @@ const saveStaff = async (jwtToken) => {
                         title: 'Staff added successfully',
                         text: 'Staff added successfully',
                     })
-                    loadTable(jwtToken);
+                    loadStaffTable(jwtToken);
                     clearTable();
                 },
                 error: (error) => {
@@ -197,13 +198,13 @@ const updateStaff = async (jwtToken) => {
                 },
                 data: JSON.stringify(staffToUpdate),
                 contentType: "application/json",
-                success: () => {
+                success:async () => {
+                    await loadStaffTable(jwtToken);
                     Swal.fire({
                         icon: 'success',
                         title: 'Staff updated successfully',
                         text: 'Staff updated successfully',
                     })
-                    loadTable(jwtToken);
                     clearTable();
                 },
                 error: (error) => {
@@ -321,7 +322,7 @@ const assignStaffToField = (jwtToken) => {
                 title: 'Success',
                 text: 'Staff assigned to field successfully!',
             })
-            loadTable(jwtToken);
+            loadStaffTable(jwtToken);
         },
         error: (error) => {
             const errorMessage = error.responseText || "An unexpected error occurred.";
@@ -333,13 +334,6 @@ const assignStaffToField = (jwtToken) => {
         }
     })
 }
-
-const getCookie = (name) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    return parts.length === 2 ? parts.pop().split(';').shift() : null;
-};
-
 const updateFormFields = (staff) => {
     document.getElementById("staff-id").innerText = staff.id || "";
     document.getElementById("first-name-input").value = staff.firstName || "";

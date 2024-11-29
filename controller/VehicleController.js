@@ -1,4 +1,5 @@
 import {VehicleModel} from "../model/VehicleModel.js";
+import {getCookie} from "../utils/utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log("Vehicle loaded");
@@ -244,14 +245,6 @@ const deleteVehicle = (jwtToken) => {
         })
     }
 }
-
-
-const getCookie = (name) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    return parts.length === 2 ? parts.pop().split(';').shift() : null;
-};
-
 const updateFormFields = (vehicle) => {
     document.getElementById("vehicle-code").innerText = vehicle.vehicleCode || "";
     document.getElementById("license-plate-number-input").value = vehicle.licensePlateNumber || "";

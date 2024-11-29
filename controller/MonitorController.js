@@ -1,3 +1,5 @@
+import {getCookie} from "../utils/utils.js";
+
 document.addEventListener("DOMContentLoaded", () => {
     console.log("Monitor loaded");
 
@@ -259,13 +261,6 @@ const loadFieldSelectorMonitor = (jwtToken) => {
         }
     })
 }
-
-
-const getCookie = (name) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    return parts.length === 2 ? parts.pop().split(';').shift() : null;
-};
 
 const showImageModal = (base64Image) => {
     const modalImage = document.getElementById("modalImage");

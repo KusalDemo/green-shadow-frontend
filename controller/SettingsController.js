@@ -1,4 +1,5 @@
 import {UserModel} from "../model/UserModel.js";
+import {getCookie} from "../utils/utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const jwtToken = getCookie("token");
@@ -222,10 +223,3 @@ const deleteAccount = (jwtToken, loggedUser) => {
         }
     })
 }
-
-
-const getCookie = (name) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    return parts.length === 2 ? parts.pop().split(';').shift() : null;
-};
