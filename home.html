@@ -70,12 +70,84 @@
                 </div>
             </header>
             <div class="dashboard-container">
-                <div class="greeting">
-                    <div>
-                        <h1>Good Morning!</h1>
-                        <p>Here's what's happening in Green Shadow</p>
+                <div class="row">
+                    <div class="greeting col-lg-6 col-sm-6 mb-6">
+                        <div>
+                            <h1>Good Morning!</h1>
+                            <p>Here's what's happening in Green Shadow</p>
+                        </div>
+                        <button class="export-btn" id="btn-reload-data">Reload data</button>
                     </div>
-                    <button class="export-btn">Reload data</button>
+                    <div class="col-lg-3 col-sm-4 mb-3">
+                        <div class="card">
+                            <div class="card-body d-flex align-items-center justify-content-space-between">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="count-container mt-2">
+                <div class="row" id="property-count">
+                    <div class="col-lg-3 col-sm-4 mb-3">
+                        <div class="card">
+                            <div class="card-body d-flex align-items-center justify-content-space-between">
+                                <div class="ms-3">
+                                    <h1 class="fw-bold mb-0" id="crops-count">0</h1>
+                                </div>
+                                <div class="ms-3">
+                                    <p class="mb-0">Crops</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-4 mb-3">
+                        <div class="card">
+                            <div class="card-body d-flex align-items-center justify-content-space-between">
+                                <div class="ms-3">
+                                    <h1 class="fw-bold mb-0" id="fields-count">0</h1>
+                                </div>
+                                <div class="ms-3">
+                                    <p class="mb-0">Fields</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-4 mb-3">
+                        <div class="card">
+                            <div class="card-body d-flex align-items-center justify-content-space-between">
+                                <div class="ms-3">
+                                    <h1 class="fw-bold mb-0" id="staff-count">0</h1>
+                                </div>
+                                <div class="ms-3">
+                                    <p class="mb-0">Staff</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-4 mb-3">
+                        <div class="card">
+                            <div class="card-body d-flex align-items-center justify-content-space-between">
+                                <div class="ms-3">
+                                    <h1 class="fw-bold mb-0" id="equipments-count">0</h1>
+                                </div>
+                                <div>
+                                    <p class="mb-0">Equipment</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3 management-header-div">
+                <h3>News feeds</h3>
+                <span class="badge text-bg-success mt-2 mb-4" id="news-badge">Agricultural</span>
+                <small>News from various sources around the world</small>
+            </div>
+            <div class="news-container">
+                <div class="row" id="news-container">
+
                 </div>
             </div>
             <!--<div class="container">
@@ -103,7 +175,7 @@
                     </div>
                     <span class="badge text-bg-success mb-3" id="monitor-form-badge"></span>
                     <form class="row g-2 needs-validation bg-white rounded-3 p-3 mb-3" novalidate>
-                        <div class="mb-3 col-lg-6">
+                        <!--<div class="mb-3 col-lg-6">
                             <label for="monitor-field-select" class="form-label">Select Field</label>
                             <div class="col-12">
                                 <select class="form-select" id="monitor-field-select" required>
@@ -120,7 +192,7 @@
                                 </select>
                                 <div class="invalid-feedback">There must be a crop selected</div>
                             </div>
-                        </div>
+                        </div>-->
                     </form>
                 </div>
                 <div class="col-12">
