@@ -43,6 +43,7 @@ const loadStaffTable = (jwtToken) => {
             "Authorization": `Bearer ${jwtToken}`
         },
         success: (data) => {
+            document.getElementById("staff-count").innerHTML = data.length+' +';
             staffTable.innerHTML = "";
             data.forEach((staff, index) => {
                 const {

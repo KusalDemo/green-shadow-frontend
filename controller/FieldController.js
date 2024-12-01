@@ -70,6 +70,7 @@ const loadTable = (jwtToken) => {
             "Authorization": `Bearer ${jwtToken}`
         },
         success: (data) => {
+            document.getElementById("fields-count").innerHTML = data.length+' +';
             fieldTable.innerHTML = "";
             data.forEach((field, index) => {
                 const {

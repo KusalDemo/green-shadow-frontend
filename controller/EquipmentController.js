@@ -42,6 +42,7 @@ const loadTable = (jwtToken) => {
             "Authorization": `Bearer ${jwtToken}`
         },
         success: (data) => {
+            document.getElementById("equipments-count").innerText = data.length+' + ';
             equipmentTable.innerHTML = "";
             data.forEach((equipment, index) => {
                 const {

@@ -48,6 +48,7 @@ const loadTable = (jwtToken) => {
                 "Authorization": `Bearer ${jwtToken}`
             },
             success: (data) => {
+                document.getElementById("crops-count").innerHTML = data.length+' +';
                 cropTable.innerHTML = "";
                 data.forEach((crop, index) => {
                     const {
