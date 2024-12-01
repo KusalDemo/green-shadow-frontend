@@ -1,6 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("Dashboard loaded");
-
     // Set up hamburger menu logic
     const hamburger = document.querySelector('.hamburger');
     const sidebar = document.querySelector('.sidebar');

@@ -17,7 +17,7 @@
         <div></div>
     </div>
     <nav class="sidebar">
-        <div class="logo">
+        <div class="logo" id="nav-home-2">
             <span style="color: #0D9F4F">GreenShadow</span>
         </div>
         <ul class="nav-items">
@@ -55,7 +55,7 @@
                 <img src="https://api.iconify.design/mdi:logout.svg" alt="Logout">Logout
             </li>
         </ul>
-        <button type="button" id="checker">CHECK</button>
+        <!--<span class="badge text-bg-success mb-4" id="dashboard-role-badge">MANAGER mode</span>-->
     </nav>
     <main class="main-content" id="main-content">
         <!--Dashboard-->
@@ -101,24 +101,25 @@
                         <h3>Monitor Crop & Field</h3>
                         <small>Search related details about crops & filed</small>
                     </div>
+                    <span class="badge text-bg-success mb-3" id="monitor-form-badge"></span>
                     <form class="row g-2 needs-validation bg-white rounded-3 p-3 mb-3" novalidate>
                         <div class="mb-3 col-lg-6">
-                            <!-- <label for="monitor-crop-select" class="form-label">Select Crop</label>
-                             <div class="col-12">
-                                 <select class="form-select" id="monitor-crop-select" required>
-
-                                 </select>
-                                 <div class="invalid-feedback">There must be a crop selected</div>
-                             </div>-->
-                        </div>
-                        <div class="mb-3 col-lg-6">
-                            <!--<label for="monitor-field-select" class="form-label">Select Field</label>
+                            <label for="monitor-field-select" class="form-label">Select Field</label>
                             <div class="col-12">
                                 <select class="form-select" id="monitor-field-select" required>
 
                                 </select>
                                 <div class="invalid-feedback">There must be a field selected</div>
-                            </div>-->
+                            </div>
+                        </div>
+                        <div class="mb-3 col-lg-6" id="monitor-crop-select-div">
+                            <label for="monitor-crop-select" class="form-label">Select Crop</label>
+                            <div class="col-12">
+                                <select class="form-select" id="monitor-crop-select" required>
+
+                                </select>
+                                <div class="invalid-feedback">There must be a crop selected</div>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -147,9 +148,9 @@
                         <h3>Manage Vehicles</h3>
                         <small>Manage company vehicles</small>
                     </div>
-                    <span class="badge text-bg-success mb-4">Staff form</span>
+                    <span class="badge text-bg-success mb-4" id="vehicle-form-badge">Staff form</span>
                     <small class="text-muted mb-4" id="vehicle-code"></small><br>
-                    <form class="row g-2 needs-validation bg-white rounded-3 p-3" novalidate>
+                    <form class="row g-2 needs-validation bg-white rounded-3 p-3" id="vehicle-manage-form" novalidate>
                         <div class="mb-3 col-lg-6">
                             <label for="license-plate-number-input" class="col-form-label">License Plate</label>
                             <div class="col-12">
@@ -212,13 +213,16 @@
                         </div>
                         <div class="col-12">
                             <button type="button" id="vehicle-save-btn" class="btn btn-primary">
-                                <img src="https://api.iconify.design/mdi:content-save.svg?color=white" alt="Save" class="btn-icon"> Save
+                                <img src="https://api.iconify.design/mdi:content-save.svg?color=white" alt="Save"
+                                     class="btn-icon"> Save
                             </button>
                             <button type="button" id="vehicle-update-btn" class="btn btn-secondary">
-                                <img src="https://api.iconify.design/mdi:database-edit.svg?color=white" alt="Update" class="btn-icon"> Update
+                                <img src="https://api.iconify.design/mdi:database-edit.svg?color=white" alt="Update"
+                                     class="btn-icon"> Update
                             </button>
                             <button type="button" id="vehicle-delete-btn" class="btn btn-danger">
-                                <img src="https://api.iconify.design/mdi:trash-can-outline.svg?color=white" alt="Delete" class="btn-icon"> Delete
+                                <img src="https://api.iconify.design/mdi:trash-can-outline.svg?color=white" alt="Delete"
+                                     class="btn-icon"> Delete
                             </button>
                             <button type="button" id="vehicle-clear-btn" class="btn btn-warning">
                                 <img src="https://api.iconify.design/mdi:broom.svg" alt="Clear" class="btn-icon"> Clear
@@ -269,9 +273,9 @@
                         <h3>Manage Equipments</h3>
                         <small>Manage company equipments</small>
                     </div>
-                    <span class="badge text-bg-success mb-4">Equipment form</span>
+                    <span class="badge text-bg-success mb-4" id="equipment-form-badge">Equipment form</span>
                     <small class="text-muted mb-4" id="equipment-id"></small><br>
-                    <form class="row g-2 needs-validation bg-white rounded-3 p-3" novalidate>
+                    <form class="row g-2 needs-validation bg-white rounded-3 p-3" id="equipment-manage-form" novalidate>
                         <div class="mb-3 col-lg-6">
                             <label for="equipment-name-input" class="col-form-label">Equipment Name</label>
                             <div class="col-12">
@@ -319,13 +323,16 @@
                         </div>
                         <div class="col-12">
                             <button type="button" id="equipment-save-btn" class="btn btn-primary">
-                                <img src="https://api.iconify.design/mdi:content-save.svg?color=white" alt="Save" class="btn-icon"> Save
+                                <img src="https://api.iconify.design/mdi:content-save.svg?color=white" alt="Save"
+                                     class="btn-icon"> Save
                             </button>
                             <button type="button" id="equipment-update-btn" class="btn btn-secondary">
-                                <img src="https://api.iconify.design/mdi:database-edit.svg?color=white" alt="Update" class="btn-icon"> Update
+                                <img src="https://api.iconify.design/mdi:database-edit.svg?color=white" alt="Update"
+                                     class="btn-icon"> Update
                             </button>
                             <button type="button" id="equipment-delete-btn" class="btn btn-danger">
-                                <img src="https://api.iconify.design/mdi:trash-can-outline.svg?color=white" alt="Delete" class="btn-icon"> Delete
+                                <img src="https://api.iconify.design/mdi:trash-can-outline.svg?color=white" alt="Delete"
+                                     class="btn-icon"> Delete
                             </button>
                             <button type="button" id="equipment-clear-btn" class="btn btn-warning">
                                 <img src="https://api.iconify.design/mdi:broom.svg" alt="Clear" class="btn-icon"> Clear
@@ -375,9 +382,9 @@
                         <h3>Manage Staff</h3>
                         <small>Manage company staff</small>
                     </div>
-                    <span class="badge text-bg-success mb-4">Staff form</span>
+                    <span class="badge text-bg-success mb-4" id="staff-form-badge">Staff form</span>
                     <small class="text-muted mb-4" id="staff-id"></small><br>
-                    <form class="row g-2 needs-validation bg-white rounded-3 p-3" novalidate>
+                    <form class="row g-2 needs-validation bg-white rounded-3 p-3" id="staff-manage-form" novalidate>
                         <div class="mb-3 col-lg-6">
                             <label for="first-name-input" class="col-form-label">First name</label>
                             <div class="col-12">
@@ -521,10 +528,12 @@
                         </div>
                         <div class="col-12">
                             <button type="button" id="staff-save-btn" class="btn btn-primary">
-                                <img src="https://api.iconify.design/mdi:content-save.svg?color=white" alt="Save" class="btn-icon"> Save
+                                <img src="https://api.iconify.design/mdi:content-save.svg?color=white" alt="Save"
+                                     class="btn-icon"> Save
                             </button>
                             <button type="button" id="staff-update-btn" class="btn btn-secondary">
-                                <img src="https://api.iconify.design/mdi:database-edit.svg?color=white" alt="Update" class="btn-icon"> Update
+                                <img src="https://api.iconify.design/mdi:database-edit.svg?color=white" alt="Update"
+                                     class="btn-icon"> Update
                             </button>
                             <button type="button" id="staff-clear-btn" class="btn btn-warning">
                                 <img src="https://api.iconify.design/mdi:broom.svg" alt="Clear" class="btn-icon"> Clear
@@ -570,7 +579,8 @@
                                     </div>
                                 </form>
                                 <button type="button" id="btn-assign-staff-to-field" class="btn btn-primary">
-                                    <img src="https://api.iconify.design/mdi:merge.svg?color=white" alt="Assign" class="btn-icon"> Assign
+                                    <img src="https://api.iconify.design/mdi:merge.svg?color=white" alt="Assign"
+                                         class="btn-icon"> Assign
                                 </button>
                             </div>
                         </div>
@@ -627,9 +637,9 @@
                         <h3>Manage Crops</h3>
                         <small>Manage company crops related data</small>
                     </div>
-                    <span class="badge text-bg-success mb-4">Crop form</span>
+                    <span class="badge text-bg-success mb-4" id="crop-form-badge">Crop form</span>
                     <small class="text-muted mb-4" id="crop-code"></small><br>
-                    <form class="row g-2 needs-validation bg-white rounded-3 p-3" novalidate>
+                    <form class="row g-2 needs-validation bg-white rounded-3 p-3" id="crop-manage-form" novalidate>
                         <div class="mb-3 col-lg-6">
                             <label for="crop-common-name-input" class="col-form-label">Common Name</label>
                             <div class="col-12">
@@ -686,13 +696,16 @@
                         </div>
                         <div class="col-12">
                             <button type="button" id="crop-save-btn" class="btn btn-primary">
-                                <img src="https://api.iconify.design/mdi:content-save.svg?color=white" alt="Save" class="btn-icon"> Save
+                                <img src="https://api.iconify.design/mdi:content-save.svg?color=white" alt="Save"
+                                     class="btn-icon"> Save
                             </button>
                             <button type="button" id="crop-update-btn" class="btn btn-secondary">
-                                <img src="https://api.iconify.design/mdi:database-edit.svg?color=white" alt="Update" class="btn-icon"> Update
+                                <img src="https://api.iconify.design/mdi:database-edit.svg?color=white" alt="Update"
+                                     class="btn-icon"> Update
                             </button>
                             <button type="button" id="crop-delete-btn" class="btn btn-danger">
-                                <img src="https://api.iconify.design/mdi:trash-can-outline.svg?color=white" alt="Delete" class="btn-icon"> Delete
+                                <img src="https://api.iconify.design/mdi:trash-can-outline.svg?color=white" alt="Delete"
+                                     class="btn-icon"> Delete
                             </button>
                             <button type="button" id="crop-clear-btn" class="btn btn-warning">
                                 <img src="https://api.iconify.design/mdi:broom.svg" alt="Clear" class="btn-icon"> Clear
@@ -733,7 +746,8 @@
                                     </div>
                                 </form>
                                 <button type="button" id="btn-upload-crop-images" class="btn btn-primary">
-                                    <img src="https://api.iconify.design/mdi:upload.svg?color=white" alt="Upload" class="btn-icon"> Upload
+                                    <img src="https://api.iconify.design/mdi:upload.svg?color=white" alt="Upload"
+                                         class="btn-icon"> Upload
                                 </button>
                             </div>
                         </div>
@@ -781,9 +795,9 @@
                         <h3>Manage Field</h3>
                         <small>Manage company fields related data</small>
                     </div>
-                    <span class="badge text-bg-success mb-4">Field form</span>
+                    <span class="badge text-bg-success mb-4" id="field-form-badge">Field form</span>
                     <small class="text-muted mb-4" id="field-code"></small><br>
-                    <form class="row g-2 needs-validation bg-white rounded-3 p-3" novalidate>
+                    <form class="row g-2 needs-validation bg-white rounded-3 p-3" id="field-manage-form" novalidate>
                         <div class="mb-3 col-lg-6">
                             <label for="field-name-input" class="col-form-label">Equipment Name</label>
                             <div class="col-12">
@@ -822,13 +836,16 @@
                         </div>
                         <div class="col-12">
                             <button type="button" id="field-save-btn" class="btn btn-primary">
-                                <img src="https://api.iconify.design/mdi:content-save.svg?color=white" alt="Save" class="btn-icon"> Save
+                                <img src="https://api.iconify.design/mdi:content-save.svg?color=white" alt="Save"
+                                     class="btn-icon"> Save
                             </button>
                             <button type="button" id="field-update-btn" class="btn btn-secondary">
-                                <img src="https://api.iconify.design/mdi:database-edit.svg?color=white" alt="Update" class="btn-icon"> Update
+                                <img src="https://api.iconify.design/mdi:database-edit.svg?color=white" alt="Update"
+                                     class="btn-icon"> Update
                             </button>
                             <button type="button" id="field-delete-btn" class="btn btn-danger">
-                                <img src="https://api.iconify.design/mdi:trash-can-outline.svg?color=white" alt="Delete" class="btn-icon"> Delete
+                                <img src="https://api.iconify.design/mdi:trash-can-outline.svg?color=white" alt="Delete"
+                                     class="btn-icon"> Delete
                             </button>
                             <button type="button" id="field-clear-btn" class="btn btn-warning">
                                 <img src="https://api.iconify.design/mdi:broom.svg" alt="Clear" class="btn-icon"> Clear
@@ -875,7 +892,8 @@
                                         </div>
                                     </form>
                                     <button type="button" id="btn-upload-field-images" class="btn btn-primary">
-                                        <img src="https://api.iconify.design/mdi:upload.svg?color=white" alt="Upload" class="btn-icon"> Upload
+                                        <img src="https://api.iconify.design/mdi:upload.svg?color=white" alt="Upload"
+                                             class="btn-icon"> Upload
                                     </button>
                                 </div>
                             </div>
@@ -957,7 +975,8 @@
                             </div>-->
                         </div>
                         <button type="button" id="log-save-btn" class="btn btn-primary">
-                            <img src="https://api.iconify.design/mdi:content-save.svg?color=white" alt="Save" class="btn-icon"> Log
+                            <img src="https://api.iconify.design/mdi:content-save.svg?color=white" alt="Save"
+                                 class="btn-icon"> Log
                         </button>
                     </form>
                     <br>
@@ -995,7 +1014,8 @@
                                         </div>
                                     </form>
                                     <button type="button" id="btn-search-logs-by-date" class="btn btn-primary">
-                                        <img src="https://api.iconify.design/mdi:magnify.svg?color=white" alt="Search" class="btn-icon"> Search
+                                        <img src="https://api.iconify.design/mdi:magnify.svg?color=white" alt="Search"
+                                             class="btn-icon"> Search
                                     </button>
                                 </div>
                             </div>
@@ -1030,7 +1050,8 @@
                                         </div>
                                     </form>
                                     <button type="button" id="btn-upload-observed-image-custom" class="btn btn-primary">
-                                        <img src="https://api.iconify.design/mdi:upload.svg?color=white" alt="Upload" class="btn-icon"> Upload
+                                        <img src="https://api.iconify.design/mdi:upload.svg?color=white" alt="Upload"
+                                             class="btn-icon"> Upload
                                     </button>
                                 </div>
                             </div>
@@ -1068,10 +1089,12 @@
                                             </div>
                                         </div>
                                         <button type="button" id="btn-merge-log-for-crop" class="btn btn-primary">
-                                            <img src="https://api.iconify.design/mdi:merge.svg?color=white" alt="Merge" class="btn-icon"> Merge
+                                            <img src="https://api.iconify.design/mdi:merge.svg?color=white" alt="Merge"
+                                                 class="btn-icon"> Merge
                                         </button>
                                         <button type="button" id="btn-delete-log-for-crop" class="btn btn-danger">
-                                            <img src="https://api.iconify.design/mdi:trash-can-outline.svg?color=white" alt="Delete" class="btn-icon"> Delete
+                                            <img src="https://api.iconify.design/mdi:trash-can-outline.svg?color=white"
+                                                 alt="Delete" class="btn-icon"> Delete
                                         </button>
                                     </form>
                                 </div>

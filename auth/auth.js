@@ -50,7 +50,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.token) {
                     document.cookie = `token=${data.token}; path=/; secure;`;
                     document.cookie = `greenShadowUser=${email}; path=/; secure;`;
-                    window.location.href = 'home.html';
+                    await getRoleOfCurrentUser({email, password}, (data) => {
+                        document.cookie = `userRole=${data}; path=/; secure;`;
+                    });
+                    setTimeout(() => {
+                        window.location.href = 'home.html';
+                    }, 2000);
                 } else {
                     showError('email', 'Error logging in. Please try again.');
                 }
@@ -117,6 +122,32 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+function getRoleOfCurrentUser(userModel, callback) {
+    const cookie = getCookie('token');
+
+    fetch("http://localhost:8082/api/v1/users/get-role", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${cookie}`
+        },
+        body: JSON.stringify(userModel)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            callback(data.userRole);
+        })
+        .catch(error => {
+            console.error("Error fetching role:", error);
+        });
+}
+
 
 // Helper functions
 function validateEmail(email) {

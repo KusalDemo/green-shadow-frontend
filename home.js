@@ -14,6 +14,7 @@ logout.addEventListener('click', () => {
             // Clear the token & user cookie
             document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             document.cookie = "greenShadowUser=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "userRole=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             window.location.href = 'index.html';
         }
     })
@@ -43,6 +44,7 @@ function initializeApp() {
 
     function setupEventListeners() {
         document.getElementById('nav-home').addEventListener('click', () => showSection('dashboard-section'));
+        document.getElementById('nav-home-2').addEventListener('click', () => showSection('dashboard-section'));
         document.getElementById('nav-user').addEventListener('click', () => showSection('user-management-section'));
         document.getElementById('nav-vehicle').addEventListener('click', () => showSection('vehicle-management-section'));
         document.getElementById('nav-equipment').addEventListener('click', () => showSection('equipment-management-section'));
@@ -52,6 +54,10 @@ function initializeApp() {
         document.getElementById('nav-field').addEventListener('click', () => showSection('field-management-section'));
         document.getElementById('nav-settings').addEventListener('click', () => showSection('settings-section'));
     }
+
+    const userRole = getCookie("userRole");
+    console.log(userRole);
+    uiChangeActionsAccordingToUserRole(userRole);
 
     function showLastActiveSection() {
         const lastActiveSection = getLastActiveSection();
@@ -63,7 +69,6 @@ function initializeApp() {
     }
 
     function showSection(sectionId) {
-        console.log("Section called from sidebar ->", sectionId);
         sections.forEach(id => document.getElementById(id).style.display = 'none');
         document.getElementById(sectionId).style.display = 'block';
         setLastActiveSection(sectionId);
@@ -109,3 +114,27 @@ const getCookie = (name) => {
     const parts = value.split(`; ${name}=`);
     return parts.length === 2 ? parts.pop().split(';').shift() : null;
 };
+
+const uiChangeActionsAccordingToUserRole = (userRole) => {
+    if (userRole === "ADMINISTRATIVE") {
+        document.getElementById("crop-manage-form").style.display = "none";
+        document.getElementById("field-manage-form").style.display = "none";
+        document.getElementById("accordion-update-crop-images").style.display = "none";
+        document.getElementById("accordion-update-field-images").style.display = "none";
+        document.getElementById("monitor-crop-select-div").style.display = "none";
+        document.getElementById("crop-form-badge").innerText = `${userRole} privileges`;
+        document.getElementById("field-form-badge").innerText = `${userRole} privileges`;
+        document.getElementById("monitor-form-badge").innerText = `${userRole} privileges`;
+    }
+    if (userRole === "SCIENTIST") {
+        document.getElementById("staff-form-badge").innerText = `${userRole} privileges`;
+        document.getElementById("vehicle-form-badge").innerText = `${userRole} privileges`;
+        document.getElementById("equipment-form-badge").innerText = `${userRole} privileges`;
+        document.getElementById("staff-manage-form").style.display = "none";
+        document.getElementById("vehicle-manage-form").style.display = "none";
+        document.getElementById("equipment-manage-form").style.display = "none";
+        document.getElementById("accordionFlush").style.display = "none";
+
+    }
+}
+

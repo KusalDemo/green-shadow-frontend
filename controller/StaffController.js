@@ -111,8 +111,7 @@ const loadAllLogs = (jwtToken) => {
                 option.text = logDetails;
                 logSelectorInStaff.appendChild(option);
             });
-        },
-        error: (error) => showErrorAlert(error)
+        }
     });
 }
 

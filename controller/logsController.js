@@ -52,6 +52,7 @@ const loadTable = (jwtToken) => {
             "Authorization": `Bearer ${jwtToken}`
         },
         success: (data) => {
+            logTableBody.innerHTML = '';
             data.forEach(({logCode, logDetails, logDate, observedImage}) => {
                 const formattedDate = getFormattedDate(logDate);
 
@@ -62,7 +63,7 @@ const loadTable = (jwtToken) => {
                     <td>${formattedDate}</td>
                     <td>
                        <button class="btn btn-primary view-btn" data-image="${observedImage}" data-bs-toggle="modal" data-bs-target="#observedImageModal">
-                            <img src="https://api.iconify.design/mdi:eye.svg?color=white" alt="View" class="btn-icon"> View
+                        <img src="https://api.iconify.design/mdi:eye.svg?color=white" alt="View" class="btn-icon"> View
                        </button>
                     </td>
                 `;
@@ -79,9 +80,6 @@ const loadTable = (jwtToken) => {
                     showImageModal(base64Image);
                 });
             });
-        },
-        error: (error) => {
-            showErrorAlert(error);
         }
     });
 };
@@ -134,7 +132,6 @@ const loadAllLogs = (jwtToken) => {
                 logSelectorInMergeCrops.appendChild(option2);
             });
         },
-        error: (error) => showErrorAlert(error)
     });
 }
 
