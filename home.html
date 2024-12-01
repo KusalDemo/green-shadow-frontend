@@ -55,7 +55,6 @@
                 <img src="https://api.iconify.design/mdi:logout.svg" alt="Logout">Logout
             </li>
         </ul>
-        <!--<span class="badge text-bg-success mb-4" id="dashboard-role-badge">MANAGER mode</span>-->
     </nav>
     <main class="main-content" id="main-content">
         <!--Dashboard-->
@@ -73,15 +72,16 @@
                 <div class="row">
                     <div class="greeting col-lg-6 col-sm-6 mb-6">
                         <div>
-                            <h1>Good Morning!</h1>
+                            <span class="badge text-bg-success mb-4" id="dashboard-role-badge">MANAGER mode</span>
+                            <h1>Welcome</h1>
                             <p>Here's what's happening in Green Shadow</p>
+                            <button class="export-btn" id="btn-reload-data">Reload data</button>
                         </div>
-                        <button class="export-btn" id="btn-reload-data">Reload data</button>
                     </div>
-                    <div class="col-lg-3 col-sm-4 mb-3">
+                    <div class="col-lg-6 col-sm-6 mb-6">
                         <div class="card">
                             <div class="card-body d-flex align-items-center justify-content-space-between">
-
+                                <canvas id="propertyBarChart"></canvas>
                             </div>
                         </div>
                     </div>
@@ -1320,6 +1320,7 @@
     </main>
 </div>
 <script src="assets/lib/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="script.js"></script>
 <script src="home.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

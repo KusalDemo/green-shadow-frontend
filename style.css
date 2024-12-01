@@ -318,3 +318,23 @@ header {
         padding: 1rem;
     }
 }
+#propertyBarChart {
+    height: 220px !important;
+}
+/** {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container-fluid, .container {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100%;
+}
+
+.main-content {
+    width: 100%;
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+}*/

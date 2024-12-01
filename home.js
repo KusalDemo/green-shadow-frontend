@@ -125,16 +125,17 @@ const uiChangeActionsAccordingToUserRole = (userRole) => {
         document.getElementById("crop-form-badge").innerText = `${userRole} privileges`;
         document.getElementById("field-form-badge").innerText = `${userRole} privileges`;
         document.getElementById("monitor-form-badge").innerText = `${userRole} privileges`;
+        document.getElementById("dashboard-role-badge").innerText = `${userRole} mode`;
     }
     if (userRole === "SCIENTIST") {
         document.getElementById("staff-form-badge").innerText = `${userRole} privileges`;
         document.getElementById("vehicle-form-badge").innerText = `${userRole} privileges`;
         document.getElementById("equipment-form-badge").innerText = `${userRole} privileges`;
+        document.getElementById("dashboard-role-badge").innerText = `${userRole} mode`;
         document.getElementById("staff-manage-form").style.display = "none";
         document.getElementById("vehicle-manage-form").style.display = "none";
         document.getElementById("equipment-manage-form").style.display = "none";
         document.getElementById("accordionFlush").style.display = "none";
-
     }
 }
 

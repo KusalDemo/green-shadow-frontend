@@ -9,9 +9,48 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btnReloadData) {
         btnReloadData.addEventListener('click', () => fetchNews());
     }
+
+
+    const ctx = document.getElementById('propertyBarChart').getContext('2d');
+
+    const propertyChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Crops', 'Vehicles', 'Staff', 'Fields', 'Equipment'],
+            datasets: [{
+                label: 'Count',
+                data: [20, 15, 25, 10, 18],
+                backgroundColor: 'green',
+                borderColor: 'darkgreen',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        color: '#333'
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: '#333'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
 })
 
-const url = `https://newsapi.org/v2/everything?q=agri&from=2024-11-01&sortBy=publishedAt&language=en&apiKey=2b465757575858585590834322`;
+const url = `https://newsapi.org/v2/everything?q=agri&from=2024-11-01&sortBy=publishedAt&language=en&apiKey=2b410fa041c646e6b71086b590834322`;
 
 const fetchNews = () => {
     $.ajax({

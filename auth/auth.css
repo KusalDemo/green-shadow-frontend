@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
 :root {
     --primary-color: #0D9F4F;
     --primary-hover: #0b8a43;
@@ -67,6 +69,12 @@ body {
     width: 32px;
     height: 32px;
     color: var(--primary-color);
+}
+
+.logo span {
+    font-family: "Great Vibes", cursive;
+    font-weight: 600;
+    font-size: 1.9rem;
 }
 
 .logo span {
