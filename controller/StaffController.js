@@ -28,6 +28,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btnAssignStaffToField) {
         btnAssignStaffToField.addEventListener('click', () => assignStaffToField(jwtToken));
     }
+
+    const btnReleaseStaffFromField = document.getElementById("btn-release-staff-from-field");
+    if (btnReleaseStaffFromField) {
+        btnReleaseStaffFromField.addEventListener('click', () => releaseStaffFromField(jwtToken));
+    }
 })
 
 const loadStaffTable = (jwtToken) => {
@@ -295,6 +300,55 @@ const assignStaffToField = (jwtToken) => {
         error: (error) => showErrorAlert(error)
     })
 }
+
+const releaseStaffFromField = (jwtToken) => {
+    const selectedStaff = document.getElementById("staff-select-1").value;
+    const selectedField = document.getElementById("field-select-1").value;
+    if (!selectedStaff || !selectedField) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: 'Please select both staff and field',
+        })
+        return
+    }
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "Staff will be released from field",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#0D9F4F',
+        confirmButtonText: 'Yes, Release!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const formData = new FormData();
+            formData.append("staffId", selectedStaff);
+            formData.append("fieldCode", selectedField);
+
+            $.ajax({
+                url: "http://localhost:8082/api/v1/staff",
+                method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${jwtToken}`
+                },
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: () => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: 'Staff released from field successfully!',
+                    })
+                    loadStaffTable(jwtToken);
+                },
+                error: (error) => showErrorAlert(error)
+            })
+        }
+    })
+}
+
 const updateFormFields = (staff) => {
     document.getElementById("staff-id").innerText = staff.id || "";
     document.getElementById("first-name-input").value = staff.firstName || "";
