@@ -36,6 +36,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btnDeleteMergedLogsAndCrop) {
         btnDeleteMergedLogsAndCrop.addEventListener('click', () => deleteMergedLogs(jwtToken));
     }
+
+    const btnDeleteLog = document.getElementById("log-delete-btn");
+    if (btnDeleteLog) {
+        btnDeleteLog.addEventListener('click', () => deleteLog(jwtToken));
+    }
 });
 
 
@@ -170,6 +175,7 @@ const saveLog = (jwtToken) => {
                     title: 'Success',
                     text: 'Log saved successfully',
                 });
+                clearLogForm();
                 loadTable(jwtToken);
             },
             error: (error) => showErrorAlert(error)
@@ -181,8 +187,54 @@ const saveLog = (jwtToken) => {
             text: 'Something went wrong!',
         });
     }
-
 };
+const deleteLog = (jwtToken) => {
+    const logCode = document.getElementById("log-code").innerText;
+    if (!logCode) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Please select a log to delete!',
+        });
+        return;
+    }
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "Deleting logs is not reversible. Are you sure you want to delete this log?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#0D9F4F',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "http://localhost:8082/api/v1/log/" + logCode,
+                method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${jwtToken}`
+                },
+                success: () => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Log deleted successfully',
+                        text: 'selected log deleted successfully',
+                    })
+                    clearLogForm();
+                    loadTable(jwtToken);
+                },
+                error: (error) => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Log is not eligible to delete! It contains related data that could be sensitive.',
+                    })
+                }
+            })
+        }
+    })
+}
+
 const uploadObservedImageCustom = (jwtToken) => {
     console.log("uploadObservedImageCustom calling..");
 
@@ -443,4 +495,9 @@ const refreshLogsTable = (jwtToken) => {
     }
     logTableBody.innerHTML = '';
     loadTable(jwtToken);
+};
+const clearLogForm = () => {
+    document.getElementById("log-code").innerText = "";
+    document.getElementById("log-date-input").value = "";
+    document.getElementById("log-description-input").value = "";
 };
