@@ -1,13 +1,16 @@
 import {getCookie, showErrorAlert} from "../utils/utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("Monitor loaded");
-
     const jwtToken = getCookie("token");
 
-    loadCropsSelector(jwtToken);
-    loadFieldSelector(jwtToken);
-    loadFieldSelectorMonitor(jwtToken);
+    let btnNavigateToMonitor = document.getElementById("nav-user");
+    if (btnNavigateToMonitor) {
+        btnNavigateToMonitor.addEventListener('click', () => {
+            loadCropsSelector(jwtToken)
+            loadFieldSelector(jwtToken)
+            loadFieldSelectorMonitor(jwtToken)
+        });
+    }
 
     let monitorCropSelector = document.getElementById("monitor-crop-select");
     if (monitorCropSelector) {
@@ -23,6 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
 const loadCropsSelector = (jwtToken) => {
     let cropSelector = document.getElementById("monitor-crop-select");
     if (!cropSelector) return;
+
+    cropSelector.innerHTML = "";
 
     $.ajax({
         url: "http://localhost:8082/api/v1/crop",
@@ -43,6 +48,8 @@ const loadCropsSelector = (jwtToken) => {
 const loadFieldSelector = (jwtToken) => {
     let monitorFieldSelector = document.getElementById("monitor-field-select");
     if (!monitorFieldSelector) return;
+
+    monitorFieldSelector.innerHTML = "";
 
     $.ajax({
         url: "http://localhost:8082/api/v1/field",
@@ -214,6 +221,8 @@ const releaseStaffFromField = (staffId, fieldCode, jwtToken) => {
 const loadFieldSelectorMonitor = (jwtToken) => {
     let fieldSelectorMonitor = document.getElementById("field-select-2");
     if (!fieldSelectorMonitor) return;
+
+    fieldSelectorMonitor.innerHTML = "";
 
     $.ajax({
         url: "http://localhost:8082/api/v1/field",

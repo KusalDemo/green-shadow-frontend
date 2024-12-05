@@ -4,8 +4,15 @@ import {getCookie, showErrorAlert ,getFormattedDate,destroyDataTable} from "../u
 document.addEventListener("DOMContentLoaded", () => {
     const jwtToken = getCookie("token");
     loadTable(jwtToken);
-    loadCropsList(jwtToken);
-    loadAllLogs(jwtToken);
+
+
+    let btnNavigateToLog = document.getElementById("nav-logs");
+    if (btnNavigateToLog) {
+        btnNavigateToLog.addEventListener('click', () => {
+            loadCropsList(jwtToken);
+            loadAllLogs(jwtToken);
+        });
+    }
 
     const logSaveButton = document.getElementById("log-save-btn");
     if (logSaveButton) {
@@ -90,9 +97,10 @@ const loadTable = (jwtToken) => {
 };
 
 const loadCropsList = (jwtToken) => {
-    //let cropsSelector = document.getElementById("crops-select");
     let cropsSelectorInMergeCrops = document.getElementById("crops-select-2");
     if (!cropsSelectorInMergeCrops) return;
+
+    cropsSelectorInMergeCrops.innerHTML = '';
 
     $.ajax({
         url: "http://localhost:8082/api/v1/crop",
@@ -105,7 +113,6 @@ const loadCropsList = (jwtToken) => {
                 let option = document.createElement("option");
                 option.value = cropCode;
                 option.text = cropCommonName;
-                //cropsSelector.appendChild(option);
                 cropsSelectorInMergeCrops.appendChild(option);
             });
         },
@@ -117,6 +124,9 @@ const loadAllLogs = (jwtToken) => {
     let logSelectorInObservedImage = document.getElementById("logs-select-1");
     let logSelectorInMergeCrops = document.getElementById("logs-select-2");
     if (!logSelectorInObservedImage || !logSelectorInMergeCrops) return;
+
+    logSelectorInObservedImage.innerHTML = '';
+    logSelectorInMergeCrops.innerHTML = '';
 
     $.ajax({
         url: "http://localhost:8082/api/v1/log",
@@ -177,6 +187,7 @@ const saveLog = (jwtToken) => {
                 });
                 clearLogForm();
                 loadTable(jwtToken);
+                refreshLogsRelatedSelectors(jwtToken);
             },
             error: (error) => showErrorAlert(error)
         });
@@ -222,6 +233,7 @@ const deleteLog = (jwtToken) => {
                     })
                     clearLogForm();
                     loadTable(jwtToken);
+                    refreshLogsRelatedSelectors(jwtToken);
                 },
                 error: (error) => {
                     Swal.fire({
@@ -496,6 +508,9 @@ const refreshLogsTable = (jwtToken) => {
     logTableBody.innerHTML = '';
     loadTable(jwtToken);
 };
+const refreshLogsRelatedSelectors = (jwtToken) => {
+    loadAllLogs(jwtToken);
+}
 const clearLogForm = () => {
     document.getElementById("log-code").innerText = "";
     document.getElementById("log-date-input").value = "";

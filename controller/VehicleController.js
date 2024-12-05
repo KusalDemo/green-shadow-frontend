@@ -5,10 +5,14 @@ import {isValidSriLankanNumberPlate} from "../utils/validations.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const jwtToken = getCookie("token");
-
     loadTable(jwtToken);
-    loadStaffList(jwtToken);
 
+    let btnNavigateToVehicle = document.getElementById("nav-vehicle");
+    if (btnNavigateToVehicle) {
+        btnNavigateToVehicle.addEventListener('click', () => {
+            loadStaffList(jwtToken);
+        });
+    }
 
     let btnSaveVehicle = document.getElementById("vehicle-save-btn");
     if (btnSaveVehicle) {
@@ -36,6 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
 const loadStaffList = (jwtToken) => {
     let vehicleResponsibleStaffSelector = document.getElementById("vehicle-staff-select");
     if (!vehicleResponsibleStaffSelector) return;
+
+    vehicleResponsibleStaffSelector.innerHTML = "";
 
     $.ajax({
         url: "http://localhost:8082/api/v1/staff",

@@ -2,11 +2,8 @@ import {FieldModel} from "../model/FieldModel.js";
 import {getCookie,showErrorAlert,destroyDataTable} from "../utils/utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("Field loaded");
     const jwtToken = getCookie("token");
-
     loadTable(jwtToken)
-    logCodeSelector(jwtToken)
 
     window.globalMap = L.map('map').setView([7.8731, 80.7718], 7);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -31,6 +28,15 @@ document.addEventListener("DOMContentLoaded", () => {
             .bindPopup("Selected Location")
             .openPopup();
     });
+
+
+    let btnNavigateToField = document.getElementById("nav-field");
+    if (btnNavigateToField) {
+        btnNavigateToField.addEventListener('click', () => {
+            logCodeSelector(jwtToken)
+            fieldCodeSelector(jwtToken)
+        });
+    }
 
     let btnSaveField = document.getElementById("field-save-btn");
     if (btnSaveField) {
@@ -121,6 +127,8 @@ const logCodeSelector = (jwtToken) => {
     let fieldsLogs = document.getElementById("field-log-select");
     if (!fieldsLogs) return;
 
+    fieldsLogs.innerHTML = '';
+
     $.ajax({
         url: "http://localhost:8082/api/v1/log",
         method: "GET",
@@ -137,6 +145,29 @@ const logCodeSelector = (jwtToken) => {
         }
     })
 }
+const fieldCodeSelector = (jwtToken) => {
+    let fieldsSelector = document.getElementById("field-select-2");
+    if (!fieldsSelector) return;
+
+    fieldsSelector.innerHTML = '';
+
+    $.ajax({
+        url: "http://localhost:8082/api/v1/field",
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${jwtToken}`
+        },
+        success: (data) => {
+            data.forEach((field) => {
+                let option = document.createElement("option");
+                option.innerHTML = field.fieldName;
+                option.value = field.fieldCode;
+                fieldsSelector.appendChild(option);
+            })
+        }
+    })
+}
+
 const saveField = (jwtToken) => {
     const fieldCode = document.getElementById("field-code").innerText;
     if (fieldCode !== "") {

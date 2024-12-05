@@ -3,11 +3,15 @@ import {getCookie,showErrorAlert,destroyDataTable} from "../utils/utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const jwtToken = getCookie("token");
-
     loadTable(jwtToken);
-    loadFieldCodes(jwtToken);
-    loadCropCodes(jwtToken);
 
+    let btnNavigateToCrop = document.getElementById("nav-crop");
+    if (btnNavigateToCrop) {
+        btnNavigateToCrop.addEventListener('click', () => {
+            loadFieldCodes(jwtToken)
+            loadCropCodes(jwtToken);
+        });
+    }
     let btnSaveCrop = document.getElementById("crop-save-btn");
     if (btnSaveCrop) {
         btnSaveCrop.addEventListener('click', () => saveCrop(jwtToken));
@@ -89,6 +93,8 @@ const loadFieldCodes = (jwtToken) => {
     let cropFieldSelector = document.getElementById("crop-field-select");
     if (!cropFieldSelector) return;
 
+    cropFieldSelector.innerHTML = "";
+
     try {
         $.ajax({
             url: "http://localhost:8082/api/v1/field",
@@ -114,6 +120,8 @@ const loadFieldCodes = (jwtToken) => {
 const loadCropCodes = (jwtToken) => {
     let cropCodeSelector = document.getElementById("crop-select-2");
     if (!cropCodeSelector) return;
+
+    cropCodeSelector.innerHTML = "";
 
     try {
         $.ajax({
@@ -165,6 +173,7 @@ const saveCrop = (jwtToken) => {
                         })
                         loadTable(jwtToken);
                         clearCropForm();
+                        loadCropCodes(jwtToken);
                     },
                     error: (error) => showErrorAlert(error)
                 })
@@ -204,6 +213,7 @@ const updateCrop = (jwtToken) => {
                         });
                         //loadTable(jwtToken);
                         clearCropForm();
+                        loadCropCodes(jwtToken);
                     },
                     error: (error) => showErrorAlert(error)
                 })
@@ -248,6 +258,7 @@ const deleteCrop = (jwtToken) => {
                             })
                             loadTable(jwtToken);
                             clearCropForm();
+                            loadCropCodes(jwtToken);
                         },
                         error: (error) => {
                             Swal.fire({

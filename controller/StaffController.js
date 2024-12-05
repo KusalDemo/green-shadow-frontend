@@ -4,10 +4,16 @@ import {isAtLeast18YearsOld, isValidEmail, isValidSriLankanPhoneNumber} from "..
 
 document.addEventListener("DOMContentLoaded", () => {
     const jwtToken = getCookie("token");
-    loadAllLogs(jwtToken)
     loadStaffTable(jwtToken);
-    loadStaffIds(jwtToken);
-    loadFieldCodes(jwtToken);
+
+    const btnNavigateToStaff = document.getElementById("nav-staff");
+    if (btnNavigateToStaff) {
+        btnNavigateToStaff.addEventListener('click', () => {
+            loadAllLogs(jwtToken)
+            loadStaffIds(jwtToken)
+            loadFieldCodes(jwtToken)
+        });
+    }
 
     const staffSaveButton = document.getElementById("staff-save-btn");
     if (staffSaveButton) {
@@ -104,6 +110,8 @@ const loadAllLogs = (jwtToken) => {
     let logSelectorInStaff = document.getElementById("staff-log-select");
     if (!logSelectorInStaff) return;
 
+    logSelectorInStaff.innerHTML = "";
+
     $.ajax({
         url: "http://localhost:8082/api/v1/log",
         method: "GET",
@@ -150,6 +158,7 @@ const saveStaff = async (jwtToken) => {
                     })
                     loadStaffTable(jwtToken);
                     clearTable();
+                    loadStaffIds(jwtToken);
                 },
                 error: (error) => showErrorAlert(error)
             });
@@ -182,7 +191,6 @@ const updateStaff = async (jwtToken) => {
     let staffIdToUpdate = document.getElementById("staff-id").innerText;
     if(staffIdToUpdate){
         staffToUpdate.id = staffIdToUpdate;
-        console.log(staffIdToUpdate)
         try{
             $.ajax({
                 url: "http://localhost:8082/api/v1/staff/"+staffIdToUpdate,
@@ -200,6 +208,7 @@ const updateStaff = async (jwtToken) => {
                         text: 'Staff updated successfully',
                     })
                     clearTable();
+                    loadStaffIds(jwtToken);
                 },
                 error: (error) => showErrorAlert(error)
             });
@@ -225,6 +234,8 @@ const loadStaffIds = (jwtToken) => {
     const staffSelector = document.getElementById("staff-select-1");
     if (!staffSelector) return;
 
+    staffSelector.innerHTML = "";
+
     $.ajax({
       url: "http://localhost:8082/api/v1/staff",
       method: "GET",
@@ -246,6 +257,8 @@ const loadStaffIds = (jwtToken) => {
 const loadFieldCodes = (jwtToken) => {
     const fieldSelector = document.getElementById("field-select-1");
     if (!fieldSelector) return;
+
+    fieldSelector.innerHTML = "";
 
     $.ajax({
       url: "http://localhost:8082/api/v1/field",

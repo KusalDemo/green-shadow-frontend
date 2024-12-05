@@ -2,12 +2,16 @@ import {EquipmentModel} from "../model/EquipmentModel.js";
 import {getCookie,showErrorAlert,destroyDataTable} from "../utils/utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    destroyDataTable('#equipment-table')
-
     const jwtToken = getCookie("token");
     loadTable(jwtToken);
-    loadStaffs(jwtToken);
-    loadFieldCodes(jwtToken);
+
+    let btnNavigateToEquipment = document.getElementById("nav-equipment");
+    if (btnNavigateToEquipment) {
+        btnNavigateToEquipment.addEventListener('click', () => {
+            loadStaffs(jwtToken)
+            loadFieldCodes(jwtToken)
+        });
+    }
 
     let btnEquipmentSave = document.getElementById("equipment-save-btn");
     if (btnEquipmentSave) {
@@ -75,9 +79,10 @@ const loadTable = (jwtToken) => {
     })
 }
 const loadStaffs = (jwtToken) => {
-
     let equipmentStaffSelector = document.getElementById("equipment-staff-select");
     if (!equipmentStaffSelector) return;
+
+    equipmentStaffSelector.innerHTML = "";
 
     $.ajax({
         url: "http://localhost:8082/api/v1/staff",
@@ -98,9 +103,10 @@ const loadStaffs = (jwtToken) => {
 }
 
 const loadFieldCodes = (jwtToken) => {
-
     let equipmentFieldSelector = document.getElementById("equipment-field-select");
     if (!equipmentFieldSelector) return;
+
+    equipmentFieldSelector.innerHTML = "";
 
     $.ajax({
         url: "http://localhost:8082/api/v1/field",
