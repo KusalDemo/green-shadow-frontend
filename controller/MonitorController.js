@@ -84,7 +84,7 @@ const loadRelatedLogDivs = (jwtToken) => {
                 let staffListHTML = "<ul>";
                 if (log.staff && log.staff.length > 0) {
                     log.staff.forEach((staffMember) => {
-                        staffListHTML += `<li>${staffMember.name} (${staffMember.role})</li>`;
+                        staffListHTML += `<li>${staffMember.firstName} ${staffMember.lastName} (${staffMember.role})</li>`;
                     });
                 } else {
                     staffListHTML += "<li>No staff assigned</li>";
@@ -105,7 +105,7 @@ const loadRelatedLogDivs = (jwtToken) => {
                     <div class="card mb-3" style="width: 100%;">
                         <p class="card-header">Log Code: ${log.logCode}</p>
                         <div class="card-body">
-                            <small class="card-title">Date: ${new Date(log.logDate).toLocaleDateString()}</small><br><br>
+                            <span class="badge text-bg-success mb-4">${new Date(log.logDate).toLocaleDateString()}</span><br>
                             <small class="card-text">${log.logDetails}</small><br><br>
                             <img src="data:image/jpeg;base64,${log.observedImage}" width="200" height="200" alt="no_image"/><br><br>
                             <small class="card-text">Related Staff</small>

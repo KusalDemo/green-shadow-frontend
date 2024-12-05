@@ -35,6 +35,8 @@ const loadTable = (jwtToken) => {
     let equipmentTable = document.getElementById("equipment-table-body");
     if (!equipmentTable) return;
 
+    destroyDataTable('#equipment-table');
+
     $.ajax({
         url: "http://localhost:8082/api/v1/equipment",
         method: "GET",

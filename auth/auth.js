@@ -53,6 +53,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     await getRoleOfCurrentUser({email, password}, (data) => {
                         document.cookie = `userRole=${data}; path=/; secure;`;
                     });
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Logged in successfully',
+                        text: 'Welcome to GreenShadow',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     setTimeout(() => {
                         window.location.href = 'home.html';
                     }, 2000);
@@ -102,6 +109,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     showError('email', 'Check your credentials and try again');
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }else{
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Registered successfully',
+                        text: 'You can now login',
+                    });
                     window.location.href = '../index.html';
                 }
             } catch (error) {

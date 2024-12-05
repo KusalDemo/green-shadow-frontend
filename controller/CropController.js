@@ -249,7 +249,13 @@ const deleteCrop = (jwtToken) => {
                             loadTable(jwtToken);
                             clearCropForm();
                         },
-                        error: (error) => showErrorAlert(error)
+                        error: (error) => {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Deleting this crop is blocked. It contains related data that could be sensitive.',
+                            })
+                        }
                     })
                 } catch (error) {
                     console.log(error);
